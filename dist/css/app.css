@@ -1,0 +1,14 @@
+.flex-div {
+    display: flex;
+}html, body{
+    background: blue;color:#fff;
+    font-size: 50px;font-weight:bold;
+    background: url(images/q.jpg) no-repeat;
+}
+
+
+
+body,html {
+    background: blue;color:#fff;
+}
+.test{text-align: center;font-size: 80px;}

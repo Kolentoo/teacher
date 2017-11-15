@@ -4,11 +4,12 @@ var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var TransferWebpackPlugin = require('transfer-webpack-plugin');
 var CopyWebpackPlugin = require('copy-webpack-plugin');
+var glob = require('glob');
 var webpack = require('webpack');
 
 module.exports = {
     entry:{
-        app:'./src/app.js',
+        app:'./src/app.js'
     },
     output:{
         path:path.resolve('./dist'),
@@ -78,7 +79,7 @@ module.exports = {
     plugins:[
         new htmlWebpackPlugin({
             filename:'index.html',
-            template:'index.html',
+            template:'./src/index.html',
             inject:'head',
             chunks:['app'],
             minify:{
@@ -86,12 +87,12 @@ module.exports = {
                 collapseWhitespace:true  //去空格
             }
         }),
-        // new htmlWebpackPlugin({
-        //     filename:'test1.html',
-        //     template:'./src/test1.html',
-        //     inject:'head',
-        //     chunks:['ceshi']
-        // }),
+        new htmlWebpackPlugin({
+            filename:'art.html',
+            template:'./src/art.html',
+            inject:'head',
+            chunks:['app']
+        }),
         // JS压缩,热更新时需要注释，不然会报错
         // new UglifyJSPlugin({
         //     compress: {
@@ -107,7 +108,7 @@ module.exports = {
         new CopyWebpackPlugin([
             {
                 from : './src/images',//定义要拷贝的源目录   __dirname + ‘/src/public’
-                to : './images',//定义要拷贝的目标目录  __dirname + ‘/dist’
+                to : './images'//定义要拷贝的目标目录  __dirname + ‘/dist’
                 //  toType : 'dir'//file 或者 dir , 可选，默认是文件
                 //  force : 强制覆盖先前的插件 , 可选 默认false
                 //  context : 不知道作用 , 可选 默认 base context 可用 specific context
@@ -121,3 +122,6 @@ module.exports = {
         
     ]
 }
+
+
+

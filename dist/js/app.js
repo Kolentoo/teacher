@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a24a118b4b6476347a9e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3ca29dc8c836b3e1f658"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -3234,7 +3234,16 @@ $(function () {
 
     // 延迟加载
     if ($('.pic-lazy').get(0)) {
-        $("img").lazyload({ effect: "fadeIn" });
+        $("img.lazy").lazyload({
+            placeholder: "images/gray.gif", //用图片提前占位
+            // placeholder,值为某一图片路径.此图片用来占据将要加载的图片的位置,待图片加载时,占位图则会隐藏
+            effect: "fadeIn", // 载入使用何种效果
+            // effect(特效),值有show(直接显示),fadeIn(淡入),slideDown(下拉)等,常用fadeIn
+            threshold: 200, // 提前开始加载
+            // threshold,值为数字,代表页面高度.如设置为200,表示滚动条在离目标位置还有200的高度时就开始加载图片,可以做到不让用户察觉
+            failurelimit: 10 // 图片排序混乱时
+            // failurelimit,值为数字.lazyload默认在找到第一张不在可见区域里的图片时则不再继续加载,但当HTML容器混乱的时候可能出现可见区域内图片并没加载出来的情况,failurelimit意在加载N张可见区域外的图片,以避免出现这个问题.
+        });
     }
 
     // 首页轮播和导航
@@ -3250,20 +3259,18 @@ $(function () {
             callback: {
                 loaded: function loaded(number) {},
                 start: function start(number) {
-                    $(".slidesjs-slide").find('img').lazyload({ effect: "fadeIn" });
+                    $('.slides-banner').find('.slidesjs-slide').eq(number - 1).find('img').lazyload({ effect: "fadeIn" });
                 },
-                complete: function complete(number) {
-                    $(".slidesjs-slide").find('img').lazyload({ effect: "fadeIn" });
-                }
+                complete: function complete(number) {}
             }
         });
 
         $('.slides-pro').slidesjs({
             width: 990,
-            height: 384,
+            height: 430,
             play: {
                 auto: true,
-                interval: 4000,
+                interval: 40000,
                 swap: true
             },
             callback: {
@@ -3273,11 +3280,9 @@ $(function () {
                     $('.slidesjs-next').append("<img class=\"slides-arrwo vm\" src=\"images/arrow-right3.png\" alt=\"\">");
                 },
                 start: function start(number) {
-                    $(".slidesjs-slide").find('img').lazyload({ effect: "fadeIn" });
+                    $('.slides-pro').find('.slidesjs-slide').eq(number - 1).find('img').lazyload({ effect: "fadeIn" });
                 },
-                complete: function complete(number) {
-                    $(".slidesjs-slide").find('img').lazyload({ effect: "fadeIn" });
-                }
+                complete: function complete(number) {}
             }
         });
 
@@ -3296,6 +3301,29 @@ $(function () {
         }).trigger("scroll");
     }
 
+    if ($('.dfth-art').get(0)) {
+        $('.slides-photo').slidesjs({
+            width: 990,
+            height: 430,
+            play: {
+                auto: true,
+                interval: 40000,
+                swap: true
+            },
+            callback: {
+                loaded: function loaded(number) {
+                    $('.slidesjs-navigation').text('');
+                    $('.slidesjs-previous').append("<img class=\"slides-arrwo vm\" src=\"images/arrow-left1.png\" alt=\"\">");
+                    $('.slidesjs-next').append("<img class=\"slides-arrwo vm\" src=\"images/arrow-right3.png\" alt=\"\">");
+                },
+                start: function start(number) {
+                    $('.slides-photo').find('.slidesjs-slide').eq(number - 1).find('img').lazyload({ effect: "fadeIn" });
+                },
+                complete: function complete(number) {}
+            }
+        });
+    }
+
     indexTab();
 });
 
@@ -3310,6 +3338,7 @@ function indexTab() {
         o.addClass('on');
         $('.item').eq(oindex).removeClass('hide');
         $('.item').eq(oindex).siblings().addClass('hide');
+        $('.item').eq(oindex).find('img').lazyload({ effect: "fadeIn" });
     });
 }
 

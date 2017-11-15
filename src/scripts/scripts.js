@@ -28,20 +28,19 @@ $(function(){
                 loaded: function(number) {
                 },
                 start: function(number) {
-                    $(".slidesjs-slide").find('img').lazyload({effect: "fadeIn"});
+                    $('.slides-banner').find('.slidesjs-slide').eq(number-1).find('img').lazyload({effect: "fadeIn"});
                 },
                 complete: function(number) {
-                    $(".slidesjs-slide").find('img').lazyload({effect: "fadeIn"});
                 }
             }
         });
 
         $('.slides-pro').slidesjs({
             width: 990,
-            height: 384,
+            height: 430,
             play: {
                 auto: true,
-                interval: 4000,
+                interval: 40000,
                 swap: true
             },
             callback: {
@@ -51,10 +50,9 @@ $(function(){
                     $('.slidesjs-next').append(`<img class="slides-arrwo vm" src="images/arrow-right3.png" alt="">`);
                 },
                 start: function(number) {
-                    $(".slidesjs-slide").find('img').lazyload({effect: "fadeIn"});
+                    $('.slides-pro').find('.slidesjs-slide').eq(number-1).find('img').lazyload({effect: "fadeIn"});
                 },
                 complete: function(number) {
-                    $(".slidesjs-slide").find('img').lazyload({effect: "fadeIn"});
                 }
             }
         });
@@ -73,6 +71,30 @@ $(function(){
                 }
         }).trigger("scroll");
     }
+
+    if($('.dfth-art').get(0)){
+        $('.slides-photo').slidesjs({
+            width: 990,
+            height: 430,
+            play: {
+                auto: true,
+                interval: 40000,
+                swap: true
+            },
+            callback: {
+                loaded: function(number) {
+                    $('.slidesjs-navigation').text('');
+                    $('.slidesjs-previous').append(`<img class="slides-arrwo vm" src="images/arrow-left1.png" alt="">`);
+                    $('.slidesjs-next').append(`<img class="slides-arrwo vm" src="images/arrow-right3.png" alt="">`);
+                },
+                start: function(number) {
+                    $('.slides-photo').find('.slidesjs-slide').eq(number-1).find('img').lazyload({effect: "fadeIn"});
+                },
+                complete: function(number) {
+                }
+            }
+        });
+    }
     
     indexTab();
 });
@@ -88,5 +110,6 @@ function indexTab(){
         o.addClass('on');
         $('.item').eq(oindex).removeClass('hide');
         $('.item').eq(oindex).siblings().addClass('hide');
+        $('.item').eq(oindex).find('img').lazyload({effect: "fadeIn"});
     });
 }

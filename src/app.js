@@ -1,14 +1,10 @@
-import Layer from './components/layer/layer.js';
-import './css/common.css';
-import './styles/style.css';
+import './styles/core.css';
+import './styles/app.css';
+import './scripts/jquery-1.9.1.min.js';
+import './scripts/scripts.js';
+import './scripts/jquery.slides.min.js';
+import './scripts/jquery.lazyload.min.js';
 
-const App = function(){
-    var dom =document.getElementById('app');
-    var layer = new Layer();
 
-    dom.innerHtml=layer.tpl;
-}
 
-console.log(12345);
 
-new App();

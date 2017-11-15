@@ -2,21 +2,24 @@ var path=require('path');
 var htmlWebpackPlugin = require('html-webpack-plugin');
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
-
+var TransferWebpackPlugin = require('transfer-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 var webpack = require('webpack');
 
 module.exports = {
     entry:{
         app:'./src/app.js',
-        ceshi:'./src/test.js'
     },
     output:{
         path:path.resolve('./dist'),
         // filename:'[name]-[hash].js', 
-        filename:'js/[name].bundle.js'
+        filename:'js/[name].js'
         // chunkhash等同于版本号来使用，md5用于文件的唯一性
         // publicPath:'http://www.baidu.com'
     },
+    // externals: {
+    //     jquery: 'window.$'
+    // },
     module:{
         loaders:[
             {
@@ -47,7 +50,7 @@ module.exports = {
                             // loader: 'url-loader',
                             loader: 'file-loader',
                             options: {
-                                // limit: 1000000000000,
+                                // limit: 100000,
                                 // name: 'assets/[name]-[hash:5].[ext]'
                                 name: 'images/[name].[ext]'
                             }
@@ -69,7 +72,7 @@ module.exports = {
         //配置服务端口号
         port:84,
         historyApiFallback: true,
-        hot:true,
+        // hot:true,
         inline: true
     },
     plugins:[
@@ -83,12 +86,12 @@ module.exports = {
                 collapseWhitespace:true  //去空格
             }
         }),
-        new htmlWebpackPlugin({
-            filename:'test1.html',
-            template:'./src/test1.html',
-            inject:'head',
-            chunks:['ceshi']
-        }),
+        // new htmlWebpackPlugin({
+        //     filename:'test1.html',
+        //     template:'./src/test1.html',
+        //     inject:'head',
+        //     chunks:['ceshi']
+        // }),
         // JS压缩,热更新时需要注释，不然会报错
         // new UglifyJSPlugin({
         //     compress: {
@@ -100,7 +103,21 @@ module.exports = {
         //     }
         // }),
         new ExtractTextPlugin('css/[name].css'),
-        new webpack.HotModuleReplacementPlugin() //热加载
+        new webpack.HotModuleReplacementPlugin(), //热加载
+        new CopyWebpackPlugin([
+            {
+                from : './src/images',//定义要拷贝的源目录   __dirname + ‘/src/public’
+                to : './images',//定义要拷贝的目标目录  __dirname + ‘/dist’
+                //  toType : 'dir'//file 或者 dir , 可选，默认是文件
+                //  force : 强制覆盖先前的插件 , 可选 默认false
+                //  context : 不知道作用 , 可选 默认 base context 可用 specific context
+                //  flatten :只拷贝文件不管文件夹 , 默认是false
+                //  ignore : 忽略拷贝指定的文件 ,可以用模糊匹配
+            }
+        ])
+        // new TransferWebpackPlugin([
+        //     {from: './src/images'}
+        // ], path.resolve(__dirname,"./dist/images"))
         
     ]
 }

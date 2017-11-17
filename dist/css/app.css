@@ -219,9 +219,10 @@ text-align: center;}
 .dfth-art .lesson-title {font-size: 24px;color:#333;padding:15px 0;}
 .dfth-art .lesson-des {font-size: 14px;color:#666;height: 44px;overflow: hidden;}
 
-.dfth-art .vip-box {background: #f9f9fa;padding:80px 0;}
+.dfth-art .vip-box {background: #f9f9fa;padding:80px 0 150px 0;}
 .dfth-art .vip-box .hd-list {width: 25%;text-align: center;font-size: 20px;color:#999;transition:all ease 0.3s;line-height: 54px;
 cursor: pointer;}
+.dfth-art .vip-box .on {color:#ff8c1b;}
 .dfth-art .vip-box .hd-list:hover {color:#ff8c1b;}
 .dfth-art .vip-box .bd {margin-top: 90px;}
 .dfth-art .vip-service {width: 1120px;margin:0 auto;}
@@ -234,7 +235,7 @@ box-shadow:0 0 20px rgba(0,0,0,0.06);-moz-box-shadow:0 0 20px rgba(0,0,0,0.06);-
 .dfth-art .service-txt {width: 470px;margin:40px 150px 0 0;}
 .dfth-art .service-txt dt{font-size: 24px;color:#ff8c1b;}
 .dfth-art .service-txt dd{font-size: 14px;color:#666;line-height: 34px;}
-
+.dfth-art .photo-con {position: relative;}
 .dfth-art .photo-title {margin-top: 90px;}
 .dfth-art .photo-title i{width: 270px;height: 1px;background: #e6e6e6;display: inline-block;position: relative;top: -2px;}
 .dfth-art .photo-title em{width: 20px;height: 4px;background: #333;display: inline-block;}
@@ -242,6 +243,13 @@ box-shadow:0 0 20px rgba(0,0,0,0.06);-moz-box-shadow:0 0 20px rgba(0,0,0,0.06);-
 .dfth-art .slidesjs-pagination-item {display: none;}
 .dfth-art .pro-list {width: 200px;height: 200px;border-radius:8px;border:1px solid #e6e6e6;margin:0 25px;}
 .dfth-art .pro-list img{width: 100%;margin-top: 20px;}
+.dfth-art .slides-photo {width:756px;margin:70px auto 0;}
+.dfth-art .slides-photo .slidesjs-navigation {border-radius:8px;border:2px solid #f2f2f2;position: absolute;top: 48%;
+display: block;overflow: hidden;padding:20px;text-align: center;margin-top: -45px;z-index:100;}
+.dfth-art .slides-photo .slidesjs-previous {width: 24px;height: 18px;left: 50%;margin-left: -500px;}
+.dfth-art .slides-photo .slidesjs-next {width: 24px;height: 18px;right: 50%;margin-right: -500px;}
+
+.dfth-art .enviroment-box {padding:80px 0;background: #fff;}
 
 
 

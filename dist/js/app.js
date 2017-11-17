@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3ca29dc8c836b3e1f658"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "5513cdb8afd620cf5d3a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -3324,12 +3324,11 @@ $(function () {
         });
     }
 
-    indexTab();
+    webTab();
 });
 
-// 首页切换
-function indexTab() {
-    var tab = $('#j_tab');
+// 全局tab切换
+function webTab() {
     $('.hd-list').on('click', function () {
         var o = $(this);
         var oindex = o.index();

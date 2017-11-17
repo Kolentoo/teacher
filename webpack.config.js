@@ -9,7 +9,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry:{
-        app:'./src/app.js'
+        app:'./src/web.js'
     },
     output:{
         path:path.resolve('./dist'),

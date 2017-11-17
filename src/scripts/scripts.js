@@ -21,14 +21,23 @@ $(function(){
             height: 385,
             play: {
                 auto: true,
-                interval: 4000,
+                interval: 5000,
                 swap: true
             },
             callback: {
                 loaded: function(number) {
+                    $('.slides-banner').find('.slidesjs-navigation').text('');
+                    $('.slides-banner').find('.slidesjs-previous').append(`
+                        <div class="arrow-bj"></div>
+                        <div class="slides-arrow sa1"></div>
+                    `);
+                    $('.slides-banner').find('.slidesjs-next').append(`
+                        <div class="arrow-bj"></div>
+                        <div class="slides-arrow sa2"></div>
+                    `);
                 },
                 start: function(number) {
-                    $('.slides-banner').find('.slidesjs-slide').eq(number-1).find('img').lazyload({effect: "fadeIn"});
+                    $('.slidesjs-slide').eq(number-1).find('img').lazyload({effect: "fadeIn"});
                 },
                 complete: function(number) {
                 }
@@ -45,9 +54,9 @@ $(function(){
             },
             callback: {
                 loaded: function(number) {
-                    $('.slidesjs-navigation').text('');
-                    $('.slidesjs-previous').append(`<img class="slides-arrwo vm" src="images/arrow-left1.png" alt="">`);
-                    $('.slidesjs-next').append(`<img class="slides-arrwo vm" src="images/arrow-right3.png" alt="">`);
+                    $('.slides-pro').find('.slidesjs-navigation').text('');
+                    $('.slides-pro').find('.slidesjs-previous').append(`<img class="slides-arrow vm" src="images/arrow-left1.png" alt="">`);
+                    $('.slides-pro').find('.slidesjs-next').append(`<img class="slides-arrow vm" src="images/arrow-right3.png" alt="">`);
                 },
                 start: function(number) {
                     $('.slides-pro').find('.slidesjs-slide').eq(number-1).find('img').lazyload({effect: "fadeIn"});
@@ -60,16 +69,6 @@ $(function(){
         $('.slidesjs-pagination-item').on('click',function(){
             $(".slidesjs-slide").find('img').lazyload({effect: "fadeIn"});
         });
-
-        let bannerTop = $('.banner').height();
-        $(window).scroll( ()=> {
-            let w = $(window).scrollTop();
-            if (w >= bannerTop) {
-                    $(".navigation").addClass('nav-on');
-                } else {
-                    $(".navigation").removeClass('nav-on');
-                }
-        }).trigger("scroll");
     }
 
     if($('.dfth-art').get(0)){
@@ -94,9 +93,6 @@ $(function(){
                 }
             }
         });
-
-        // 动画效果
-        $('.listen-con').addClass('listen-on');
     }
 
     if($('.swiper-enviroment').get(0)){
@@ -119,6 +115,11 @@ $(function(){
         $('body,html').animate({scrollTop:0},1000);
     });
 
+    // 表单动效
+    if($('.listen-con').get(0)){
+        $('.listen-con').addClass('listen-on');
+    }
+
     var bannerTop = $('.banner').height();
     $(window).scroll( ()=> {
         let w = $(window).scrollTop();
@@ -133,6 +134,9 @@ $(function(){
     commonTop();
     commonBottom();
     timeCatch();
+    listenWakeup();
+    indexAm();
+    scrollAm();
 });
 
 // 全局tab切换
@@ -219,9 +223,130 @@ function commonBottom(){
     }
 }
 
+// 首页首屏动画
+function indexAm(){
+    let index = $('.dfth-index');
+    setTimeout(()=> {
+        index.find('.banner').find('.des-btn').addClass('des-btn-on');
+    }, 500);
+    setTimeout(()=> {
+        index.find('.slides-des').find('.p1').addClass('p1-on');
+    }, 700);
+    setTimeout(()=> {
+        index.find('.slides-des').find('h2').addClass('h2-on');
+    }, 950);
+    setTimeout(()=> {
+        index.find('.author').addClass('author-on');
+    }, 1150);
+}
+
+// 首页滚动动画
+function scrollAm(){
+    let bannerTop = $('.banner').height();
+    let lessonTop = $('.lesson-box').offset().top;
+    let galleryTop = $('.gallery-box').offset().top;
+    $(window).scroll( ()=> {
+        let w = $(window).scrollTop();
+        if (w >= bannerTop) {
+                $(".navigation").addClass('nav-on navigation-on');
+            } else {
+                $(".navigation").removeClass('nav-on navigation-on');
+            }
+        if(w >= lessonTop){
+            setTimeout(()=> {
+                $('.main-lesson').find('h3').addClass('h3-on');
+            }, 200);
+            setTimeout(()=> {
+                $('.main-lesson').find('.p1').addClass('p1-on');
+            }, 400);
+            setTimeout(()=> {
+                $('.main-lesson').find('.des-btn').addClass('des-btn-in');
+            }, 600);
+            setTimeout(()=> {
+                $('.lesson-box').find('.main-pic').addClass('main-pic-on');
+            }, 800);
+            setTimeout(()=> {
+                $('.lesson-list').eq(0).find('.other-pic').addClass('other-pic-on');
+            }, 300);
+            setTimeout(()=> {
+                $('.lesson-list').eq(0).find('.lesson-title').addClass('lesson-title-on');
+            }, 500);
+            setTimeout(()=> {
+                $('.lesson-list').eq(0).find('.lesson-des').addClass('lesson-des-on');
+            }, 700);
+            setTimeout(()=> {
+                $('.lesson-list').eq(0).find('.lesson-btn').addClass('lesson-btn-on');
+            }, 900);
+            setTimeout(()=> {
+                $('.lesson-list').eq(1).find('.other-pic').addClass('other-pic-on');
+            }, 400);
+            setTimeout(()=> {
+                $('.lesson-list').eq(1).find('.lesson-title').addClass('lesson-title-on');
+            }, 600);
+            setTimeout(()=> {
+                $('.lesson-list').eq(1).find('.lesson-des').addClass('lesson-des-on');
+            }, 800);
+            setTimeout(()=> {
+                $('.lesson-list').eq(1).find('.lesson-btn').addClass('lesson-btn-on');
+            }, 1000);
+            setTimeout(()=> {
+                $('.lesson-list').eq(2).find('.other-pic').addClass('other-pic-on');
+            }, 500);
+            setTimeout(()=> {
+                $('.lesson-list').eq(2).find('.lesson-title').addClass('lesson-title-on');
+            }, 700);
+            setTimeout(()=> {
+                $('.lesson-list').eq(2).find('.lesson-des').addClass('lesson-des-on');
+            }, 900);
+            setTimeout(()=> {
+                $('.lesson-list').eq(2).find('.lesson-btn').addClass('lesson-btn-on');
+            }, 1100);
+        }
+        if(w >= galleryTop){
+            setTimeout(function() {
+                $('.gallery-list').eq(0).find('.gallery-pic').addClass('gallery-on');
+            }, 200);
+            setTimeout(function() {
+                $('.gallery-list').eq(1).find('.gallery-pic').addClass('gallery-on');
+            }, 500);
+            setTimeout(function() {
+                $('.gallery-list').eq(2).find('.gallery-pic').addClass('gallery-on');
+            }, 600);
+            setTimeout(function() {
+                $('.gallery-list').eq(3).find('.gallery-pic').addClass('gallery-on');
+            }, 700);
+            setTimeout(function() {
+                $('.gallery-list').eq(4).find('.gallery-pic').addClass('gallery-on');
+            }, 800);
+            setTimeout(function() {
+                $('.gallery-list').eq(5).find('.gallery-pic').addClass('gallery-on');
+            }, 900);
+            setTimeout(function() {
+                $('.gallery-list').eq(6).find('.gallery-pic').addClass('gallery-on');
+            }, 1000);
+            setTimeout(function() {
+                $('.gallery-list').eq(7).find('.gallery-pic').addClass('gallery-on');
+            }, 1100);
+            setTimeout(function() {
+                $('.gallery-list').eq(8).find('.gallery-pic').addClass('gallery-on');
+            }, 1200);
+            setTimeout(function() {
+                $('.gallery-list').eq(9).find('.gallery-pic').addClass('gallery-on');
+            }, 1300);
+            setTimeout(function() {
+                $('.entry-pic').addClass('entry-pic-on');
+            }, 1500);
+            setTimeout(function() {
+                $('.entry-btn').addClass('entry-btn-on');
+            }, 1700);
+            
+        }
+    }).trigger("scroll");
+}
+
 // 手机号验证
-function check(a) {
-    let regPhone = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$/; 
+function phoneCheck(a) {
+    let regPhone = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/; 
     if (!$(a).val()) {
         $(a).parents('.infor-item').addClass('infor-wrong');
         $(a).parents('.infor-item').find('.hint').text('手机号不能为空');
@@ -248,6 +373,7 @@ function nameCheck(b) {
         } else {
             $(b).parent('.infor-item').addClass('infor-wrong');
             $(b).parent('.infor-item').find('.hint').text('姓名错误');
+            return false;
         }
     } else {
         $(b).parent('.infor-item').addClass('infor-wrong');
@@ -258,18 +384,19 @@ function nameCheck(b) {
 
 // 验证码倒计时
 function timeCatch() {
-    let btn1 = $('.code-btn').find('.p1');
-    let btn2 = $('.code-btn').find('.p2');
+    let cbtn = $('.code-btn');
+    let [btn1,btn2] = [cbtn.find('.p1'),cbtn.find('.p2')];
 
     btn1.on('click', ()=> {
         let uphone = $('.uphone');
         let uphoneVal = uphone.val();
-        check(uphone);
-        if (check(uphone) == false) {
+        phoneCheck(uphone);
+        if (phoneCheck(uphone) == false) {
             return false;
-        } else if (check(uphone) == true) {
+        } else if (phoneCheck(uphone) == true) {
             btn1.addClass('hide');
             btn2.removeClass('hide');
+            btn2.find('i').text('60');
             let i = btn2.find('i').text();
             let itext = parseInt(i);
             let timeNum = setInterval(function () {
@@ -281,7 +408,68 @@ function timeCatch() {
                 btn2.find('i').text(itext--);
             }, 1000);
         }
+    });
+}
 
+// 免费视听验证
+function listenTest() {
+    let uname = $('.uname');
+    let uphone = $('.uphone');
+    let ucode = $('.ucode');
+    let uplace = $('.uplace');
+    nameCheck(uname);
+    phoneCheck(uphone);
+    if (uname.val()) {
+        if (nameCheck(uname) == false) {
+            $('.refer').removeClass('refer-on');
+            uname.parent('.infor-item').addClass('infor-wrong');
+            uname.parent('.infor-item').find('.hint').text('姓名格式错误');
+            return false;
+        }else if(nameCheck(uname) == true){
+            if(uphone.val()){
+                if(phoneCheck(uphone) == false){
+                    $('.refer').removeClass('refer-on');
+                    uphone.parent('.infor-item').addClass('infor-wrong');
+                    uphone.parent('.infor-item').find('.hint').text('手机号格式错误');
+                    return false;
+                }else if(phoneCheck(uphone) == true){
+                    if(ucode.val()){
+                        if(uplace.val()){
+                            $('.refer').addClass('refer-on');
+                            uplace.parent('.infor-item').removeClass('infor-wrong');
+                            return true;
+                        }else{
+                            $('.refer').removeClass('refer-on');
+                            uplace.parent('.infor-item').addClass('infor-wrong');
+                            uplace.parent('.infor-item').find('.hint').text('上课区域不能为空');
+                            return false;
+                        }
+                    }else{
+                        $('.refer').removeClass('refer-on');
+                        ucode.parent('.infor-item').addClass('infor-wrong');
+                        ucode.parent('.infor-item').find('.hint').text('验证码不能为空');
+                        return false;
+                    }
+                }
+            }else{
+                $('.refer').removeClass('refer-on');
+                uphone.parent('.infor-item').addClass('infor-wrong');
+                uphone.parent('.infor-item').find('.hint').text('手机号不能为空');
+                return false;
+            }
+        }
+    }else{
+        $('.refer').removeClass('refer-on');
+        uname.parent('.infor-item').addClass('infor-wrong');
+        uname.parent('.infor-item').find('.hint').text('姓名不能为空');
+        return false;
+    }
+}
 
+// 视听申请唤醒
+function listenWakeup() {
+    let listenInput = $('.listen-box').find('input');
+    listenInput.on('input propertychange', ()=> {
+        listenTest();
     });
 }

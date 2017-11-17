@@ -9,20 +9,6 @@
 <body>
     <div class="dfth-art pic-lazy yahei">
         <div class="common-top common">
-            <div class="menu-box clearfix">
-                <a href="" class="logo block fl"><img class="vm g10 lazy" data-original="images/logo.png" alt=""></a>
-                <ul class="menu-con clearfix">
-                    <li class="menu-list fl"><a href="">首页</a></li>
-                    <li class="menu-list fl"><a href="">美术教育</a></li>
-                    <li class="menu-list fl"><a href="">授权合作</a></li>
-                    <li class="menu-list fl"><a href="">创艺产品</a></li>
-                    <li class="menu-list fl"><a href="">在线画廊</a></li>
-                    <li class="menu-list fl"><a href="">品牌故事</a></li>
-                    <li class="menu-list fl"><a href="">加入我们</a></li>
-                    <li class="menu-list fl"><a href="">校区查询</a></li>
-                    <li class="menu-list fl"><a href="">学员中心</a></li>
-                </ul>
-            </div>
         </div>
         <div class="banner">
             <div class="listen-box">
@@ -46,7 +32,7 @@
                                 </div>
                                 <div class="infor-item">
                                     <div class="code-box clearfix">
-                                        <input type="text" class="code fl" name="" placeholder="请输入验证码" maxlength="4">
+                                        <input type="text" class="ucode fl" name="" placeholder="请输入验证码" maxlength="4">
                                         <div class="code-btn fr">
                                             <p class="p1">获取验证码</p>
                                             <p class="p2 hide"><i>60</i>后重发</p>
@@ -55,8 +41,8 @@
                                     <p class="hint">验证码错误</p>
                                 </div>
                                 <div class="infor-item">
-                                    <input type="text" class="uphone" name="" placeholder="请输入您想要上课的区域" value="">
-                                    <p class="hint"></p>
+                                    <input type="text" class="uplace" name="" placeholder="请输入您想要上课的区域" value="">
+                                    <p class="hint">上课区域不能为空</p>
                                 </div>
                             </div>
                             <p class="refer">立即申请</p>
@@ -139,7 +125,7 @@
                 </div>
                 <div class="vip-service">
                     <ul class="hd clearfix">
-                        <li class="hd-list fl">熊猫到家</li>
+                        <li class="hd-list fl on">熊猫到家</li>
                         <li class="hd-list fl">亲子艺术节</li>
                         <li class="hd-list fl">全国绘画大赛</li>
                         <li class="hd-list fl">专业艺术展</li>
@@ -614,36 +600,79 @@
                     <h2>校区环境<br></h2>
                     <i>—</i>
                 </div>
-                <div class="slides-enviroment">
-                    <div class="slidesjs-slide">
-                        <ul class="pro-con clearfix">
-                            <li class="pro-list fl tc">
-                                <img class="vm g10 type-pic lazy" data-original="images/type1.png" alt="">
-                            </li>
-                            <li class="pro-list fl tc">
-                                <img class="vm g10 type-pic lazy" data-original="images/type2.png" alt="">
-                            </li>
-                            <li class="pro-list fl tc">
-                                <img class="vm g10 type-pic lazy" data-original="images/type3.png" alt="">
-                            </li>
-                        </ul>
-                    </div> 
-                    <div class="slidesjs-slide">
-                        <ul class="pro-con" clearfix>
-                            <li class="pro-list fl tc">
-                                <img class="vm g10 type-pic lazy" data-original="images/type1.png" alt="">
-                            </li>
-                            <li class="pro-list fl tc">
-                                <img class="vm g10 type-pic lazy" data-original="images/type2.png" alt="">
-                            </li>
-                            <li class="pro-list fl tc">
-                                <img class="vm g10 type-pic lazy" data-original="images/type3.png" alt="">
-                            </li>
-                        </ul>
+                <div class="swiper-enviroment">
+                    <div class="swiper-container">
+                        <div class="swiper-wrapper">
+                            <div class="swiper-slide">
+                                <div class="chart">
+                                    <img class="vm e-pic lazy block" src="images/enviroment1.jpg" alt="">
+                                </div>
+                                <p class="p1"><i>01</i>校区大门</p>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="chart">
+                                    <img class="vm e-pic lazy block" src="images/enviroment2.jpg" alt="">
+                                </div>
+                                <p class="p1"><i>02</i>学校教室</p>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="chart">
+                                    <img class="vm e-pic lazy block" src="images/enviroment3.jpg" alt="">
+                                </div>
+                                <p class="p1"><i>03</i>学校走廊</p>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="chart">
+                                    <img class="vm e-pic lazy block" src="images/enviroment4.jpg" alt="">
+                                </div>
+                                <p class="p1"><i>04</i>校区大门</p>
+                            </div>
+                            <div class="swiper-slide">
+                                <div class="chart">
+                                    <img class="vm e-pic lazy block" src="images/enviroment2.jpg" alt="">
+                                </div>
+                                <p class="p1"><i>05</i>校区大门</p>
+                            </div>
+                        </div>
+                        <!-- Add Pagination -->
+                        <div class="swiper-pagination hide"></div>
+                        <!-- Add Arrows -->
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                    <div class="swiper-mask">
+                        <div class="mask mask1"></div>
+                        <div class="mask mask2"></div>
                     </div>
                 </div>
             </div>
 
+            <div class="query-box">
+                <h2 class="tc">东方童画教师资质查询</h2>
+                <div class="infor-item clearfix">
+                    <input class="query-teacher fl" type="text" placeholder="请输入教师认证编号或者教师名">
+                    <p class="search-btn fl">搜索</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="bottom"></div>
+    </div>
+
+    <p class="apply-listen tc back">
+        <i>申<br>请<br>试<br>听</i>
+    </p>
+    <div class="common-back back">
+        <img class="vm back-icon" src="images/back.png" alt="">
+    </div>
+
+    <div class="lesson-pop hide">
+        <div class="pop-con">
+            <div class="pop-list">
+                <h2 class="tc">课程内容</h2>
+
+            </div>
         </div>
     </div>
 </body>

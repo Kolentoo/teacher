@@ -3,7 +3,7 @@ $(function(){
     // 延迟加载
     if($('.pic-lazy').get(0)){
         $("img.lazy").lazyload({
-            placeholder : "images/gray.gif", //用图片提前占位
+            placeholder : "/images/gray.gif", //用图片提前占位
                 // placeholder,值为某一图片路径.此图片用来占据将要加载的图片的位置,待图片加载时,占位图则会隐藏
             effect: "fadeIn", // 载入使用何种效果
                 // effect(特效),值有show(直接显示),fadeIn(淡入),slideDown(下拉)等,常用fadeIn
@@ -120,15 +120,17 @@ $(function(){
         $('.listen-con').addClass('listen-on');
     }
 
-    var bannerTop = $('.banner').height();
-    $(window).scroll( ()=> {
-        let w = $(window).scrollTop();
-        if (w >= bannerTop) {
-                $(".back").addClass('back-on');
-            } else {
-                $(".back").removeClass('back-on');
-            }
-    }).trigger("scroll");
+    if($('.dfth-index').get(0)){
+        $(window).scroll( ()=> {
+            let bannerTop = $('.banner').height();
+            let w = $(window).scrollTop();
+            if (w >= bannerTop) {
+                    $(".back").addClass('back-on');
+                } else {
+                    $(".back").removeClass('back-on');
+                }
+        }).trigger("scroll");
+    }
     
     webTab(); 
     commonTop();
@@ -137,19 +139,33 @@ $(function(){
     listenWakeup();
     indexAm();
     scrollAm();
+    newsPage();
 });
 
 // 全局tab切换
 function webTab(){
-    $('.hd-list').on('click',()=>{
+    $('.hd-list').on('click',function(){
+        $(this).addClass('aaaaa')
         let o = $(this);
         let oindex = o.index();
         let os = o.siblings();
         os.removeClass('on');
         o.addClass('on');
-        $('.item').eq(oindex).removeClass('hide');
-        $('.item').eq(oindex).siblings().addClass('hide');
-        $('.item').eq(oindex).find('img').lazyload({effect: "fadeIn"});
+        let item1 = $('.bd').find('.item').eq(oindex);
+        let item2 = item1.siblings();
+        item2.addClass('hide');
+        item1.removeClass('hide');
+        setTimeout(function() {
+            $('.main-lesson').find('h3').addClass('h3-on');
+            $('.main-lesson').find('.p1').addClass('p1-on');
+            $('.main-lesson').find('.des-btn').addClass('des-btn-in');
+            $('.lesson-box').find('.main-pic').addClass('main-pic-on');
+            $('.lesson-list').find('.other-pic').addClass('other-pic-on');
+            $('.lesson-list').find('.lesson-title').addClass('lesson-title-on');
+            $('.lesson-list').find('.lesson-des').addClass('lesson-des-on');
+            $('.lesson-list').find('.lesson-btn').addClass('lesson-btn-on');
+            item1.find('img').lazyload({effect: "fadeIn"});
+        }, 1);
     });
 }
 
@@ -242,106 +258,183 @@ function indexAm(){
 
 // 首页滚动动画
 function scrollAm(){
-    let bannerTop = $('.banner').height();
-    let lessonTop = $('.lesson-box').offset().top;
-    let galleryTop = $('.gallery-box').offset().top;
-    $(window).scroll( ()=> {
-        let w = $(window).scrollTop();
-        if (w >= bannerTop) {
-                $(".navigation").addClass('nav-on navigation-on');
-            } else {
-                $(".navigation").removeClass('nav-on navigation-on');
+    if($('.dfth-index').get(0)){
+        $(window).scroll( ()=> {
+            let w = $(window).scrollTop();
+            let bannerTop = $('.banner').height();
+            let lessonTop = $('.lesson-box').offset().top;
+            let galleryTop = $('.gallery-box').offset().top;
+            let proTop = $('.pro-box').offset().top;
+            let cooperateTop = $('.cooperate-box').find('.coop-pic').offset().top;
+            let aboutusTop = $('.aboutus-box').offset().top;
+            let newTop = $('.news-box ').offset().top;
+            if (w >= 150) {
+                    $(".navigation").addClass('nav-on navigation-on');
+                } else {
+                    $(".navigation").removeClass('nav-on navigation-on');
+                }
+            if(w >= lessonTop-250){
+                lessonAm();
             }
-        if(w >= lessonTop){
-            setTimeout(()=> {
-                $('.main-lesson').find('h3').addClass('h3-on');
-            }, 200);
-            setTimeout(()=> {
-                $('.main-lesson').find('.p1').addClass('p1-on');
-            }, 400);
-            setTimeout(()=> {
-                $('.main-lesson').find('.des-btn').addClass('des-btn-in');
-            }, 600);
-            setTimeout(()=> {
-                $('.lesson-box').find('.main-pic').addClass('main-pic-on');
-            }, 800);
-            setTimeout(()=> {
-                $('.lesson-list').eq(0).find('.other-pic').addClass('other-pic-on');
-            }, 300);
-            setTimeout(()=> {
-                $('.lesson-list').eq(0).find('.lesson-title').addClass('lesson-title-on');
-            }, 500);
-            setTimeout(()=> {
-                $('.lesson-list').eq(0).find('.lesson-des').addClass('lesson-des-on');
-            }, 700);
-            setTimeout(()=> {
-                $('.lesson-list').eq(0).find('.lesson-btn').addClass('lesson-btn-on');
-            }, 900);
-            setTimeout(()=> {
-                $('.lesson-list').eq(1).find('.other-pic').addClass('other-pic-on');
-            }, 400);
-            setTimeout(()=> {
-                $('.lesson-list').eq(1).find('.lesson-title').addClass('lesson-title-on');
-            }, 600);
-            setTimeout(()=> {
-                $('.lesson-list').eq(1).find('.lesson-des').addClass('lesson-des-on');
-            }, 800);
-            setTimeout(()=> {
-                $('.lesson-list').eq(1).find('.lesson-btn').addClass('lesson-btn-on');
-            }, 1000);
-            setTimeout(()=> {
-                $('.lesson-list').eq(2).find('.other-pic').addClass('other-pic-on');
-            }, 500);
-            setTimeout(()=> {
-                $('.lesson-list').eq(2).find('.lesson-title').addClass('lesson-title-on');
-            }, 700);
-            setTimeout(()=> {
-                $('.lesson-list').eq(2).find('.lesson-des').addClass('lesson-des-on');
-            }, 900);
-            setTimeout(()=> {
-                $('.lesson-list').eq(2).find('.lesson-btn').addClass('lesson-btn-on');
-            }, 1100);
-        }
-        if(w >= galleryTop){
-            setTimeout(function() {
-                $('.gallery-list').eq(0).find('.gallery-pic').addClass('gallery-on');
-            }, 200);
-            setTimeout(function() {
-                $('.gallery-list').eq(1).find('.gallery-pic').addClass('gallery-on');
-            }, 500);
-            setTimeout(function() {
-                $('.gallery-list').eq(2).find('.gallery-pic').addClass('gallery-on');
-            }, 600);
-            setTimeout(function() {
-                $('.gallery-list').eq(3).find('.gallery-pic').addClass('gallery-on');
-            }, 700);
-            setTimeout(function() {
-                $('.gallery-list').eq(4).find('.gallery-pic').addClass('gallery-on');
-            }, 800);
-            setTimeout(function() {
-                $('.gallery-list').eq(5).find('.gallery-pic').addClass('gallery-on');
-            }, 900);
-            setTimeout(function() {
-                $('.gallery-list').eq(6).find('.gallery-pic').addClass('gallery-on');
-            }, 1000);
-            setTimeout(function() {
-                $('.gallery-list').eq(7).find('.gallery-pic').addClass('gallery-on');
-            }, 1100);
-            setTimeout(function() {
-                $('.gallery-list').eq(8).find('.gallery-pic').addClass('gallery-on');
-            }, 1200);
-            setTimeout(function() {
-                $('.gallery-list').eq(9).find('.gallery-pic').addClass('gallery-on');
-            }, 1300);
-            setTimeout(function() {
-                $('.entry-pic').addClass('entry-pic-on');
-            }, 1500);
-            setTimeout(function() {
-                $('.entry-btn').addClass('entry-btn-on');
-            }, 1700);
-            
-        }
-    }).trigger("scroll");
+            if(w >= galleryTop-150){
+                setTimeout(function() {
+                    $('.gallery-list').eq(0).find('.gallery-pic').addClass('gallery-on');
+                }, 200);
+                setTimeout(function() {
+                    $('.gallery-list').eq(1).find('.gallery-pic').addClass('gallery-on');
+                }, 500);
+                setTimeout(function() {
+                    $('.gallery-list').eq(2).find('.gallery-pic').addClass('gallery-on');
+                }, 600);
+                setTimeout(function() {
+                    $('.gallery-list').eq(3).find('.gallery-pic').addClass('gallery-on');
+                }, 700);
+                setTimeout(function() {
+                    $('.gallery-list').eq(4).find('.gallery-pic').addClass('gallery-on');
+                }, 800);
+                setTimeout(function() {
+                    $('.gallery-list').eq(5).find('.gallery-pic').addClass('gallery-on');
+                }, 900);
+                setTimeout(function() {
+                    $('.gallery-list').eq(6).find('.gallery-pic').addClass('gallery-on');
+                }, 1000);
+                setTimeout(function() {
+                    $('.gallery-list').eq(7).find('.gallery-pic').addClass('gallery-on');
+                }, 1100);
+                setTimeout(function() {
+                    $('.gallery-list').eq(8).find('.gallery-pic').addClass('gallery-on');
+                }, 1200);
+                setTimeout(function() {
+                    $('.gallery-list').eq(9).find('.gallery-pic').addClass('gallery-on');
+                }, 1300);
+                setTimeout(function() {
+                    $('.entry-pic').addClass('entry-pic-on');
+                }, 1500);
+                setTimeout(function() {
+                    $('.entry-btn').addClass('entry-btn-on');
+                }, 1700);
+                
+            }
+            if(w >= proTop-200){
+                setTimeout(function() {
+                    $('.pro-list').addClass('pro-on');
+                }, 500);
+            }
+            if(w >= cooperateTop-300){
+                setTimeout(function() {
+                    $('.coop').addClass('coop-on');
+                }, 500);
+                if(!$('.coop-mask').get(0)){
+                    setTimeout(function() {
+                        $('.coop-pic').append(`<div class="coop-mask"></div>`);
+                    }, 650);
+                }
+                setTimeout(function() {
+                    $('.coop-mask').addClass('mask-on');
+                }, 850);
+                setTimeout(function() {
+                    $('.coop-title').addClass('title-on');
+                }, 950);
+                setTimeout(function() {
+                    $('.coop-txt').find('dd').addClass('dd-on');
+                }, 1150);
+                setTimeout(function() {
+                    $('.entry-btn').addClass('btn-on');
+                }, 1350);
+            }
+            if(w >= aboutusTop-250){
+                setTimeout(function() {
+                    $('.about-pic').children('img').addClass('img-on');
+                }, 500);
+                setTimeout(function() {
+                    $('.introduce').addClass('introduce-on');
+                }, 700);
+                setTimeout(function() {
+                    $('.introduce').find('.intro-title').addClass('title-on');
+                }, 900);
+                setTimeout(function() {
+                    $('.introduce').find('.p1').addClass('p1-on');
+                }, 1100);
+                setTimeout(function() {
+                    $('.introduce').find('.des-btn').addClass('btn-on');
+                }, 1300);
+            }
+            if(w >= newTop-350){
+                setTimeout(function() {
+                    $('.main-news').addClass('main-news-on');
+                }, 500);
+                setTimeout(function() {
+                    $('.news-list').eq(0).addClass('news-list-on');
+                }, 700);
+                setTimeout(function() {
+                    $('.news-list').eq(1).addClass('news-list-on');
+                }, 900);
+                setTimeout(function() {
+                    $('.news-list').eq(2).addClass('news-list-on');
+                }, 1100);
+            }
+        }).trigger("scroll");
+
+        $('.entry-btn').on('mouseenter',()=>{
+            $('.gallery-entry').find('.pic-box').children('img').addClass('img-on');
+        });
+
+        $('.entry-btn').on('mouseleave',()=>{
+            $('.gallery-entry').find('.pic-box').children('img').removeClass('img-on');
+        });
+    }
+}
+
+// 首页课程板块动画
+function lessonAm(){
+    setTimeout(()=> {
+        $('.main-lesson').find('h3').addClass('h3-on');
+    }, 200);
+    setTimeout(()=> {
+        $('.main-lesson').find('.p1').addClass('p1-on');
+    }, 400);
+    setTimeout(()=> {
+        $('.main-lesson').find('.des-btn').addClass('des-btn-in');
+    }, 600);
+    setTimeout(()=> {
+        $('.lesson-box').find('.main-pic').addClass('main-pic-on');
+    }, 800);
+    setTimeout(()=> {
+        $('.lesson-list').eq(0).find('.other-pic').addClass('other-pic-on');
+    }, 300);
+    setTimeout(()=> {
+        $('.lesson-list').eq(0).find('.lesson-title').addClass('lesson-title-on');
+    }, 500);
+    setTimeout(()=> {
+        $('.lesson-list').eq(0).find('.lesson-des').addClass('lesson-des-on');
+    }, 700);
+    setTimeout(()=> {
+        $('.lesson-list').eq(0).find('.lesson-btn').addClass('lesson-btn-on');
+    }, 900);
+    setTimeout(()=> {
+        $('.lesson-list').eq(1).find('.other-pic').addClass('other-pic-on');
+    }, 400);
+    setTimeout(()=> {
+        $('.lesson-list').eq(1).find('.lesson-title').addClass('lesson-title-on');
+    }, 600);
+    setTimeout(()=> {
+        $('.lesson-list').eq(1).find('.lesson-des').addClass('lesson-des-on');
+    }, 800);
+    setTimeout(()=> {
+        $('.lesson-list').eq(1).find('.lesson-btn').addClass('lesson-btn-on');
+    }, 1000);
+    setTimeout(()=> {
+        $('.lesson-list').eq(2).find('.other-pic').addClass('other-pic-on');
+    }, 500);
+    setTimeout(()=> {
+        $('.lesson-list').eq(2).find('.lesson-title').addClass('lesson-title-on');
+    }, 700);
+    setTimeout(()=> {
+        $('.lesson-list').eq(2).find('.lesson-des').addClass('lesson-des-on');
+    }, 900);
+    setTimeout(()=> {
+        $('.lesson-list').eq(2).find('.lesson-btn').addClass('lesson-btn-on');
+    }, 1100);
 }
 
 // 手机号验证
@@ -471,5 +564,15 @@ function listenWakeup() {
     let listenInput = $('.listen-box').find('input');
     listenInput.on('input propertychange', ()=> {
         listenTest();
+    });
+}
+
+function newsPage(){
+    $(".tcdPageCode").createPage({
+        pageCount:5,
+        current:1,
+        backFn:function(p){
+            console.log(p);
+        }
     });
 }

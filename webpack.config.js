@@ -9,7 +9,7 @@ var webpack = require('webpack');
 
 module.exports = {
     entry:{
-        app:'./src/web.js'
+        app:'./src/app.js'
     },
     output:{
         path:path.resolve('./dist'),
@@ -18,9 +18,9 @@ module.exports = {
         // chunkhash等同于版本号来使用，md5用于文件的唯一性
         // publicPath:'http://www.baidu.com'
     },
-    // externals: {
-    //     jquery: 'window.$'
-    // },
+    externals: {
+        jquery: 'window.$'
+    },
     module:{
         loaders:[
             {
@@ -99,6 +99,12 @@ module.exports = {
             inject:'head',
             chunks:['app']
         }),
+        new htmlWebpackPlugin({
+            filename:'news.html',
+            template:'./src/news.html',
+            inject:'head',
+            chunks:['app']
+        }),
         // JS压缩,热更新时需要注释，不然会报错
         // new UglifyJSPlugin({
         //     compress: {
@@ -121,7 +127,11 @@ module.exports = {
                 //  flatten :只拷贝文件不管文件夹 , 默认是false
                 //  ignore : 忽略拷贝指定的文件 ,可以用模糊匹配
             }
-        ])
+        ]),
+        // new webpack.ProvidePlugin({
+        //     $: "./src/scripts/jquery-1.9.1.min.js",
+        //     jQuery: "./src/scripts/jquery-1.9.1.min.js"
+        // })
         // new TransferWebpackPlugin([
         //     {from: './src/images'}
         // ], path.resolve(__dirname,"./dist/images"))

@@ -1,4 +1,4 @@
-var path=require('path');
+﻿var path=require('path');
 var htmlWebpackPlugin = require('html-webpack-plugin');
 var UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
@@ -18,9 +18,9 @@ module.exports = {
         // chunkhash等同于版本号来使用，md5用于文件的唯一性
         // publicPath:'http://www.baidu.com'
     },
-    externals: {
-        jquery: 'window.$'
-    },
+    // externals: {
+    //     jquery: 'window.$'
+    // },
     module:{
         loaders:[
             {
@@ -67,11 +67,11 @@ module.exports = {
         //设置基本目录结构
         contentBase:path.resolve(__dirname,'./dist/'),
         //服务器的IP地址，可以使用IP也可以使用localhost
-        host:'localhost',
+        host:'192.168.1.227',
         //服务端压缩是否开启
         compress:true,
         //配置服务端口号
-        port:84,
+        port:86,
         historyApiFallback: true,
         // hot:true,
         inline: true
@@ -87,24 +87,12 @@ module.exports = {
                 collapseWhitespace:true  //去空格
             }
         }),
-        new htmlWebpackPlugin({
-            filename:'art.html',
-            template:'./src/art.html',
-            inject:'head',
-            chunks:['app']
-        }),
-        new htmlWebpackPlugin({
-            filename:'cooperate.html',
-            template:'./src/cooperate.html',
-            inject:'head',
-            chunks:['app']
-        }),
-        new htmlWebpackPlugin({
-            filename:'news.html',
-            template:'./src/news.html',
-            inject:'head',
-            chunks:['app']
-        }),
+        // new htmlWebpackPlugin({
+        //     filename:'art.html',
+        //     template:'./src/art.html',
+        //     inject:'head',
+        //     chunks:['app']
+        // }),
         // JS压缩,热更新时需要注释，不然会报错
         // new UglifyJSPlugin({
         //     compress: {
@@ -128,10 +116,10 @@ module.exports = {
                 //  ignore : 忽略拷贝指定的文件 ,可以用模糊匹配
             }
         ]),
-        // new webpack.ProvidePlugin({
-        //     $: "./src/scripts/jquery-1.9.1.min.js",
-        //     jQuery: "./src/scripts/jquery-1.9.1.min.js"
-        // })
+        new webpack.ProvidePlugin({
+            $: 'jquery',
+            jQuery: 'jquery'    
+        })
         // new TransferWebpackPlugin([
         //     {from: './src/images'}
         // ], path.resolve(__dirname,"./dist/images"))

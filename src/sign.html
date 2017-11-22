@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="zh-cn" class="signHtml">
+<head>
+	<title>东方童画-签到</title>
+	<meta charset="utf-8" />
+	<meta name="keywords" content="" />
+	<meta name="description" content="" />
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport" />
+	<meta name="format-detection" content="telephone=no" />
+    <script>!function(e){function t(a){if(i[a])return i[a].exports;var n=i[a]={exports:{},id:a,loaded:!1};return e[a].call(n.exports,n,n.exports,t),n.loaded=!0,n.exports}var i={};return t.m=e,t.c=i,t.p="",t(0)}([function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=window;t["default"]=i.flex=function(normal,e,t){var a=e||10,n=t||1,r=i.document,o=navigator.userAgent,d=o.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i),l=o.match(/U3\/((\d+|\.){5,})/i),c=l&&parseInt(l[1].split(".").join(""),10)>=80,p=navigator.appVersion.match(/(iphone|ipad|ipod)/gi),s=i.devicePixelRatio||1;p||d&&d[1]>534||c||(s=1);var u=normal?1:1/s,m=r.querySelector('meta[name="viewport"]');m||(m=r.createElement("meta"),m.setAttribute("name","viewport"),r.head.appendChild(m)),m.setAttribute("content","width=device-width,user-scalable=no,initial-scale="+u+",maximum-scale="+u+",minimum-scale="+u),r.documentElement.style.fontSize=normal?"50px": a/2*s*n+"px"},e.exports=t["default"]}]);  flex(false,10, 1);</script>
+
+</head>
+<body class="sign-body">
+
+	<div class="w pf user-sign">
+        <div class="sign-box">
+            <div class="sign-title clearfix">
+                <p class="p1 fl">姓名</p>
+                <p class="p1 fl">剩余课时</p>
+                <p class="p1 fl">签到情况</p>
+            </div>
+            <ul class="sign-body">
+                <li class="sign-list clearfix ">
+                    <p class="p2 fl">张晓明</p>
+                    <p class="p2 fl">16</p>
+                    <p class="p2 fl p3 attend">已出勤</p>
+                </li>
+                <li class="sign-list clearfix">
+                    <p class="p2 fl">张晓明</p>
+                    <p class="p2 fl">16</p>
+                    <p class="p2 fl p3 leave">已请假</p>
+                </li>
+                <li class="sign-list clearfix">
+                    <p class="p2 fl">张晓明</p>
+                    <p class="p2 fl">16</p>
+                    <p class="p2 fl p3">出勤</p>
+                </li>
+                <li class="sign-list clearfix">
+                    <p class="p2 fl">张晓明</p>
+                    <p class="p2 fl">16</p>
+                    <p class="p2 fl p3 absent">旷课</p>
+                </li>
+                <li class="sign-list clearfix">
+                    <p class="p2 fl">张晓明</p>
+                    <p class="p2 fl">16</p>
+                    <p class="p2 fl p3 absent">旷课</p>
+                </li>
+                <li class="sign-list clearfix">
+                    <p class="p2 fl">张晓明</p>
+                    <p class="p2 fl">16</p>
+                    <p class="p2 fl p3 leave">已请假</p>
+                </li>
+                <li class="sign-list clearfix">
+                    <p class="p2 fl">张晓明</p>
+                    <p class="p2 fl">16</p>
+                    <p class="p2 fl p3">出勤</p>
+                </li>
+                <li class="sign-list clearfix">
+                    <p class="p2 fl">张晓明</p>
+                    <p class="p2 fl">16</p>
+                    <p class="p2 fl p3 absent">旷课</p>
+                </li>
+                <li class="sign-list clearfix">
+                    <p class="p2 fl">张晓明</p>
+                    <p class="p2 fl">16</p>
+                    <p class="p2 fl p3 absent">旷课</p>
+                </li>
+            </ul>
+        </div>   
+
+        <p class="sign-btn hide">确认签到</p> 
+        <p class="sign-late tc hide">*签到已超时，请及时联系经理进行处理</p>   
+        <ul class="sign-ok clearfix">
+            <li class="ok-list fl attend-list">出勤(<i></i>人)</li>
+            <li class="ok-list fl leave-list">请假（<i></i>人)</li>
+            <li class="ok-list fl absent-list">旷课(<i></i>人)</li>
+        </ul> 
+	</div>
+
+
+</body>
+</html>

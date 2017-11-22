@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ef46ed7bf815006ac936"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c08b65e059d7b01fd675"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11022,9 +11022,7 @@ __webpack_require__(5);
 $(function () {
 
     _IsIOS();
-
     $('body').show();
-    var _scale = { width: 750, rem: true };
 });
 
 // 设备判断

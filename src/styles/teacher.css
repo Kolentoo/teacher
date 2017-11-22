@@ -1,0 +1,129 @@
+/* 公用css */
+html, body{ width: 100%; overflow-x: hidden;}
+body{display: none;}
+.pf {font-family: PingFangTC-Light, sans-serif;}
+.sy {font-family: 'Source Han Sans CN';}
+input {-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;}
+:-moz-placeholder {color:#ccc;}
+::-moz-placeholder {color:#ccc;}
+input:-ms-input-placeholder{color:#ccc;}
+input::-webkit-input-placeholder{color:#ccc;}
+textarea:-ms-input-placeholder{color:#ccc;}
+textarea::-webkit-input-placeholder{color:#ccc;}
+
+
+/* 全局头部 */
+.common-top {padding: 2rem 3rem 0;}
+.common-top .logo-link {width: 19.2rem;height: 5.4rem;}
+.common-top .logo {width: 100%}
+.common-top .customer {margin: 0.5rem 0 0 0;display: inline-block;}
+.common-top .msgs {width: 3.5rem;}
+.common-top .msgs .msgs-icon {width: 3.5rem;margin:0.6rem 4.5rem 0 0;}
+
+
+/* 用户中心老师首页 */
+.user-body,.userHtml {background: #f5f5fa;}
+.user-index .header {background: #fff;border-bottom: 0.1rem solid #ddd;}
+.user-index .content {padding-bottom: 10rem;}
+.user-index .user-box {padding:8rem 0 6rem 0;}
+.user-index .user-box .user-info {margin-left: 3rem;}
+.user-index .user-box .student-head {width: 13.8rem;border-radius:50%;overflow: hidden;border:0.1rem solid #e6e6e6;}
+.user-index .user-box .student-head img{width: 100%;}
+.user-index .notice-msg {background: #fff;height: 9rem;margin-bottom: 1rem;border-top: 0.1rem solid #e6e6e6;}
+.user-index .notice-msg .notice-tips {width: 7.8rem;border:0.1rem solid #ff8c1b;color:#ff8c1b;font-size: 2.4rem;text-align: center;
+border-radius:0.8rem;height: 4.4rem;line-height: 4.4rem;margin:2.8rem 0 0 2.5rem;}
+.user-index .notice-msg .notice-con {width: 54rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size: 2.8rem;color:#666;
+margin-left:2.5rem;line-height: 10rem;}
+.user-index .notice-msg .notice-arrow {width: 1.6rem;margin:3.5rem 2.5rem 0 0;}
+.user-index .photo-wrap {width: 13.8rem;margin-left: 3rem;position: relative;}
+.user-index .photo-wrap .change-icon {width: 4.8rem;position: absolute;top: 9rem;left: 9rem;}
+.user-index .img-file {width: 48rem;height: 13.8rem;position: absolute;top: 0;left: 0;opacity: 0;}
+.user-index .photo-box {width: 13.8rem;position: relative;}
+.user-index .photo-box .pic-change {position: absolute;top: 8rem;right: -0.3rem;
+background-size: 100%;width: 4.8rem;height: 4.8rem;}
+.user-index .user-box .student-photo {width: 13.8rem;height: 13.8rem;border-radius:50%;border:0.1rem solid #e9e8e9;height: 13.8rem;display: inline-block;}
+.user-index .user-box .student-txt {margin: 3rem 0 0 2rem;}
+.user-index .user-box .txt1 .s1 {color:#333;font-size: 4.2rem;line-height: 4.2rem;}
+.user-index .user-box .txt1 .s2 {line-height: 3.5rem;border-radius:0.8rem;background: #333;color:#fff;text-align: center;
+display: inline-block;position: relative;top: -0.7rem;margin-left: 1.5rem;font-size: 2rem;padding:0 0.4rem;height: 3.7rem;}
+.user-index .user-box .txt2 {font-size: 2.8rem;color:#999;}
+.user-index .class-group {margin-top: 1rem;background: #fff;}
+.user-index .class-title {line-height: 8.9rem;padding-left: 2rem;border-bottom: 0.1rem solid #e6e6e6;font-size: 2.8rem;}
+.user-index .class-item {padding-top:2rem;}
+.user-index .class-item .item-con {margin-left:2rem;border-bottom: 0.1rem solid #e6e6e6;padding-bottom: 2rem;}
+.user-index .class-item .grade-box {width: 57.5rem;border-right: 0.1rem solid #e6e6e6;}
+.user-index .class-item .grade {margin-bottom: 0.5rem;}
+.user-index .class-item .grade .s1 {font-size: 3.2rem;color:#333;}
+.user-index .class-item .grade i{font-size: 2.4rem;color:#999;}
+.user-index .class-item .lesson-time {font-size: 2.4rem;color:#666;}
+.user-index .class-item .state {margin-right: 2rem;}
+.user-index .class-item .state p{font-size: 2.8rem;color:#ff8c1b;text-align: right;}
+.user-index .class-item .state .qj-btn {width: 12rem;text-align: center;line-height: 5.4rem;font-size: 2.4rem;color:#fff;background: #ff8c1b;
+border-radius:0.8rem;}
+.user-index .class-item .p-btn {width: 12rem;line-height: 5.4rem;text-align: center;background: #ff8c1b;color:#fff;border-radius:0.8rem;
+font-size: 2.4rem;display: none;}
+.user-index .leave .p-btn {display: inline-block;}
+.user-index .teacher-detail {margin-right: 3.5rem;width: 7.5rem;}
+.user-index .teacher-detail .teacher-photo {width: 5.3rem;margin:0 auto;border-radius:50%;}
+.user-index .teacher-detail .teacher-name {font-size: 2.4rem;color:#333;margin-top: 1rem;text-align: center;}
+.user-index .class-tips {background: #333;margin-top:1rem;background: #fff;transition:all ease 2s;
+border:0.1rem solid #e6e6e6;}
+.user-index .class-list {margin:0 2rem;height: 15rem;border-bottom: 0.1rem solid #e6e6e6;}
+.user-index .class-list .class-status {display: none;}
+.user-index .class-list .class-detail {color:#333;margin-top: 3rem;}
+.user-index .class-list .class-detail span{font-size: 2.4rem;border-radius:0.5rem;padding:0 0.5rem;margin-left: 1.5rem;color:#fff;
+display: inline-block;position: relative;top: -0.2rem;}
+.user-index .class-list .class-detail .s1 {background: #c9e6ff;}
+.user-index .class-list .class-detail .s2 {background: #ffdcc9;}
+.user-index .class-list .class-detail .s3 {background: #a8f3d6;}
+.user-index .class-list .class-detail .p1 {font-size: 3.4rem;margin-bottom: 1rem;}
+.user-index .class-list .class-detail .p2 {font-size: 2.4rem;color:#999;}
+.user-index .class-list .class-detail i{margin-left: 3.5rem;}
+.user-index .class-list .class-status {width: 12rem;}
+.user-index .class-list .class-status .signed-pic {width: 5.4rem;margin:2.5rem auto 0;}
+.user-index .class-list .class-status .p3 {font-size: 2.4rem;margin-top:1rem;color:#c7e0f5;}
+.user-index .c-signing .class-status {display: block;}
+.user-index .c-signing .class-status .signing {font-size: 2.8rem;color:#1fb5ad;line-height: 15rem;color:#1fb5ad;}
+.user-index .c-signing .signed {display: none;}
+.user-index .c-signing .signing {display: block;}
+.user-index .c-signing .class-detail .p2 {color:#333;}
+.user-index .c-signing .class-detail span{display: none;}
+.user-index .c-signed .class-status {display: block;}
+.user-index .c-signed .class-detail {color:#ccc;}
+.user-index .c-signed .signed {display: block;}
+.user-index .c-signed .signing {display: none;}
+.user-index .c-signed .class-detail .p2 {color:#ccc;}
+.user-index .c-signed .class-detail span{display: none;}
+.user-index .user-menu {margin-top:1rem;background: #fff;}
+.user-index .user-menu .menu-list {width: 33.33%;padding: 4.5rem 0;position: relative;}
+.user-index .user-menu .menu-list .new-msg {font-size: 2rem;color:#fff;background: #f64646;line-height: 2.8rem;border-radius:2rem;
+padding:0 0.9rem;position: absolute;left: 50%;top: 50%;margin:-5rem 0 0 1rem;}
+.user-index .user-menu .menu-first {border-bottom: 0.1rem solid #e6e6e6;}
+.user-index .user-menu .user-icon {margin:0 auto;display: block;height: 4rem;}
+.user-index .user-menu .user-txt {text-align: center;font-size: 2.2rem;color:#666;margin-top: 1rem;}
+
+
+/* 老师课程签到页 */
+.sign-body,.signHtml {background: #fff;padding-bottom: 5rem;}
+.user-sign .sign-title {margin-top: 5rem;}
+.user-sign .sign-title p{width: 33.33%;text-align: center;font-size: 3.4rem;color:#333;font-family:SimHei;}
+.user-sign .sign-body p{width: 33.33%;text-align: center;font-size: 3.2rem;color:#666;}
+.user-sign .sign-body .sign-list {margin-top: 6.5rem;}
+.user-sign .sign-body .sign-list .attend {color:#1fb5ad;}
+.user-sign .sign-body .sign-list .leave {color:#e8bd38;}
+.user-sign .sign-body .sign-list .absent {color:#ff4f4f;}
+.user-sign .sign-btn {width:84.8%;height: 7rem;line-height: 7rem;margin:8rem auto 0;background: #1fb5ad;color:#fff;font-size: 3.6rem;
+border-radius:0.5rem;text-align: center;}
+.user-sign .sign-late {font-size: 3.2rem;margin-top: 7rem;color:#ff3737;}
+.user-sign .sign-ok {margin-top: 5rem;}
+.user-sign .ok-list {width: 33.33%;text-align: center;font-size: 3.4rem;}
+.user-sign .attend-list {color:#1fb5ad;}
+.user-sign .leave-list {color:#f7c760;}
+.user-sign .absent-list {color:#ff7a7a;}
+
+
+
+
+
+
+

@@ -10,6 +10,53 @@ input:-ms-input-placeholder{color:#ccc;}
 input::-webkit-input-placeholder{color:#ccc;}
 textarea:-ms-input-placeholder{color:#ccc;}
 textarea::-webkit-input-placeholder{color:#ccc;}
+.class-tips .sign-total .total-list {width: 33.1%;text-align: center;margin:4.5rem 0;}
+.class-tips .sign-total .total-list .p1 {color:#2d2c31;font-size: 5rem;}
+.class-tips .sign-total .total-list .p2 {color:#ccc;font-size: 2.8rem;}
+.class-tips .sign-total .total-list:nth-child(2) {border-left:1px solid #ccc;border-right:1px solid #ccc;}
+.class-list {margin:0 2rem;height: 15rem;border-bottom: 0.1rem solid #e6e6e6;}
+.class-list .class-status {display: none;}
+.class-list .class-detail {color:#333;margin-top: 3rem;}
+.class-list .class-detail span{font-size: 2.4rem;border-radius:0.5rem;padding:0 0.5rem;margin-left: 1.5rem;color:#fff;
+display: inline-block;position: relative;top: -0.2rem;}
+.class-list .class-detail .s1 {background: #c9e6ff;}
+.class-list .class-detail .s2 {background: #ffdcc9;}
+.class-list .class-detail .s3 {background: #a8f3d6;}
+.class-list .class-detail .s4 {background: #ff9f9f;}
+.class-list .class-detail .p1 {font-size: 3.4rem;margin-bottom: 1rem;}
+.class-list .class-detail .p2 {font-size: 2.4rem;color:#999;}
+.class-list .class-detail i{margin-left: 3.5rem;}
+.class-list .class-status {width: 12rem;}
+.class-list .class-status .signed-pic {width: 5.4rem;margin:2.5rem auto 0;}
+.class-list .class-status p{font-size: 2.4rem;margin-top:1rem;color:#ff9f9f;}
+.class-list .class-status .p3 {font-size: 2.4rem;margin-top:1rem;color:#ccc;}
+.class-list .class-status .p4 {font-size: 2.4rem;margin-top:1rem;color:#ff9f9f;}
+.class-tips {background: #333;margin-top:1rem;background: #fff;transition:all ease 2s;
+border:0.1rem solid #e6e6e6;}
+.c-signing .class-status {display: block;}
+.c-signing .class-status .signing {font-size: 2.8rem;color:#1fb5ad;line-height: 15rem;color:#1fb5ad;}
+.c-signing .sign-no {display: none;}
+.c-signing .signed {display: none;}
+.c-signing .signing {display: block;}
+.c-signing .class-detail .p2 {color:#333;}
+.c-signing .class-detail span{display: none;}
+
+.c-signed .class-status {display: block;}
+.c-signed .class-detail {color:#ccc;}
+.c-signed .signed {display: block;}
+.c-signed .signing {display: none;}
+.c-signed .sign-no {display: none;}
+.c-signed .class-detail .p2 {color:#ccc;}
+.c-signed .class-detail span{display: none;}
+
+.c-signoff .class-status {display: block;}
+.c-signoff .class-detail {color:#ccc;}
+.c-signoff .signed {display: block;}
+.c-signoff .signing {display: none;}
+.c-signoff .signed {display: none;}
+.c-signoff .class-detail .p2 {color:#ccc;}
+.c-signoff .class-detail span{display: none;}
+.c-signoff .class-detail span{display: inline-block;}
 
 
 /* 全局头部 */
@@ -66,34 +113,6 @@ font-size: 2.4rem;display: none;}
 .user-index .teacher-detail {margin-right: 3.5rem;width: 7.5rem;}
 .user-index .teacher-detail .teacher-photo {width: 5.3rem;margin:0 auto;border-radius:50%;}
 .user-index .teacher-detail .teacher-name {font-size: 2.4rem;color:#333;margin-top: 1rem;text-align: center;}
-.user-index .class-tips {background: #333;margin-top:1rem;background: #fff;transition:all ease 2s;
-border:0.1rem solid #e6e6e6;}
-.user-index .class-list {margin:0 2rem;height: 15rem;border-bottom: 0.1rem solid #e6e6e6;}
-.user-index .class-list .class-status {display: none;}
-.user-index .class-list .class-detail {color:#333;margin-top: 3rem;}
-.user-index .class-list .class-detail span{font-size: 2.4rem;border-radius:0.5rem;padding:0 0.5rem;margin-left: 1.5rem;color:#fff;
-display: inline-block;position: relative;top: -0.2rem;}
-.user-index .class-list .class-detail .s1 {background: #c9e6ff;}
-.user-index .class-list .class-detail .s2 {background: #ffdcc9;}
-.user-index .class-list .class-detail .s3 {background: #a8f3d6;}
-.user-index .class-list .class-detail .p1 {font-size: 3.4rem;margin-bottom: 1rem;}
-.user-index .class-list .class-detail .p2 {font-size: 2.4rem;color:#999;}
-.user-index .class-list .class-detail i{margin-left: 3.5rem;}
-.user-index .class-list .class-status {width: 12rem;}
-.user-index .class-list .class-status .signed-pic {width: 5.4rem;margin:2.5rem auto 0;}
-.user-index .class-list .class-status .p3 {font-size: 2.4rem;margin-top:1rem;color:#c7e0f5;}
-.user-index .c-signing .class-status {display: block;}
-.user-index .c-signing .class-status .signing {font-size: 2.8rem;color:#1fb5ad;line-height: 15rem;color:#1fb5ad;}
-.user-index .c-signing .signed {display: none;}
-.user-index .c-signing .signing {display: block;}
-.user-index .c-signing .class-detail .p2 {color:#333;}
-.user-index .c-signing .class-detail span{display: none;}
-.user-index .c-signed .class-status {display: block;}
-.user-index .c-signed .class-detail {color:#ccc;}
-.user-index .c-signed .signed {display: block;}
-.user-index .c-signed .signing {display: none;}
-.user-index .c-signed .class-detail .p2 {color:#ccc;}
-.user-index .c-signed .class-detail span{display: none;}
 .user-index .user-menu {margin-top:1rem;background: #fff;}
 .user-index .user-menu .menu-list {width: 33.33%;padding: 4.5rem 0;position: relative;}
 .user-index .user-menu .menu-list .new-msg {font-size: 2rem;color:#fff;background: #f64646;line-height: 2.8rem;border-radius:2rem;
@@ -120,6 +139,25 @@ border-radius:0.5rem;text-align: center;}
 .user-sign .attend-list {color:#1fb5ad;}
 .user-sign .leave-list {color:#f7c760;}
 .user-sign .absent-list {color:#ff7a7a;}
+
+
+/* 课程表 */
+.syllabus-body,.syllabusHtml {background: #f0eff5;}
+.user-syllabus {background: #fff;}
+.user-syllabus .date-title {text-align: center;padding:4.5rem 0;}
+.user-syllabus .date-title .date-con {font-size: 3.6rem;color:#333;margin:0 5rem;position: relative;top: 0.7rem;}
+.user-syllabus .date-title .date-con .date-icon{margin-top: -1rem;width: 3rem;}
+.user-syllabus .date-title .arrow-icon {width: 2.4rem;height: 4.4rem;}
+.week-box .hd {box-shadow:0 0.2rem 0.4rem rgba(0,0,0,0.16);-moz-box-shadow:0 0.2rem 0.4rem rgba(0,0,0,0.16);
+-webkit-box-shadow:0 0.2rem 0.4rem rgba(0,0,0,0.16);}
+.week-box .hd-list {font-size: 3.2rem;color:#333;width: 14.28%;text-align: center;height: 8rem;line-height: 8rem;position: relative;}
+.week-box .hd-list .cricle {width: 1.6rem;height: 1.6rem;border-radius:50%;background: #1fb5ad;position: absolute;right: 4rem;top: 1.6rem;}
+.week-box .hd-list .notice-icon {width: 2.4rem;position: absolute;top: 1.3rem;right: 3.5rem;}
+.week-box .hd-list .choose-icon {width: 2.2rem;position: absolute;bottom: 0;left: 50%;margin-left: -1.1rem;opacity: 0;}
+.week-box .on .choose-icon {opacity: 1;}
+.week-box .class-tips {border: none;}
+.week-box .class-tips .class-list {border-top: 0.1rem solid #e6e6e6;border-bottom: none;}
+.week-box .class-tips .class-list:nth-child(1) {border-top: none;}
 
 
 

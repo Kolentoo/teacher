@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f6f0f35dd1c9cee0ae08"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "42619227c345a1ed2f10"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11023,6 +11023,10 @@ $(function () {
 
     _IsIOS();
     signStatus();
+    commonTab();
+    dateSet();
+    weekChoose();
+    signSure();
     $('body').show();
 });
 
@@ -11055,10 +11059,82 @@ function signStatus() {
     var attendLength = attend.length;
     var leaveLength = leave.length;
     var absentLength = absent.length;
-    console.log(attend, leave, absent);
     $('.attend-list').children('i').text(attendLength);
     $('.leave-list').children('i').text(leaveLength);
     $('.absent-list').children('i').text(absentLength);
+}
+
+// 全局切换
+function commonTab() {
+    $('.hd-list').on('click', function () {
+        var o = $(this);
+        var oindex = o.index();
+        var os = o.siblings();
+        os.removeClass('on');
+        o.addClass('on');
+        var item1 = $('.bd').find('.item').eq(oindex);
+        var item2 = item1.siblings();
+        item2.addClass('hide');
+        item1.removeClass('hide');
+    });
+}
+
+// 选择当前星期
+function weekChoose() {
+    var weekd = new Date().getDay();
+    $('.hd-list').each(function (x, y) {
+        var wn = $(y).find('.week-num').text();
+        if (wn == weekd) {
+            $(y).click();
+        }
+    });
+}
+
+// 周历操作
+function dateSet() {
+
+    var a = new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDay() == 0 ? new Date().getDate() - 6 : new Date().getDate() - new Date().getDay() + 1);
+    var tmonday = new Date(a.setDate(a.getDate()));
+    var tsunday = new Date(a.setDate(a.getDate() + 6));
+
+    mondaySum(tmonday);
+    function mondaySum(value) {
+        var str1 = value.toLocaleDateString();
+        var str2 = str1.replace(/\//g, '.');
+        $('.start').text(str2);
+    }
+
+    sundaySum(tsunday);
+    function sundaySum(value) {
+        var str1 = value.toLocaleDateString();
+        var str2 = str1.replace(/\//g, '.');
+        $('.end').text(str2);
+    }
+
+    var prev = $('.date-title').find('.arrow-prev');
+    var next = $('.date-title').find('.arrow-next');
+    prev.on('click', function () {
+        var prevMonday = new Date(tmonday.setDate(tmonday.getDate() - 7));
+        var prevSunday = new Date(tsunday.setDate(tsunday.getDate() - 7));
+        weekChoose();
+        mondaySum(prevMonday);
+        sundaySum(prevSunday);
+    });
+    next.on('click', function () {
+        var nextMonday = new Date(tmonday.setDate(tmonday.getDate() + 7));
+        var nextSunday = new Date(tsunday.setDate(tsunday.getDate() + 7));
+        weekChoose();
+        mondaySum(nextMonday);
+        sundaySum(nextSunday);
+    });
+}
+
+// 确认签到
+function signSure() {
+    $('.sign-btn').on('click', function () {
+        $('.sign-ok').removeClass('hide');
+        $('.sign-btn').addClass('hide');
+    });
 }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
-<html lang="zh-cn" class="signHtml">
+<html lang="zh-cn" class="syllabusHtml">
 <head>
-	<title>东方童画-签到</title>
+	<title>东方童画-课程表</title>
 	<meta charset="utf-8" />
 	<meta name="keywords" content="" />
 	<meta name="description" content="" />
@@ -10,71 +10,709 @@
     <script>!function(e){function t(a){if(i[a])return i[a].exports;var n=i[a]={exports:{},id:a,loaded:!1};return e[a].call(n.exports,n,n.exports,t),n.loaded=!0,n.exports}var i={};return t.m=e,t.c=i,t.p="",t(0)}([function(e,t){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var i=window;t["default"]=i.flex=function(normal,e,t){var a=e||10,n=t||1,r=i.document,o=navigator.userAgent,d=o.match(/Android[\S\s]+AppleWebkit\/(\d{3})/i),l=o.match(/U3\/((\d+|\.){5,})/i),c=l&&parseInt(l[1].split(".").join(""),10)>=80,p=navigator.appVersion.match(/(iphone|ipad|ipod)/gi),s=i.devicePixelRatio||1;p||d&&d[1]>534||c||(s=1);var u=normal?1:1/s,m=r.querySelector('meta[name="viewport"]');m||(m=r.createElement("meta"),m.setAttribute("name","viewport"),r.head.appendChild(m)),m.setAttribute("content","width=device-width,user-scalable=no,initial-scale="+u+",maximum-scale="+u+",minimum-scale="+u),r.documentElement.style.fontSize=normal?"50px": a/2*s*n+"px"},e.exports=t["default"]}]);  flex(false,10, 1);</script>
 
 </head>
-<body class="sign-body">
+<body class="syllabus-body">
 
-	<div class="w pf user-sign">
-        <div class="sign-box">
-            <div class="sign-title clearfix">
-                <p class="p1 fl">姓名</p>
-                <p class="p1 fl">剩余课时</p>
-                <p class="p1 fl">签到情况</p>
-            </div>
-            <ul class="sign-body">
-                <li class="sign-list clearfix ">
-                    <p class="p2 fl">张晓明</p>
-                    <p class="p2 fl">16</p>
-                    <p class="p2 fl p3 attend">已出勤</p>
+	<div class="w pf user-syllabus">
+        <div class="date-title">
+            <img class="arrow-icon vm arrow-prev" src="images/prev.png" alt="">
+            <span class="date-con">
+                <i class="start"></i>————<i class="end"></i>
+                <img class="date-icon vm" src="images/date-icon.png" alt="">
+            </span>
+            <img class="arrow-icon vm arrow-next" src="images/next.png" alt="">
+        </div>
+        <div class="week-box">
+            <ul class="hd clearfix">
+                <li class="hd-list fl">
+                    <p class="p1">一</p>
+                    <i class="week-num hide">1</i>
+                    <p class="cricle hide"></p>
+                    <img class="notice-icon hide vm" src="images/notice-icon.png" alt="">
+                    <img class="choose-icon vm" src="images/shape.png" alt="">
                 </li>
-                <li class="sign-list clearfix">
-                    <p class="p2 fl">张晓明</p>
-                    <p class="p2 fl">16</p>
-                    <p class="p2 fl p3 leave">已请假</p>
+                <li class="hd-list fl">
+                    <p class="p1">二</p>
+                    <i class="week-num hide">2</i>
+                    <p class="cricle hide"></p>
+                    <img class="notice-icon hide vm" src="images/notice-icon.png" alt="">
+                    <img class="choose-icon vm" src="images/shape.png" alt="">
                 </li>
-                <li class="sign-list clearfix">
-                    <p class="p2 fl">张晓明</p>
-                    <p class="p2 fl">16</p>
-                    <p class="p2 fl p3">出勤</p>
+                <li class="hd-list fl">
+                    <p class="p1">三</p>
+                    <i class="week-num hide">3</i>
+                    <p class="cricle hide"></p>
+                    <img class="notice-icon hide vm" src="images/notice-icon.png" alt="">
+                    <img class="choose-icon vm" src="images/shape.png" alt="">
                 </li>
-                <li class="sign-list clearfix">
-                    <p class="p2 fl">张晓明</p>
-                    <p class="p2 fl">16</p>
-                    <p class="p2 fl p3 absent">旷课</p>
+                <li class="hd-list fl">
+                    <p class="p1">四</p>
+                    <i class="week-num hide">4</i>
+                    <p class="cricle hide"></p>
+                    <img class="notice-icon hide vm" src="images/notice-icon.png" alt="">
+                    <img class="choose-icon vm" src="images/shape.png" alt="">
                 </li>
-                <li class="sign-list clearfix">
-                    <p class="p2 fl">张晓明</p>
-                    <p class="p2 fl">16</p>
-                    <p class="p2 fl p3 absent">旷课</p>
+                <li class="hd-list fl">
+                    <p class="p1">五</p>
+                    <i class="week-num hide">5</i>
+                    <p class="cricle hide"></p>
+                    <img class="notice-icon hide vm" src="images/notice-icon.png" alt="">
+                    <img class="choose-icon vm" src="images/shape.png" alt="">
                 </li>
-                <li class="sign-list clearfix">
-                    <p class="p2 fl">张晓明</p>
-                    <p class="p2 fl">16</p>
-                    <p class="p2 fl p3 leave">已请假</p>
+                <li class="hd-list fl">
+                    <p class="p1">六</p>
+                    <i class="week-num hide">6</i>
+                    <p class="cricle hide"></p>
+                    <img class="notice-icon hide vm" src="images/notice-icon.png" alt="">
+                    <img class="choose-icon vm" src="images/shape.png" alt="">
                 </li>
-                <li class="sign-list clearfix">
-                    <p class="p2 fl">张晓明</p>
-                    <p class="p2 fl">16</p>
-                    <p class="p2 fl p3">出勤</p>
-                </li>
-                <li class="sign-list clearfix">
-                    <p class="p2 fl">张晓明</p>
-                    <p class="p2 fl">16</p>
-                    <p class="p2 fl p3 absent">旷课</p>
-                </li>
-                <li class="sign-list clearfix">
-                    <p class="p2 fl">张晓明</p>
-                    <p class="p2 fl">16</p>
-                    <p class="p2 fl p3 absent">旷课</p>
+                <li class="hd-list fl">
+                    <p class="p1">日</p>
+                    <i class="week-num hide">0</i>
+                    <p class="cricle hide"></p>
+                    <img class="notice-icon hide vm" src="images/notice-icon.png" alt="">
+                    <img class="choose-icon vm" src="images/shape.png" alt="">
                 </li>
             </ul>
-        </div>   
-
-        <p class="sign-btn hide">确认签到</p> 
-        <p class="sign-late tc hide">*签到已超时，请及时联系经理进行处理</p>   
-        <ul class="sign-ok clearfix">
-            <li class="ok-list fl attend-list">出勤(<i></i>人)</li>
-            <li class="ok-list fl leave-list">请假（<i></i>人)</li>
-            <li class="ok-list fl absent-list">旷课(<i></i>人)</li>
-        </ul> 
+            <ul class="bd">
+                <li class="item">
+                    <div class="class-tips">
+                        <ul class="class-con">
+                            <li class="class-list clearfix c-signed">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s4">超时</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix c-signing">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix c-signoff">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s4">超时</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s2">被代</span></p></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s3">补</span></p></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="item hide">
+                    <div class="class-tips">
+                        <ul class="class-con">
+                            <li class="class-list clearfix c-signed">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s4">超时</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室三</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix c-signing">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix c-signoff">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s4">超时</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s2">被代</span></p></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s3">补</span></p></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="item hide">
+                    <div class="class-tips">
+                        <ul class="class-con">
+                            <li class="class-list clearfix c-signed">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2019年10月考级班</i><span class="s4">超时</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室三</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix c-signing">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix c-signoff">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s4">超时</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s2">被代</span></p></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s3">补</span></p></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="item hide">
+                    <div class="class-tips">
+                        <ul class="class-con">
+                            <li class="class-list clearfix c-signed">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2000年10月考级班</i><span class="s4">超时</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室三</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix c-signing">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix c-signoff">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s4">超时</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s2">被代</span></p></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s3">补</span></p></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="item hide">
+                    <div class="class-tips">
+                        <ul class="class-con">
+                            <li class="class-list clearfix c-signed">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>1917年10月考级班</i><span class="s4">超时</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室三</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix c-signing">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix c-signoff">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s4">超时</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s2">被代</span></p></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s3">补</span></p></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="item hide">
+                    <div class="class-tips">
+                        <ul class="class-con">
+                            <li class="class-list clearfix c-signed">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2088年10月考级班</i><span class="s4">超时</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室三</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix c-signing">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix c-signoff">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s4">超时</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s2">被代</span></p></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s3">补</span></p></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="item hide">
+                    <div class="class-tips">
+                        <ul class="class-con">
+                            <li class="class-list clearfix c-signed">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2060年10月考级班</i><span class="s4">超时</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室三</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix c-signing">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix c-signoff">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s4">超时</span></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s2">被代</span></p></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                            <li class="class-list clearfix">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s3">补</span></p></p>
+                                    <p class="p2"><em>宋老师</em><i>教室二</i></p>
+                                </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <div class="sign-no">
+                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                        <p class="p4">未签到</p>
+                                    </div>
+                                    <a href="" class="signing">立即签到</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+            </ul>
+        </div>
 	</div>
 
 

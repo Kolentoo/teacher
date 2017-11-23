@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "c08b65e059d7b01fd675"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f6f0f35dd1c9cee0ae08"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11022,6 +11022,7 @@ __webpack_require__(5);
 $(function () {
 
     _IsIOS();
+    signStatus();
     $('body').show();
 });
 
@@ -11034,6 +11035,30 @@ function _IsIOS() {
     } else {
         $('body').children('div').removeClass('pf').addClass('sy');
     }
+}
+
+// 签到状态操作
+function signStatus() {
+    var attend = [];
+    var leave = [];
+    var absent = [];
+
+    $('.sign-list').each(function (a, b) {
+        if ($(b).children('.p3').text() == '已出勤' || $(b).children('.p3').text() == '出勤') {
+            attend.push(1);
+        } else if ($(b).children('.p3').text() == '已请假') {
+            leave.push(2);
+        } else if ($(b).children('.p3').text() == '旷课') {
+            absent.push(3);
+        }
+    });
+    var attendLength = attend.length;
+    var leaveLength = leave.length;
+    var absentLength = absent.length;
+    console.log(attend, leave, absent);
+    $('.attend-list').children('i').text(attendLength);
+    $('.leave-list').children('i').text(leaveLength);
+    $('.absent-list').children('i').text(absentLength);
 }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 

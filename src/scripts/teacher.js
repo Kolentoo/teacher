@@ -6,6 +6,7 @@ $(function () {
     dateSet();
     weekChoose();
     signSure();
+    signOperation();
     $('body').show();
 });
 
@@ -102,6 +103,510 @@ function dateSet(){
         weekChoose();
         mondaySum(prevMonday);
         sundaySum(prevSunday);
+        // $('.week-box').find('.bd').html('');
+        // $('.week-box').find('.bd').append(
+        //     `<li class="item">
+        //             <div class="class-tips">
+        //                 <ul class="class-con">
+        //                     <li class="class-list clearfix c-signed">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signing">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>10:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>15:30</em><i>2017年10月ART1</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </li>
+        //         <li class="item hide">
+        //             <div class="class-tips">
+        //                 <ul class="class-con">
+        //                     <li class="class-list clearfix c-signed">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signing">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>10:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>15:30</em><i>2017年10月ART1</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>08:30</em><i>2017年11月考级班</i><span class="s2">被代</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>13:30</em><i>2017年11月ATR1</i><span class="s3">补</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>15:30</em><i>2017年11月ART1</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </li>
+        //         <li class="item hide">
+        //             <div class="class-tips">
+        //                 <ul class="class-con">
+        //                     <li class="class-list clearfix c-signing">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>10:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>15:30</em><i>2017年10月ART1</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>08:30</em><i>2017年11月考级班</i><span class="s2">被代</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>13:30</em><i>2017年11月ATR1</i><span class="s3">补</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>15:30</em><i>2017年11月ART1</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>08:30</em><i>2017年11月考级班</i><span class="s2">被代</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </li>
+        //         <li class="item hide">
+        //             <div class="class-tips">
+        //                 <ul class="class-con">
+        //                     <li class="class-list clearfix c-signing">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>9:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室三</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>15:30</em><i>2017年10月ART1</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </li>
+        //         <li class="item hide">
+        //             <div class="class-tips">
+        //                 <ul class="class-con">
+        //                     <li class="class-list clearfix c-signing">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>9:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室三</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>08:30</em><i>2017年11月考级班</i><span class="s2">被代</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix signed">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>13:30</em><i>2017年11月ATR1</i><span class="s3">补</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>15:30</em><i>2017年11月ART1</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </li>
+        //         <li class="item hide">
+        //             <div class="class-tips">
+        //                 <ul class="class-con">
+        //                     <li class="class-list clearfix c-signing">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>12:30</em><i>2017年11月考级班</i><span class="s1">代</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室三</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>13:30</em><i>2017年10月ART2</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>08:30</em><i>2017年11月考级班</i><span class="s2">被代</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>08:30</em><i>2017年11月考级班</i><span class="s2">被代</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>14:30</em><i>2017年11月ATR1</i><span class="s3">补</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </li>
+        //         <li class="item hide">
+        //             <div class="class-tips">
+        //                 <ul class="class-con">
+        //                     <li class="class-list clearfix c-signing">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>8:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室三</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </li>`
+        // );
     });
     next.on('click',()=>{
         let nextMonday = new Date(tmonday.setDate(tmonday.getDate() + 7));
@@ -109,10 +614,392 @@ function dateSet(){
         weekChoose();
         mondaySum(nextMonday);
         sundaySum(nextSunday);
+        // $('.week-box').find('.bd').html('');
+        // $('.week-box').find('.bd').append(
+        //     `<li class="item">
+        //             <div class="class-tips">
+        //                 <ul class="class-con">
+        //                     <li class="class-list clearfix c-signed">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signing">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>10:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </li>
+        //         <li class="item hide">
+        //             <div class="class-tips">
+        //                 <ul class="class-con">
+        //                     <li class="class-list clearfix c-signed">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>08:30</em><i>2017年10月考级班</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signing">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>10:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>15:30</em><i>2017年11月ART1</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </li>
+        //         <li class="item hide">
+        //             <div class="class-tips">
+        //                 <ul class="class-con">
+        //                     <li class="class-list clearfix c-signing">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>10:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>15:30</em><i>2017年10月ART1</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>08:30</em><i>2017年11月考级班</i><span class="s2">被代</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>13:30</em><i>2017年11月ATR1</i><span class="s3">补</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </li>
+        //         <li class="item hide">
+        //             <div class="class-tips">
+        //                 <ul class="class-con">
+        //                     <li class="class-list clearfix c-signing">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>9:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室三</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>15:30</em><i>2017年10月ART1</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </li>
+        //         <li class="item hide">
+        //             <div class="class-tips">
+        //                 <ul class="class-con">
+        //                     <li class="class-list clearfix c-signing">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>9:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室三</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>08:30</em><i>2017年11月考级班</i><span class="s2">被代</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix signed">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>13:30</em><i>2017年11月ATR1</i><span class="s3">补</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>15:30</em><i>2017年11月ART1</i><span class="s4">超时</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </li>
+        //         <li class="item hide">
+        //             <div class="class-tips">
+        //                 <ul class="class-con">
+        //                     <li class="class-list clearfix c-signing">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>12:30</em><i>2017年11月考级班</i><span class="s1">代</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室三</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>08:30</em><i>2017年11月考级班</i><span class="s2">被代</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>08:30</em><i>2017年11月考级班</i><span class="s2">被代</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室二</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                     <li class="class-list clearfix c-signoff">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>14:30</em><i>2017年11月ATR1</i><span class="s3">补</span></p></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室一</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </li>
+        //         <li class="item hide">
+        //             <div class="class-tips">
+        //                 <ul class="class-con">
+        //                     <li class="class-list clearfix c-signing">
+        //                         <div class="class-detail fl">
+        //                             <p class="p1"><em>8:30</em><i>2017年10月考级班</i><span class="s1">代</span></p>
+        //                             <p class="p2"><em>宋老师</em><i>教室三</i></p>
+        //                         </div>
+        //                         <div class="class-status fr tc">
+        //                             <div class="signed">
+        //                                 <img class="vm signed-pic" src="images/signed.png" alt="">
+        //                                 <p class="p3">已签到</p>
+        //                             </div>
+        //                             <div class="sign-no">
+        //                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
+        //                                 <p class="p4">未签到</p>
+        //                             </div>
+        //                             <a href="" class="signing">立即签到</a>
+        //                         </div>
+        //                     </li>
+        //                 </ul>
+        //             </div>
+        //         </li>`
+        // );
     });
-
-
-
 
 }
 
@@ -121,9 +1008,28 @@ function signSure(){
     $('.sign-btn').on('click',()=>{
         $('.sign-ok').removeClass('hide');
         $('.sign-btn').addClass('hide');
+
+        $('.sign-list').each((a,b)=>{
+            if($(b).children('.p3').text()=='出勤'){
+                $(b).children('.p3').addClass('attend');
+            }
+        });
     });
 }
 
+// 考勤操作
+function signOperation(){
+    $('.sign-list').children('.p3').on('click',function(){
+        var o = $(this);
+        if(o.text()=='出勤'){
+            o.text('旷课');
+            o.addClass('absent');
+        }else if(o.text()=='旷课'){
+            o.text('出勤');
+            o.removeClass('absent');
+        }
+    });
+}
 
 
 

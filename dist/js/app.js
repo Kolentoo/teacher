@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "9c3bb00ed7b93bb0673f"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a630c12a37953a4b847d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11000,6 +11000,8 @@ __webpack_require__(4);
 
 __webpack_require__(5);
 
+__webpack_require__(6);
+
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {
@@ -11028,6 +11030,8 @@ $(function () {
     weekChoose();
     signSure();
     signOperation();
+    personDetai();
+
     $('body').show();
 });
 
@@ -12046,6 +12050,28 @@ function signOperation() {
         }
     });
 }
+
+// 首页个人信息
+function personDetai() {
+    var curl = window.location.href;
+    var cobj = curl.split('=');
+    $.session.set('key', cobj[1]);
+    var key = $.session.get('key');
+    var ckey = 'Bearer ' + key;
+    console.log(key);
+    $.ajax({
+        type: 'GET',
+        cache: 'false',
+        url: 'http://192.168.1.227:86/user.html',
+        data: { 'Authorization': ckey },
+        dataType: 'json',
+        success: function success(msg) {
+            console.log(msg);
+            $('.student-head').children('img').attr('src');
+        },
+        error: function error(msg) {}
+    });
+}
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
@@ -12122,6 +12148,78 @@ function signOperation() {
       return !a.rightoffold(b, { threshold: 0 });
     } });
 }(jQuery, window, document);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(jQuery) {
+
+(function ($) {
+  $.session = { _id: null, _cookieCache: undefined, _init: function _init() {
+      if (!window.name) {
+        window.name = Math.random();
+      }
+      this._id = window.name;this._initCache();var matches = new RegExp(this._generatePrefix() + "=([^;]+);").exec(document.cookie);if (matches && document.location.protocol !== matches[1]) {
+        this._clearSession();for (var key in this._cookieCache) {
+          try {
+            window.sessionStorage.setItem(key, this._cookieCache[key]);
+          } catch (e) {};
+        }
+      }
+      document.cookie = this._generatePrefix() + "=" + document.location.protocol + ';path=/;expires=' + new Date(new Date().getTime() + 120000).toUTCString();
+    }, _generatePrefix: function _generatePrefix() {
+      return '__session:' + this._id + ':';
+    }, _initCache: function _initCache() {
+      var cookies = document.cookie.split(';');this._cookieCache = {};for (var i in cookies) {
+        var kv = cookies[i].split('=');if (new RegExp(this._generatePrefix() + '.+').test(kv[0]) && kv[1]) {
+          this._cookieCache[kv[0].split(':', 3)[2]] = kv[1];
+        }
+      }
+    }, _setFallback: function _setFallback(key, value, onceOnly) {
+      var cookie = this._generatePrefix() + key + "=" + value + "; path=/";if (onceOnly) {
+        cookie += "; expires=" + new Date(Date.now() + 120000).toUTCString();
+      }
+      document.cookie = cookie;this._cookieCache[key] = value;return this;
+    }, _getFallback: function _getFallback(key) {
+      if (!this._cookieCache) {
+        this._initCache();
+      }
+      return this._cookieCache[key];
+    }, _clearFallback: function _clearFallback() {
+      for (var i in this._cookieCache) {
+        document.cookie = this._generatePrefix() + i + '=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      }
+      this._cookieCache = {};
+    }, _deleteFallback: function _deleteFallback(key) {
+      document.cookie = this._generatePrefix() + key + '=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;';delete this._cookieCache[key];
+    }, get: function get(key) {
+      return window.sessionStorage.getItem(key) || this._getFallback(key);
+    }, set: function set(key, value, onceOnly) {
+      try {
+        window.sessionStorage.setItem(key, value);
+      } catch (e) {}
+      this._setFallback(key, value, onceOnly || false);return this;
+    }, 'delete': function _delete(key) {
+      return this.remove(key);
+    }, remove: function remove(key) {
+      try {
+        window.sessionStorage.removeItem(key);
+      } catch (e) {};this._deleteFallback(key);return this;
+    }, _clearSession: function _clearSession() {
+      try {
+        window.sessionStorage.clear();
+      } catch (e) {
+        for (var i in window.sessionStorage) {
+          window.sessionStorage.removeItem(i);
+        }
+      }
+    }, clear: function clear() {
+      this._clearSession();this._clearFallback();return this;
+    } };$.session._init();
+})(jQuery);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ })

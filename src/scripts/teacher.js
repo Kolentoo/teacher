@@ -4,7 +4,8 @@ $(function () {
     commonTab();
     weekChoose();
     personDetai();
-
+    loginWake();
+    login();
     $('body').show();
 });
 
@@ -50,6 +51,7 @@ function weekChoose(){
     });
 }
 
+// 课程类型判断
 function lessonType(){
     $('.class-list').each((a,b)=>{
         let ctype = $(b).find('.ctype').text();
@@ -97,8 +99,10 @@ function lessonType(){
             $(b).find('.ctext').addClass('s4');
             if($('.week-box').get(0)){
                 let oindex = $(b).parents('.item').index();
+                let oc = $('.week-box').find('.hd-list').eq(oindex).find('.cricle');
                 let on = $('.week-box').find('.hd-list').eq(oindex).find('.notice-icon');
                 // if(!on.hasClass('checked')){
+                    oc.addClass('hide');
                     on.removeClass('hide');
                 // }
             }
@@ -128,19 +132,14 @@ function personDetai(){
     let idGroup = [];
     let sGroup = [];
     if($('.user-index').get(0)){
-        let curl = window.location.href;
-        let cobj = curl.split('=');
-        let key = cobj[1];
-        let ckey = 'Bearer '+key;
-        sessionStorage.setItem('ckey', ckey);
-        let data = sessionStorage.getItem('ckey');
-        console.log(data);
+        let cdata = sessionStorage.getItem('ckey');
+        console.log(cdata);
         let tid = [];
         $.ajax({
             type:'GET',
             cache:'false',
             url:'http://pandatest.dfth.com/api/v1/userinfo/user',
-            headers:{'Authorization':ckey},
+            headers:{'Authorization':cdata},
             dataType:'json',
             success:function(msg){
                 // console.log(msg)
@@ -174,7 +173,7 @@ function personDetai(){
             type:'GET',
             cache:'false',
             url:'http://pandatest.dfth.com/api/v1/reportForms/teachFormsPic',
-            headers:{'Authorization':ckey},
+            headers:{'Authorization':cdata},
             data:{'teach_uid':tid[0],'start_date':firstDay,'end_date':lastDay},
             dataType:'json',
             success:function(msg){
@@ -210,8 +209,8 @@ function personDetai(){
             type:'GET',
             cache:'false',
             url:'http://pandatest.dfth.com/api/v1/teacher/syllabus',
-            headers:{'Authorization':ckey},
-            data:{'teach_uid':tid[0],'start_date':'2017/09/04','end_date':'2017/09/04'},
+            headers:{'Authorization':cdata},
+            data:{'teach_uid':tid[0],'start_date':today,'end_date':today},
             dataType:'json',
             success:function(msg){
                 console.log(msg.data);
@@ -265,7 +264,7 @@ function personDetai(){
                         type:'GET',
                         cache:'false',
                         url:'http://pandatest.dfth.com/api/v1/teacher/checkWork',
-                        headers:{'Authorization':ckey},
+                        headers:{'Authorization':cdata},
                         data:{'id':sid,'schooltime':sschoole},
                         dataType:'json',
                         success:function(msg){
@@ -298,7 +297,7 @@ function personDetai(){
             cache:'false',
             url:'http://pandatest.dfth.com/api/v1/teacher/checkWork',
             headers:{'Authorization':cdata},
-            data:{'id':104,'schooltime':dtime},
+            data:{'id':did,'schooltime':dtime},
             dataType:'json',
             success:function(msg){
                 console.log(msg.data);
@@ -396,7 +395,7 @@ function personDetai(){
                         cache:'false',
                         url:'http://pandatest.dfth.com/api/v1/teacher/checkWork',
                         headers:{'Authorization':cdata},
-                        data:{'id':104,'schooltime':dtime,'students':sGroup},
+                        data:{'id':did,'schooltime':dtime,'students':sGroup},
                         dataType:'json',
                         success:function(msg){
                             console.log(sGroup);
@@ -550,6 +549,109 @@ function personDetai(){
     }
 }
 
+// 邮箱验证
+function emailCheck(c){
+    let email = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    if(email.test($(c).val())){
+        $(c).parents('.infor-item').removeClass('infor-wrong');
+        return true;
+    }else{
+        $(c).parent('.infor-item').addClass('infor-wrong');
+        $(c).parent('.infor-item').find('.hint').text('帐号格式错误');
+        $('.refer').removeClass('refer-on');
+        return false;
+    }
+
+}
+
+// 手机号验证
+function phoneCheck(a) {
+    let phone = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+     if (phone.test($(a).val())) {
+        $(a).parents('.infor-item').removeClass('infor-wrong');
+        return true;
+    } else {
+        $(a).parent('.infor-item').addClass('infor-wrong');
+        $(a).parent('.infor-item').find('.hint').text('帐号格式错误');
+        $('.refer').removeClass('refer-on');
+        return false;
+    }
+}  
+
+// 登录验证
+function loginCheck(){
+    let loginName = $('.phone-number');
+    let psd = $('.pass-word');
+    emailCheck(loginName);
+    phoneCheck(loginName);
+    if($('.login').get(0)){
+        if(loginName.val()){
+            if(emailCheck(loginName)==true || phoneCheck(loginName)==true){
+                loginName.parent('.infor-item').removeClass('infor-wrong');
+                if(psd.val()){
+                    psd.parent('.infor-item').removeClass('infor-wrong');
+                    $('.refer').addClass('refer-on');
+                }else{
+                    psd.parent('.infor-item').addClass('infor-wrong');
+                    psd.parent('.infor-item').find('.hint').text('密码不能为空');
+                    $('.refer').removeClass('refer-on');
+                }
+            }else{
+                loginName.parent('.infor-item').addClass('infor-wrong');
+                $('.refer').removeClass('refer-on');
+                return false;
+            }
+        }else{
+            loginName.parent('.infor-item').addClass('infor-wrong');
+            loginName.parent('.infor-item').find('.hint').text('帐号不能为空');
+            $('.refer').removeClass('refer-on');
+            return false;
+        }
+    }
+}
+
+// 登录唤醒
+function loginWake(){
+    if($('.login').get(0)){
+        let input = $('.infor-item').find('input');
+        input.on('input propertychange',()=>{
+            loginCheck();
+        });
+    }
+}
+
+// 用户登录
+function login(){
+    $('.refer').on('click',()=>{
+        let uname = $('.phone-number').val();
+        let psd = $('.pass-word').val();
+        if($('.refer').hasClass('refer-on')){
+            $.ajax({
+                type:'POST',
+                cache:'false',
+                url:'http://pandatest.dfth.com/api/v1/admin/login',
+                data:{'username':uname,'password':psd,'grant_type':'password','client_id':'1','client_secret':'EjKXjo27hXenF8a2MgqHvpYv7IhtJ678GfOgnHc5'},
+                dataType:'json',
+                success:function(msg){
+                    console.log(msg)
+                    if(msg.code==0){
+                        let ckey = msg.token_type+' '+msg.access_token;
+                        console.log(ckey)
+                        sessionStorage.setItem('ckey', ckey);
+                        window.location.href='index.html';
+                    }else{
+                        $('.pass-word').parent('.infor-item').addClass('infor-wrong');
+                    }
+                },
+                error:function(msg){
+                    console.log(msg);
+                }    
+            });
+        }else{
+            return false;
+        }
+    });
+} 
 
 
 

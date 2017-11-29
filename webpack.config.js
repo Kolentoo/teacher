@@ -105,6 +105,12 @@ module.exports = {
             inject:'head',
             chunks:['app']
         }),
+        new htmlWebpackPlugin({
+            filename:'login.html',
+            template:'./src/login.html',
+            inject:'head',
+            chunks:['app']
+        }),
         // JS压缩,热更新时需要注释，不然会报错
         // new UglifyJSPlugin({
         //     compress: {

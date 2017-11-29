@@ -97,7 +97,8 @@ background-size: 100%;width: 4.8rem;height: 4.8rem;}
 display: inline-block;position: relative;top: -0.7rem;margin-left: 1.5rem;font-size: 2rem;padding:0 0.4rem;height: 3.7rem;}
 .user-index .user-box .txt2 {font-size: 2.8rem;color:#999;}
 .user-index .class-group {margin-top: 1rem;background: #fff;}
-.user-index .class-title {line-height: 8.9rem;padding-left: 2rem;border-bottom: 0.1rem solid #e6e6e6;font-size: 2.8rem;}
+.user-index .class-title {line-height: 8.9rem;padding:0 2rem;border-bottom: 0.1rem solid #e6e6e6;font-size: 2.8rem;}
+.user-index .class-title a{line-height: 8.9rem;}
 .user-index .class-item {padding-top:2rem;}
 .user-index .class-item .item-con {margin-left:2rem;border-bottom: 0.1rem solid #e6e6e6;padding-bottom: 2rem;}
 .user-index .class-item .grade-box {width: 57.5rem;border-right: 0.1rem solid #e6e6e6;}
@@ -136,7 +137,7 @@ padding:0 0.9rem;position: absolute;left: 50%;top: 50%;margin:-5rem 0 0 1rem;}
 .user-sign .sign-btn {width:84.8%;height: 7rem;line-height: 7rem;margin:8rem auto 0;background: #1fb5ad;color:#fff;font-size: 3.6rem;
 border-radius:0.5rem;text-align: center;}
 .user-sign .sign-late {font-size: 3.2rem;margin-top: 7rem;color:#ff3737;}
-.user-sign .sign-early {color:#ff3737;}
+.user-sign .sign-early {color:#ff3737;font-size: 3.2rem;margin-top: 7rem;}
 .user-sign .sign-ok {margin-top: 5rem;}
 .user-sign .ok-list {width: 33.33%;text-align: center;font-size: 3.4rem;}
 .user-sign .attend-list {color:#1fb5ad;}
@@ -154,17 +155,42 @@ border-radius:0.5rem;text-align: center;}
 .week-box .hd {box-shadow:0 0.2rem 0.4rem rgba(0,0,0,0.16);-moz-box-shadow:0 0.2rem 0.4rem rgba(0,0,0,0.16);
 -webkit-box-shadow:0 0.2rem 0.4rem rgba(0,0,0,0.16);}
 .week-box .hd-list {font-size: 3.2rem;color:#333;width: 14.28%;text-align: center;height: 8rem;line-height: 8rem;position: relative;}
-.week-box .hd-list .cricle {width: 1.6rem;height: 1.6rem;border-radius:50%;background: #1fb5ad;position: absolute;right: 4rem;top: 1.6rem;}
-.week-box .hd-list .notice-icon {width: 2.4rem;position: absolute;top: 1.3rem;right: 3.5rem;}
+.week-box .hd-list .cricle {width: 1.6rem;height: 1.6rem;border-radius:50%;background: #1fb5ad;position: absolute;right: 4rem;top: 1.6rem;z-index:10;}
+.week-box .hd-list .notice-icon {width: 2.4rem;position: absolute;top: 1.3rem;right: 3.5rem;z-index:20;}
 .week-box .hd-list .choose-icon {width: 2.2rem;position: absolute;bottom: 0;left: 50%;margin-left: -1.1rem;opacity: 0;}
 .week-box .on .choose-icon {opacity: 1;}
 .week-box .class-tips {border: none;}
 .week-box .class-tips .class-list {border-top: 0.1rem solid #e6e6e6;border-bottom: none;}
 .week-box .class-tips .class-list:nth-child(1) {border-top: none;}
 .week-box .class-tips .tips-txt {padding:5rem 0;color:#999;font-size: 2.8rem;}
-
 .tips-body,.tipsHtml{background: #fff;}
 .user-tips {text-align: center;text-align: center;padding-top: 45rem;font-size: 2.8rem;}
+
+
+/* 登录 */
+.login-body,html {background: #fff;height: 100%;}
+.login .logo {padding:18rem 0 0 3rem;width: 29.9rem;margin:0 auto;}
+.login .logo img{width: 100%;}
+.login .login-tab {margin-top: 7rem;}
+.login .login-tab .hd {width: 24rem;margin:0 auto;}
+.login .login-tab li{padding:0 3.5rem;font-size: 4.2rem;color:#999;}
+.login .login-tab .on {color:#ff8c1b}
+.login .bd {margin:9rem auto 0;width: 65rem;}
+.login .infor-item {width: 65.6rem;}
+.login .infor-item input{color:#333;padding:2.5rem 0 2.5rem 2rem;border:0.1rem solid #ccc;border-radius:0.8rem;font-size: 3rem;}
+.login .infor-item .phone-number {width: 63rem;}
+.login .infor-item .code {width: 41rem;margin-top: 1.5rem;}
+.login .infor-item .code-btn {width: 18.6rem;margin-top: 1.5rem;}
+.login .infor-item .code-btn p{height: 9rem;line-height: 9rem;color:#fff;font-size: 3rem;border-radius:0.8rem;text-align: center;}
+.login .infor-item .code-btn .p1 {background: #ff8c1b;}
+.login .infor-item .code-btn .p2 {background: #ddd;}
+.login .infor-item .pass-word {width: 63rem;margin-top: 1.5rem;}
+.login .refer {width: 65rem;height: 9rem;line-height: 9rem;border-radius:0.8rem;background: #ddd;color:#fff;text-align: center;font-size: 3.6rem;
+margin-top: 6rem;border:none;}
+.login .refer-on {background:rgb(31,181,173);}
+.login .infor-wrong input{border-color:#ed3939;}
+.login .hint {color:#ed3939;font-size: 2rem;opacity:0;}
+.login .infor-wrong .hint {opacity: 1;}
 
 
 

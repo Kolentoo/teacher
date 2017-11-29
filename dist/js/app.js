@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "82752a1c1811a9ddf035"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "b604388b5753a03d1dd9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11027,7 +11027,8 @@ $(function () {
     commonTab();
     weekChoose();
     personDetai();
-
+    loginWake();
+    login();
     $('body').show();
 });
 
@@ -11072,6 +11073,7 @@ function weekChoose() {
     });
 }
 
+// 课程类型判断
 function lessonType() {
     $('.class-list').each(function (a, b) {
         var ctype = $(b).find('.ctype').text();
@@ -11119,8 +11121,10 @@ function lessonType() {
             $(b).find('.ctext').addClass('s4');
             if ($('.week-box').get(0)) {
                 var _oindex = $(b).parents('.item').index();
+                var _oc = $('.week-box').find('.hd-list').eq(_oindex).find('.cricle');
                 var on = $('.week-box').find('.hd-list').eq(_oindex).find('.notice-icon');
                 // if(!on.hasClass('checked')){
+                _oc.addClass('hide');
                 on.removeClass('hide');
                 // }
             }
@@ -11147,19 +11151,14 @@ function personDetai() {
     var idGroup = [];
     var sGroup = [];
     if ($('.user-index').get(0)) {
-        var curl = window.location.href;
-        var cobj = curl.split('=');
-        var key = cobj[1];
-        var ckey = 'Bearer ' + key;
-        sessionStorage.setItem('ckey', ckey);
-        var data = sessionStorage.getItem('ckey');
-        console.log(data);
+        var _cdata = sessionStorage.getItem('ckey');
+        console.log(_cdata);
         var tid = [];
         $.ajax({
             type: 'GET',
             cache: 'false',
             url: 'http://pandatest.dfth.com/api/v1/userinfo/user',
-            headers: { 'Authorization': ckey },
+            headers: { 'Authorization': _cdata },
             dataType: 'json',
             success: function success(msg) {
                 // console.log(msg)
@@ -11192,7 +11191,7 @@ function personDetai() {
             type: 'GET',
             cache: 'false',
             url: 'http://pandatest.dfth.com/api/v1/reportForms/teachFormsPic',
-            headers: { 'Authorization': ckey },
+            headers: { 'Authorization': _cdata },
             data: { 'teach_uid': tid[0], 'start_date': firstDay, 'end_date': lastDay },
             dataType: 'json',
             success: function success(msg) {
@@ -11228,22 +11227,22 @@ function personDetai() {
             type: 'GET',
             cache: 'false',
             url: 'http://pandatest.dfth.com/api/v1/teacher/syllabus',
-            headers: { 'Authorization': ckey },
-            data: { 'teach_uid': tid[0], 'start_date': '2017/09/04', 'end_date': '2017/09/04' },
+            headers: { 'Authorization': _cdata },
+            data: { 'teach_uid': tid[0], 'start_date': today, 'end_date': today },
             dataType: 'json',
             success: function success(msg) {
                 console.log(msg.data);
                 var classCon = msg.data;
-                for (var _key in classCon) {
-                    var ctime = classCon[_key].class_time;
-                    var ctitle = classCon[_key].course.title;
-                    var cname = classCon[_key].teacher.uname;
+                for (var key in classCon) {
+                    var ctime = classCon[key].class_time;
+                    var ctitle = classCon[key].course.title;
+                    var cname = classCon[key].teacher.uname;
                     var cfirst = cname.substr(0, 1);
-                    var cclass = classCon[_key].class_room.names.substr(0, 1);
-                    var ctype = classCon[_key].type;
-                    var cstatus = classCon[_key].check_status;
-                    var did = classCon[_key].id;
-                    var st = classCon[_key].schooltime;
+                    var cclass = classCon[key].class_room.names.substr(0, 1);
+                    var ctype = classCon[key].type;
+                    var cstatus = classCon[key].check_status;
+                    var did = classCon[key].id;
+                    var st = classCon[key].schooltime;
                     idGroup.push(did);
                     sGroup.push(st);
                     $('.class-con').append('<li class="class-list clearfix">\n                            <div class="class-detail fl">\n                                <p class="p1"><em>' + ctime + '</em><i>' + ctitle + '</i><span class="ctext"></span></p>\n                                <p class="p2"><em>' + cfirst + '\u8001\u5E08</em><i>\u6559\u5BA4' + cclass + '</i></p>\n                            </div>\n                            <div class="class-status fr tc">\n                                <div class="signed">\n                                    <img class="vm signed-pic" src="images/signed.png" alt="">\n                                    <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                </div>\n                                <a class="signing">\u7ACB\u5373\u7B7E\u5230</a>\n                            </div>\n                            <i class="hide ctype">' + ctype + '</i>\n                            <i class="hide cstatus">' + cstatus + '</i>\n                        </li>');
@@ -11267,7 +11266,7 @@ function personDetai() {
                         type: 'GET',
                         cache: 'false',
                         url: 'http://pandatest.dfth.com/api/v1/teacher/checkWork',
-                        headers: { 'Authorization': ckey },
+                        headers: { 'Authorization': _cdata },
                         data: { 'id': sid, 'schooltime': sschoole },
                         dataType: 'json',
                         success: function success(msg) {
@@ -11300,16 +11299,16 @@ function personDetai() {
             cache: 'false',
             url: 'http://pandatest.dfth.com/api/v1/teacher/checkWork',
             headers: { 'Authorization': cdata },
-            data: { 'id': 104, 'schooltime': dtime },
+            data: { 'id': did, 'schooltime': dtime },
             dataType: 'json',
             success: function success(msg) {
                 console.log(msg.data);
                 var sGroup = msg.data.students;
                 var signStatus = msg.data.check_status;
-                for (var _key2 in sGroup) {
-                    var cname = sGroup[_key2].child_name;
-                    var cnum = sGroup[_key2].course_curr_num;
-                    var ctype = sGroup[_key2].checkin_types_name;
+                for (var key in sGroup) {
+                    var cname = sGroup[key].child_name;
+                    var cnum = sGroup[key].course_curr_num;
+                    var ctype = sGroup[key].checkin_types_name;
                     $('.sign-group').append('\n                        <li class="sign-list clearfix ">\n                            <p class="p2 fl">' + cname + '</p>\n                            <p class="p2 fl">' + cnum + '</p>\n                            <p class="p2 fl p3">' + ctype + '</p>\n                        </li>\n                    ');
                 }
 
@@ -11392,7 +11391,7 @@ function personDetai() {
                         cache: 'false',
                         url: 'http://pandatest.dfth.com/api/v1/teacher/checkWork',
                         headers: { 'Authorization': cdata },
-                        data: { 'id': 104, 'schooltime': dtime, 'students': sGroup },
+                        data: { 'id': did, 'schooltime': dtime, 'students': sGroup },
                         dataType: 'json',
                         success: function success(msg) {
                             console.log(sGroup);
@@ -11478,15 +11477,15 @@ function personDetai() {
             success: function success(msg) {
                 console.log(msg.data);
                 var lessonGroup = msg.data;
-                for (var _key3 in lessonGroup) {
-                    for (var x in lessonGroup[_key3]) {
-                        var ltime = lessonGroup[_key3][x].class_time;
-                        var ltitle = lessonGroup[_key3][x].title;
-                        var ctype = lessonGroup[_key3][x].type;
-                        var cstatus = lessonGroup[_key3][x].check_status;
-                        var lteacher = lessonGroup[_key3][x].teacher.uname.substr(0, 1);
-                        var lclass = lessonGroup[_key3][x].class_room.names.substr(0, 1);
-                        $('.item').eq(_key3).find('.class-con').append('\n                            <li class="class-list clearfix">\n                                <div class="class-detail fl">\n                                    <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                    <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i></p>\n                                </div>\n                                <div class="class-status fr tc">\n                                    <div class="signed">\n                                        <img class="vm signed-pic" src="images/signed.png" alt="">\n                                        <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                    </div>\n                                    <div class="sign-no">\n                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                        <p class="p4">\u672A\u7B7E\u5230</p>\n                                    </div>\n                                    <a class="signing">\u7ACB\u5373\u7B7E\u5230</a>\n                                </div>\n                                <i class="hide ctype">' + ctype + '</i>\n                                <i class="hide cstatus">' + cstatus + '</i>\n                            </li>\n                        ');
+                for (var key in lessonGroup) {
+                    for (var x in lessonGroup[key]) {
+                        var ltime = lessonGroup[key][x].class_time;
+                        var ltitle = lessonGroup[key][x].title;
+                        var ctype = lessonGroup[key][x].type;
+                        var cstatus = lessonGroup[key][x].check_status;
+                        var lteacher = lessonGroup[key][x].teacher.uname.substr(0, 1);
+                        var lclass = lessonGroup[key][x].class_room.names.substr(0, 1);
+                        $('.item').eq(key).find('.class-con').append('\n                            <li class="class-list clearfix">\n                                <div class="class-detail fl">\n                                    <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                    <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i></p>\n                                </div>\n                                <div class="class-status fr tc">\n                                    <div class="signed">\n                                        <img class="vm signed-pic" src="images/signed.png" alt="">\n                                        <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                    </div>\n                                    <div class="sign-no">\n                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                        <p class="p4">\u672A\u7B7E\u5230</p>\n                                    </div>\n                                    <a class="signing">\u7ACB\u5373\u7B7E\u5230</a>\n                                </div>\n                                <i class="hide ctype">' + ctype + '</i>\n                                <i class="hide cstatus">' + cstatus + '</i>\n                            </li>\n                        ');
                     }
                 }
 
@@ -11520,6 +11519,109 @@ function personDetai() {
             }
         });
     }
+}
+
+// 邮箱验证
+function emailCheck(c) {
+    var email = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+    if (email.test($(c).val())) {
+        $(c).parents('.infor-item').removeClass('infor-wrong');
+        return true;
+    } else {
+        $(c).parent('.infor-item').addClass('infor-wrong');
+        $(c).parent('.infor-item').find('.hint').text('帐号格式错误');
+        $('.refer').removeClass('refer-on');
+        return false;
+    }
+}
+
+// 手机号验证
+function phoneCheck(a) {
+    var phone = /^(13[0-9]|14[5|7]|15[0|1|2|3|5|6|7|8|9]|18[0|1|2|3|5|6|7|8|9])\d{8}$/;
+    if (phone.test($(a).val())) {
+        $(a).parents('.infor-item').removeClass('infor-wrong');
+        return true;
+    } else {
+        $(a).parent('.infor-item').addClass('infor-wrong');
+        $(a).parent('.infor-item').find('.hint').text('帐号格式错误');
+        $('.refer').removeClass('refer-on');
+        return false;
+    }
+}
+
+// 登录验证
+function loginCheck() {
+    var loginName = $('.phone-number');
+    var psd = $('.pass-word');
+    emailCheck(loginName);
+    phoneCheck(loginName);
+    if ($('.login').get(0)) {
+        if (loginName.val()) {
+            if (emailCheck(loginName) == true || phoneCheck(loginName) == true) {
+                loginName.parent('.infor-item').removeClass('infor-wrong');
+                if (psd.val()) {
+                    psd.parent('.infor-item').removeClass('infor-wrong');
+                    $('.refer').addClass('refer-on');
+                } else {
+                    psd.parent('.infor-item').addClass('infor-wrong');
+                    psd.parent('.infor-item').find('.hint').text('密码不能为空');
+                    $('.refer').removeClass('refer-on');
+                }
+            } else {
+                loginName.parent('.infor-item').addClass('infor-wrong');
+                $('.refer').removeClass('refer-on');
+                return false;
+            }
+        } else {
+            loginName.parent('.infor-item').addClass('infor-wrong');
+            loginName.parent('.infor-item').find('.hint').text('帐号不能为空');
+            $('.refer').removeClass('refer-on');
+            return false;
+        }
+    }
+}
+
+// 登录唤醒
+function loginWake() {
+    if ($('.login').get(0)) {
+        var input = $('.infor-item').find('input');
+        input.on('input propertychange', function () {
+            loginCheck();
+        });
+    }
+}
+
+// 用户登录
+function login() {
+    $('.refer').on('click', function () {
+        var uname = $('.phone-number').val();
+        var psd = $('.pass-word').val();
+        if ($('.refer').hasClass('refer-on')) {
+            $.ajax({
+                type: 'POST',
+                cache: 'false',
+                url: 'http://pandatest.dfth.com/api/v1/admin/login',
+                data: { 'username': uname, 'password': psd, 'grant_type': 'password', 'client_id': '1', 'client_secret': 'EjKXjo27hXenF8a2MgqHvpYv7IhtJ678GfOgnHc5' },
+                dataType: 'json',
+                success: function success(msg) {
+                    console.log(msg);
+                    if (msg.code == 0) {
+                        var ckey = msg.token_type + ' ' + msg.access_token;
+                        console.log(ckey);
+                        sessionStorage.setItem('ckey', ckey);
+                        window.location.href = 'index.html';
+                    } else {
+                        $('.pass-word').parent('.infor-item').addClass('infor-wrong');
+                    }
+                },
+                error: function error(msg) {
+                    console.log(msg);
+                }
+            });
+        } else {
+            return false;
+        }
+    });
 }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 

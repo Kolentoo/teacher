@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "bda7767f59e9a8bd61c9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f99610828e7dd670dc6a"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11109,30 +11109,30 @@ function lessonType() {
         if (cstatus == 'yes') {
             $(b).removeClass('c-signing c-signoff').addClass('c-signed');
         } else if (cstatus == 'no') {
-            $(b).removeClass('c-signed c-signing c-signoff');
+            $(b).removeClass('c-signed c-signoff').addClass('c-signing');
+            if ($('.week-box').get(0)) {
+                var oindex = $(b).parents('.item').index();
+                var oc = $('.week-box').find('.hd-list').eq(oindex).find('.cricle');
+                // if(!oc.hasClass('checked')){
+                oc.removeClass('hide');
+                // }
+            }
         } else if (cstatus == 'overdue') {
             $(b).removeClass('c-signed c-signing').addClass('c-signoff');
             $(b).find('.ctext').text('超时');
             $(b).find('.ctext').removeClass('s1 s2 s3 s5');
             $(b).find('.ctext').addClass('s4');
             if ($('.week-box').get(0)) {
-                var oindex = $(b).parents('.item').index();
-                var oc = $('.week-box').find('.hd-list').eq(oindex).find('.cricle');
-                var on = $('.week-box').find('.hd-list').eq(oindex).find('.notice-icon');
+                var _oindex = $(b).parents('.item').index();
+                var _oc = $('.week-box').find('.hd-list').eq(_oindex).find('.cricle');
+                var on = $('.week-box').find('.hd-list').eq(_oindex).find('.notice-icon');
                 // if(!on.hasClass('checked')){
-                oc.addClass('hide');
+                _oc.addClass('hide');
                 on.removeClass('hide');
                 // }
             }
         } else {
-            $(b).removeClass('c-signed c-signoff').addClass('c-signing');
-            if ($('.week-box').get(0)) {
-                var _oindex = $(b).parents('.item').index();
-                var _oc = $('.week-box').find('.hd-list').eq(_oindex).find('.cricle');
-                // if(!oc.hasClass('checked')){
-                _oc.removeClass('hide');
-                // }
-            }
+            $(b).removeClass('c-signed c-signing c-signoff');
         }
     });
 
@@ -11487,7 +11487,7 @@ function personDetai() {
                         var cstatus = lessonGroup[key][x].check_status;
                         var lteacher = lessonGroup[key][x].teacher.uname.substr(0, 1);
                         var lclass = lessonGroup[key][x].class_room.names.substr(0, 1);
-                        $('.item').eq(key).find('.class-con').append('\n                            <li class="class-list clearfix">\n                                <div class="class-detail fl">\n                                    <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                    <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i></p>\n                                </div>\n                                <div class="class-status fr tc">\n                                    <div class="signed">\n                                        <img class="vm signed-pic" src="images/signed.png" alt="">\n                                        <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                    </div>\n                                    <div class="sign-no">\n                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                        <p class="p4">\u672A\u7B7E\u5230</p>\n                                    </div>\n                                    <a class="signing">\u7ACB\u5373\u7B7E\u5230</a>\n                                </div>\n                                <i class="hide ctype">' + ctype + '</i>\n                                <i class="hide cstatus">' + cstatus + '</i>\n                            </li>\n                        ');
+                        $('.item').eq(key - 1).find('.class-con').append('\n                            <li class="class-list clearfix">\n                                <div class="class-detail fl">\n                                    <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                    <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i></p>\n                                </div>\n                                <div class="class-status fr tc">\n                                    <div class="signed">\n                                        <img class="vm signed-pic" src="images/signed.png" alt="">\n                                        <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                    </div>\n                                    <div class="sign-no">\n                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                        <p class="p4">\u672A\u7B7E\u5230</p>\n                                    </div>\n                                    <a class="signing">\u7ACB\u5373\u7B7E\u5230</a>\n                                </div>\n                                <i class="hide ctype">' + ctype + '</i>\n                                <i class="hide cstatus">' + cstatus + '</i>\n                            </li>\n                        ');
                     }
                 }
 

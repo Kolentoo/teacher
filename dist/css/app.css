@@ -63,7 +63,7 @@ border:0.1rem solid #e6e6e6;}
 
 /* 全局头部 */
 .common-top {padding: 2rem 3rem 0;}
-.common-top .logo-link {width: 19.2rem;height: 5.4rem;}
+.common-top .logo-link {width: 22rem;height: 5.4rem;}
 .common-top .logo {width: 100%}
 .common-top .customer {margin: 0.5rem 0 0 0;display: inline-block;}
 .common-top .msgs {width: 3.5rem;}
@@ -99,6 +99,7 @@ display: inline-block;position: relative;top: -0.7rem;margin-left: 1.5rem;font-s
 .user-index .class-group {margin-top: 1rem;background: #fff;}
 .user-index .class-title {line-height: 8.9rem;padding:0 2rem;border-bottom: 0.1rem solid #e6e6e6;font-size: 2.8rem;}
 .user-index .class-title a{line-height: 8.9rem;}
+.user-index .class-title .arrow-icon {width: 1.4rem;position: relative;top: -0.2rem;}
 .user-index .class-item {padding-top:2rem;}
 .user-index .class-item .item-con {margin-left:2rem;border-bottom: 0.1rem solid #e6e6e6;padding-bottom: 2rem;}
 .user-index .class-item .grade-box {width: 57.5rem;border-right: 0.1rem solid #e6e6e6;}

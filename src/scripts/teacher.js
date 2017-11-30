@@ -6,7 +6,10 @@ $(function () {
     personDetai();
     loginWake();
     login();
-    $('body').show();
+    setTimeout(function() {
+        $('body').show();
+    }, 100);
+    
 });
 
 
@@ -56,6 +59,7 @@ function lessonType(){
     $('.class-list').each((a,b)=>{
         let ctype = $(b).find('.ctype').text();
         let cstatus = $(b).find('.cstatus').text();
+        console.log(cstatus)
         if (ctype ==0) {
             $(b).find('.ctext').text('');
             $(b).find('.ctext').removeClass('s1 s2 s3 s4 s5');
@@ -107,8 +111,7 @@ function lessonType(){
                 // }
             }
         }else {
-            // $(b).removeClass('c-signed c-signing c-signoff');
-            $(b).removeClass('c-signed c-signoff').addClass('c-signing');
+            $(b).removeClass('c-signed c-signing c-signoff');
         }
     });
 
@@ -360,9 +363,9 @@ function personDetai(){
                     $('.sign-late').addClass('hide');
                     $('.sign-early').addClass('hide');
                 }else if(signStatus==='no'){
-                    $('.sign-btn').addClass('hide');
+                    $('.sign-btn').removeClass('hide');
                     $('.sign-ok').addClass('hide');
-                    $('.sign-late').removeClass('hide');
+                    $('.sign-late').addClass('hide');
                     $('.sign-early').addClass('hide');
                 }else{
                     $('.sign-btn').addClass('hide');
@@ -491,7 +494,7 @@ function personDetai(){
                         let cstatus = lessonGroup[key][x].check_status;
                         let lteacher = lessonGroup[key][x].teacher.uname.substr(0, 1);
                         let lclass = lessonGroup[key][x].class_room.names.substr(0, 1);
-                        $('.item').eq(key).find('.class-con').append(`
+                        $('.item').eq(key-1).find('.class-con').append(`
                             <li class="class-list clearfix">
                                 <div class="class-detail fl">
                                     <p class="p1"><em>${ltime}</em><i>${ltitle}</i><span class="ctext"></span></p></p>
@@ -641,6 +644,7 @@ function login(){
                         window.location.href='index.html';
                     }else{
                         $('.pass-word').parent('.infor-item').addClass('infor-wrong');
+                        $('.pass-word').parent('.infor-item').find('.hint').text(msg.message);
                     }
                 },
                 error:function(msg){

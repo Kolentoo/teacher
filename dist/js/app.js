@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "b604388b5753a03d1dd9"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "bda7767f59e9a8bd61c9"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11029,7 +11029,9 @@ $(function () {
     personDetai();
     loginWake();
     login();
-    $('body').show();
+    setTimeout(function () {
+        $('body').show();
+    }, 100);
 });
 
 // 设备判断
@@ -11078,6 +11080,7 @@ function lessonType() {
     $('.class-list').each(function (a, b) {
         var ctype = $(b).find('.ctype').text();
         var cstatus = $(b).find('.cstatus').text();
+        console.log(cstatus);
         if (ctype == 0) {
             $(b).find('.ctext').text('');
             $(b).find('.ctext').removeClass('s1 s2 s3 s4 s5');
@@ -11106,31 +11109,30 @@ function lessonType() {
         if (cstatus == 'yes') {
             $(b).removeClass('c-signing c-signoff').addClass('c-signed');
         } else if (cstatus == 'no') {
-            $(b).removeClass('c-signed c-signoff').addClass('c-signing');
-            if ($('.week-box').get(0)) {
-                var oindex = $(b).parents('.item').index();
-                var oc = $('.week-box').find('.hd-list').eq(oindex).find('.cricle');
-                // if(!oc.hasClass('checked')){
-                oc.removeClass('hide');
-                // }
-            }
+            $(b).removeClass('c-signed c-signing c-signoff');
         } else if (cstatus == 'overdue') {
             $(b).removeClass('c-signed c-signing').addClass('c-signoff');
             $(b).find('.ctext').text('超时');
             $(b).find('.ctext').removeClass('s1 s2 s3 s5');
             $(b).find('.ctext').addClass('s4');
             if ($('.week-box').get(0)) {
-                var _oindex = $(b).parents('.item').index();
-                var _oc = $('.week-box').find('.hd-list').eq(_oindex).find('.cricle');
-                var on = $('.week-box').find('.hd-list').eq(_oindex).find('.notice-icon');
+                var oindex = $(b).parents('.item').index();
+                var oc = $('.week-box').find('.hd-list').eq(oindex).find('.cricle');
+                var on = $('.week-box').find('.hd-list').eq(oindex).find('.notice-icon');
                 // if(!on.hasClass('checked')){
-                _oc.addClass('hide');
+                oc.addClass('hide');
                 on.removeClass('hide');
                 // }
             }
         } else {
-            // $(b).removeClass('c-signed c-signing c-signoff');
             $(b).removeClass('c-signed c-signoff').addClass('c-signing');
+            if ($('.week-box').get(0)) {
+                var _oindex = $(b).parents('.item').index();
+                var _oc = $('.week-box').find('.hd-list').eq(_oindex).find('.cricle');
+                // if(!oc.hasClass('checked')){
+                _oc.removeClass('hide');
+                // }
+            }
         }
     });
 
@@ -11356,9 +11358,9 @@ function personDetai() {
                     $('.sign-late').addClass('hide');
                     $('.sign-early').addClass('hide');
                 } else if (signStatus === 'no') {
-                    $('.sign-btn').addClass('hide');
+                    $('.sign-btn').removeClass('hide');
                     $('.sign-ok').addClass('hide');
-                    $('.sign-late').removeClass('hide');
+                    $('.sign-late').addClass('hide');
                     $('.sign-early').addClass('hide');
                 } else {
                     $('.sign-btn').addClass('hide');
@@ -11612,6 +11614,7 @@ function login() {
                         window.location.href = 'index.html';
                     } else {
                         $('.pass-word').parent('.infor-item').addClass('infor-wrong');
+                        $('.pass-word').parent('.infor-item').find('.hint').text(msg.message);
                     }
                 },
                 error: function error(msg) {

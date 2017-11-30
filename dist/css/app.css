@@ -76,7 +76,7 @@ border:0.1rem solid #e6e6e6;}
 .user-index .content {padding-bottom: 10rem;}
 .user-index .user-box {padding:8rem 0 6rem 0;}
 .user-index .user-box .user-info {margin-left: 3rem;}
-.user-index .user-box .student-head {width: 13.8rem;border-radius:50%;overflow: hidden;border:0.1rem solid #e6e6e6;}
+.user-index .user-box .student-head {width: 13.8rem;height: 13.8rem;border-radius:50%;overflow: hidden;border:0.1rem solid #e6e6e6;}
 .user-index .user-box .student-head img{width: 100%;}
 .user-index .notice-msg {background: #fff;height: 9rem;margin-bottom: 1rem;border-top: 0.1rem solid #e6e6e6;}
 .user-index .notice-msg .notice-tips {width: 7.8rem;border:0.1rem solid #ff8c1b;color:#ff8c1b;font-size: 2.4rem;text-align: center;

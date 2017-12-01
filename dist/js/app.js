@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f99610828e7dd670dc6a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "59a42a11ca8f1ec1aacf"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11029,6 +11029,7 @@ $(function () {
     personDetai();
     loginWake();
     login();
+    loginTeach();
     setTimeout(function () {
         $('body').show();
     }, 100);
@@ -11080,7 +11081,8 @@ function lessonType() {
     $('.class-list').each(function (a, b) {
         var ctype = $(b).find('.ctype').text();
         var cstatus = $(b).find('.cstatus').text();
-        console.log(cstatus);
+        var num = $(b).find('.snum');
+        var numText = num.text();
         if (ctype == 0) {
             $(b).find('.ctext').text('');
             $(b).find('.ctext').removeClass('s1 s2 s3 s4 s5');
@@ -11106,6 +11108,10 @@ function lessonType() {
             $(b).find('.ctext').addClass('s5');
         }
 
+        if (numText == 0) {
+            $(b).addClass('hidden');
+        }
+
         if (cstatus == 'yes') {
             $(b).removeClass('c-signing c-signoff').addClass('c-signed');
         } else if (cstatus == 'no') {
@@ -11113,9 +11119,7 @@ function lessonType() {
             if ($('.week-box').get(0)) {
                 var oindex = $(b).parents('.item').index();
                 var oc = $('.week-box').find('.hd-list').eq(oindex).find('.cricle');
-                // if(!oc.hasClass('checked')){
                 oc.removeClass('hide');
-                // }
             }
         } else if (cstatus == 'overdue') {
             $(b).removeClass('c-signed c-signing').addClass('c-signoff');
@@ -11126,10 +11130,8 @@ function lessonType() {
                 var _oindex = $(b).parents('.item').index();
                 var _oc = $('.week-box').find('.hd-list').eq(_oindex).find('.cricle');
                 var on = $('.week-box').find('.hd-list').eq(_oindex).find('.notice-icon');
-                // if(!on.hasClass('checked')){
                 _oc.addClass('hide');
                 on.removeClass('hide');
-                // }
             }
         } else {
             $(b).removeClass('c-signed c-signing c-signoff');
@@ -11137,7 +11139,7 @@ function lessonType() {
     });
 
     $(".ct").each(function (a, b) {
-        if ($(b).find('.class-list').length > 0) {
+        if ($(b).find('.hidden').length != $(b).find('.class-list').length) {
             $(b).find('.tips-txt').remove();
         } else {
             if ($(b).find('.tips-txt').length > 0) {} else {
@@ -11154,8 +11156,6 @@ function personDetai() {
     var sGroup = [];
     if ($('.user-index').get(0)) {
         var _cdata = sessionStorage.getItem('ckey');
-        console.log(_cdata);
-        var tid = [];
         $.ajax({
             type: 'GET',
             cache: 'false',
@@ -11163,21 +11163,22 @@ function personDetai() {
             headers: { 'Authorization': _cdata },
             dataType: 'json',
             success: function success(msg) {
-                // console.log(msg)
                 $('.student-head').children('img').attr('src', msg.data.avatar);
                 $('.student-txt').find('.s1').text(msg.data.uname);
                 $('.student-txt').find('.s2').text(msg.data.school_name);
                 $('.student-txt').find('.txt2').find('i').text(msg.data.job.full_name);
-                tid.push(msg.data.aid);
+                var tid = sessionStorage.setItem('tid', msg.data.aid);
             },
             error: function error(msg) {
                 console.log('信息获取出错');
             }
         });
 
+        var tidNum = sessionStorage.getItem('tid');
         var nowdays = new Date();
         var year = nowdays.getFullYear();
-        var month = nowdays.getMonth();
+        var month = nowdays.getMonth() + 1;
+        console.log(year, month);
         if (month == 0) {
             month = 12;
             year = year - 1;
@@ -11194,7 +11195,7 @@ function personDetai() {
             cache: 'false',
             url: 'http://pandatest.dfth.com/api/v1/reportForms/teachFormsPic',
             headers: { 'Authorization': _cdata },
-            data: { 'teach_uid': tid[0], 'start_date': firstDay, 'end_date': lastDay },
+            data: { 'teach_uid': tidNum, 'start_date': firstDay, 'end_date': lastDay },
             dataType: 'json',
             success: function success(msg) {
                 // console.log(msg.data)
@@ -11230,14 +11231,15 @@ function personDetai() {
             cache: 'false',
             url: 'http://pandatest.dfth.com/api/v1/teacher/syllabus',
             headers: { 'Authorization': _cdata },
-            data: { 'teach_uid': tid[0], 'start_date': today, 'end_date': today },
+            data: { 'teach_uid': tidNum, 'start_date': today, 'end_date': today },
             dataType: 'json',
             success: function success(msg) {
-                console.log(msg.data);
+                // console.log(msg.data);
                 var classCon = msg.data;
                 for (var key in classCon) {
                     var ctime = classCon[key].class_time;
                     var ctitle = classCon[key].course.title;
+                    var pnum = classCon[key].studentCount;
                     var cname = classCon[key].teacher.uname;
                     var cfirst = cname.substr(0, 1);
                     var cclass = classCon[key].class_room.names.substr(0, 1);
@@ -11247,23 +11249,42 @@ function personDetai() {
                     var st = classCon[key].schooltime;
                     idGroup.push(did);
                     sGroup.push(st);
-                    $('.class-con').append('<li class="class-list clearfix">\n                            <div class="class-detail fl">\n                                <p class="p1"><em>' + ctime + '</em><i>' + ctitle + '</i><span class="ctext"></span></p>\n                                <p class="p2"><em>' + cfirst + '\u8001\u5E08</em><i>\u6559\u5BA4' + cclass + '</i></p>\n                            </div>\n                            <div class="class-status fr tc">\n                                <div class="signed">\n                                    <img class="vm signed-pic" src="images/signed.png" alt="">\n                                    <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                </div>\n                                <a class="signing">\u7ACB\u5373\u7B7E\u5230</a>\n                            </div>\n                            <i class="hide ctype">' + ctype + '</i>\n                            <i class="hide cstatus">' + cstatus + '</i>\n                        </li>');
+                    var idNum = sessionStorage.setItem('idGroup', idGroup);
+                    var sNum = sessionStorage.setItem('sGroup', sGroup);
+
+                    $('.class-con').append('<li class="class-list">\n                            <a class="block alink clearfix" id="alink">\n                                <div class="class-detail fl">\n                                    <p class="p1"><em>' + ctime + '</em><i>' + ctitle + '</i><span class="ctext"></span></p>\n                                    <p class="p2"><em>' + cfirst + '\u8001\u5E08</em><i>\u6559\u5BA4' + cclass + '</i><em class="num">(<em class="snum">' + pnum + '</em>\u4EBA)</em></p>\n                                </div>\n                                <div class="class-status fr tc">\n                                    <div class="signed">\n                                        <img class="vm signed-pic" src="images/signed.png" alt="">\n                                        <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                    </div>\n                                    <p class="signing">\u7ACB\u5373\u7B7E\u5230</p>\n                                </div>\n                            </a>\n                            <i class="hide ctype">' + ctype + '</i>\n                            <i class="hide cstatus">' + cstatus + '</i>\n                        </li>');
                 }
 
                 lessonType();
 
                 setTimeout(function () {
-                    if ($('.class-list').length == 0) {
+                    if ($('.class-list').length <= $('.hidden').length) {
                         $('.class-con').addClass('hide');
                         $('.class-result').removeClass('hide');
                     }
                 }, 1);
 
-                $('.signing').on('click', function () {
-                    var sList = $(this).parents('.class-list');
+                $('.class-list').on('click', function () {
+                    var sList = $(this);
                     var sindex = sList.index();
-                    var sid = idGroup[sindex];
-                    var sschoole = sGroup[sindex];
+                    var idResult = sessionStorage.getItem('idGroup');
+                    var sResult = sessionStorage.getItem('sGroup');
+                    console.log(idResult, sResult);
+                    var ir = idResult.split(',');
+                    var sr = sResult.split(',');
+                    var sid = ir[sindex];
+                    var sschoole = sr[sindex];
+                    var s1 = sschoole.replace(' ', '=');
+                    var alink = sList.find('.alink');
+                    var link = 'sign.html?id=' + sid + '&schooltime=' + s1;
+                    $('.alink').attr('href', link);
+                    // window.location.href='sign.html?id='+sid+'&schooltime='+s1;
+                    setTimeout(function () {
+                        $('.alink').click();
+                        // document.getElementById("alink").click();
+                        // sessionStorage.removeItem('idGroup');
+                        // sessionStorage.removeItem('sGroup');
+                    }, 500);
                     $.ajax({
                         type: 'GET',
                         cache: 'false',
@@ -11272,11 +11293,10 @@ function personDetai() {
                         data: { 'id': sid, 'schooltime': sschoole },
                         dataType: 'json',
                         success: function success(msg) {
-                            console.log(msg);
-                            window.location.href = 'sign.html?id%' + sid + '&schooltime%' + sschoole;
+                            // console.log(msg);
                         },
                         error: function error(msg) {
-                            console.log('信息获取出错');
+                            // console.log(msg);
                         }
                     });
                 });
@@ -11290,12 +11310,16 @@ function personDetai() {
     var cdata = sessionStorage.getItem('ckey');
     if ($('.user-sign').get(0)) {
         var durl = window.location.href;
-        var dobj = durl.split('%');
-        var dgroup = dobj[1];
-        var dgroup1 = dgroup.split('&');
+        var dobj = durl.split('=');
+        console.log(dobj);
+        var dj1 = dobj[1];
+        var dj2 = dobj[2];
+        var dj3 = dj1.split('&');
+        var dj5 = dobj[2] + ' ' + dobj[3];
+        console.log(dj3[0], dj5);
 
-        var did = dgroup1[0];
-        var dtime = dobj[2];
+        var did = dj3[0];
+        var dtime = dj5;
         $.ajax({
             type: 'GET',
             cache: 'false',
@@ -11305,12 +11329,12 @@ function personDetai() {
             dataType: 'json',
             success: function success(msg) {
                 console.log(msg.data);
-                var sGroup = msg.data.students;
+                var ssGroup = msg.data.students;
                 var signStatus = msg.data.check_status;
-                for (var key in sGroup) {
-                    var cname = sGroup[key].child_name;
-                    var cnum = sGroup[key].course_curr_num;
-                    var ctype = sGroup[key].checkin_types_name;
+                for (var key in ssGroup) {
+                    var cname = ssGroup[key].child_name;
+                    var cnum = ssGroup[key].course_curr_num;
+                    var ctype = ssGroup[key].checkin_types_name;
                     $('.sign-group').append('\n                        <li class="sign-list clearfix ">\n                            <p class="p2 fl">' + cname + '</p>\n                            <p class="p2 fl">' + cnum + '</p>\n                            <p class="p2 fl p3">' + ctype + '</p>\n                        </li>\n                    ');
                 }
 
@@ -11330,10 +11354,13 @@ function personDetai() {
                     }
                     if ($(b).children('.p3').text() == '已出勤' || $(b).children('.p3').text() == '出勤') {
                         attend.push(1);
+                        var attendNum = sessionStorage.setItem('attend', attend);
                     } else if ($(b).children('.p3').text() == '已请假') {
                         leave.push(2);
+                        var leaveNum = sessionStorage.setItem('leave', leave);
                     } else if ($(b).children('.p3').text() == '旷课') {
                         absent.push(3);
+                        var absentNum = sessionStorage.setItem('absent', absent);
                     }
                 });
                 var attendLength = attend.length;
@@ -11369,34 +11396,42 @@ function personDetai() {
                     $('.sign-early').removeClass('hide');
                 }
 
+                if ($('.sign-list').length == 0) {
+                    $('.sign-btn').addClass('hide');
+                    $('.no-person').removeClass('hide');
+                }
+
                 // 考勤操作
                 $('.sign-list').children('.p3').on('click', function () {
-                    var o = $(this);
-                    var oindex = o.parent('.sign-list').index();
-                    if (o.text() == '出勤') {
-                        sGroup[oindex].checkin_types_name = '旷课';
-                        sGroup[oindex].checkin_types = 3;
-                        o.text('旷课');
-                        o.addClass('absent');
-                    } else if (o.text() == '旷课') {
-                        sGroup[oindex].checkin_types_name = '出勤';
-                        sGroup[oindex].checkin_types = 1;
-                        o.text('出勤');
-                        o.removeClass('absent');
+                    if ($('.sign-ok').hasClass('hide')) {
+                        var o = $(this);
+                        var oindex = o.parent('.sign-list').index();
+                        if (o.text() == '出勤') {
+                            ssGroup[oindex].checkin_types_name = '旷课';
+                            ssGroup[oindex].checkin_types = 3;
+                            o.text('旷课');
+                            o.addClass('absent');
+                        } else if (o.text() == '旷课') {
+                            ssGroup[oindex].checkin_types_name = '出勤';
+                            ssGroup[oindex].checkin_types = 1;
+                            o.text('出勤');
+                            o.removeClass('absent');
+                        }
                     }
                 });
 
                 // 确认签到
                 $('.sign-btn').on('click', function () {
+                    var jsonGroup = JSON.stringify(ssGroup);
+                    console.log(jsonGroup);
                     $.ajax({
-                        type: 'GET',
+                        type: 'POST',
                         cache: 'false',
-                        url: 'http://pandatest.dfth.com/api/v1/teacher/checkWork',
+                        url: 'http://pandatest.dfth.com/api/v1/teacher/checkWorkPost',
                         headers: { 'Authorization': cdata },
-                        data: { 'id': did, 'schooltime': dtime, 'students': sGroup },
+                        data: { 'class_id': did, 'schooltime': dtime, 'students': jsonGroup },
                         dataType: 'json',
                         success: function success(msg) {
-                            console.log(sGroup);
                             $('.sign-ok').removeClass('hide');
                             $('.sign-btn').addClass('hide');
                             $('.sign-list').each(function (a, b) {
@@ -11404,6 +11439,41 @@ function personDetai() {
                                     $(b).children('.p3').addClass('attend');
                                 }
                             });
+                            var attend = [];
+                            var leave = [];
+                            var absent = [];
+                            $('.sign-list').each(function (a, b) {
+                                var status = $(b).find('.p3');
+                                if (status.text() === '已请假') {
+                                    status.removeClass('attend absent').addClass('leave');
+                                } else if (status.text() === '旷课') {
+                                    status.removeClass('attend leave').addClass('absent');
+                                } else if (status.text() === '已出勤') {
+                                    status.removeClass('attend absent').addClass('attend');
+                                } else {
+                                    status.removeClass('attend absent attend');
+                                }
+                                if ($(b).children('.p3').text() == '已出勤' || $(b).children('.p3').text() == '出勤') {
+                                    attend.push(1);
+                                    var attendNum = sessionStorage.setItem('attend', attend);
+                                } else if ($(b).children('.p3').text() == '已请假') {
+                                    leave.push(2);
+                                    var leaveNum = sessionStorage.setItem('leave', leave);
+                                } else if ($(b).children('.p3').text() == '旷课') {
+                                    absent.push(3);
+                                    var absentNum = sessionStorage.setItem('absent', absent);
+                                }
+                            });
+                            var attendLength = attend.length;
+                            var leaveLength = leave.length;
+                            var absentLength = absent.length;
+                            $('.common-msg').removeClass('msg-off').addClass('msg-on');
+                            setTimeout(function () {
+                                $('.common-msg').removeClass('msg-on').addClass('msg-off');
+                                $('.attend-list').children('i').text(attendLength);
+                                $('.leave-list').children('i').text(leaveLength);
+                                $('.absent-list').children('i').text(absentLength);
+                            }, 3000);
                         },
                         error: function error(msg) {
                             console.log('信息获取出错');
@@ -11477,41 +11547,49 @@ function personDetai() {
             data: { 'start_date': weekst2, 'end_date': weeken2 },
             dataType: 'json',
             success: function success(msg) {
-                console.log(msg.data);
                 var lessonGroup = msg.data;
                 for (var key in lessonGroup) {
                     for (var x in lessonGroup[key]) {
                         var ltime = lessonGroup[key][x].class_time;
                         var ltitle = lessonGroup[key][x].title;
+                        var lnum = lessonGroup[key][x].studentCount;
                         var ctype = lessonGroup[key][x].type;
                         var cstatus = lessonGroup[key][x].check_status;
                         var lteacher = lessonGroup[key][x].teacher.uname.substr(0, 1);
                         var lclass = lessonGroup[key][x].class_room.names.substr(0, 1);
-                        $('.item').eq(key - 1).find('.class-con').append('\n                            <li class="class-list clearfix">\n                                <div class="class-detail fl">\n                                    <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                    <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i></p>\n                                </div>\n                                <div class="class-status fr tc">\n                                    <div class="signed">\n                                        <img class="vm signed-pic" src="images/signed.png" alt="">\n                                        <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                    </div>\n                                    <div class="sign-no">\n                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                        <p class="p4">\u672A\u7B7E\u5230</p>\n                                    </div>\n                                    <a class="signing">\u7ACB\u5373\u7B7E\u5230</a>\n                                </div>\n                                <i class="hide ctype">' + ctype + '</i>\n                                <i class="hide cstatus">' + cstatus + '</i>\n                            </li>\n                        ');
+                        var _did = lessonGroup[key][x].id;
+                        var st = lessonGroup[key][x].schooltime;
+                        // keyGroup.push(key);
+                        // idGroup2.push(did);
+                        // sGroup2.push(st);
+                        // let idNum = sessionStorage.setItem('idGroup2',idGroup2);
+                        // let sNum = sessionStorage.setItem('sGroup2',sGroup2);
+                        // let keyNum = sessionStorage.setItem('keyGroup',keyGroup);
+                        $('.item').eq(key - 1).find('.class-con').append('\n                            <li class="class-list">\n                                <a class="block alink clearfix">\n                                    <div class="class-detail fl">\n                                        <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                        <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i><em class="num">(<em class="snum">' + lnum + '</em></>\u4EBA)</em></p>\n                                    </div>\n                                    <div class="class-status fr tc">\n                                        <div class="signed">\n                                            <img class="vm signed-pic" src="images/signed.png" alt="">\n                                            <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                        </div>\n                                        <div class="sign-no">\n                                            <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                            <p class="p4">\u672A\u7B7E\u5230</p>\n                                        </div>\n                                        <p class="signing">\u7ACB\u5373\u7B7E\u5230</p>\n                                    </div>\n                                </a>    \n                                <i class="hide ctype">' + ctype + '</i>\n                                <i class="hide cstatus">' + cstatus + '</i>\n                                <i class="hide did">' + _did + '</i>\n                                <i class="hide st">' + st + '</i>\n                            </li>\n                        ');
                     }
                 }
 
                 lessonType();
-
-                $('.signing').on('click', function () {
-                    var sList = $(this).parents('.class-list');
-                    var sindex = sList.index();
-                    var sid = idGroup[sindex];
-                    var sschoole = sGroup[sindex];
+                $('.class-list').on('click', function () {
+                    var sList = $(this);
+                    var didText = sList.find('.did').text();
+                    var stText = sList.find('.st').text();
                     var oindex = $(this).parents('.item').index();
+                    console.log(didText, stText);
+                    var s1 = stText.replace(' ', '=');
+                    window.location.href = 'sign.html?id=' + didText + '&schooltime=' + s1;
                     $.ajax({
                         type: 'GET',
                         cache: 'false',
                         url: 'http://pandatest.dfth.com/api/v1/teacher/checkWork',
                         headers: { 'Authorization': cdata },
-                        data: { 'id': sid, 'schooltime': sschoole },
+                        data: { 'id': didText, 'schooltime': stText },
                         dataType: 'json',
                         success: function success(msg) {
                             console.log(msg);
-                            window.location.href = 'sign.html?id%' + sid + '&schooltime%' + sschoole;
                         },
                         error: function error(msg) {
-                            console.log('信息获取出错');
+                            console.log(msg);
                         }
                     });
                 });
@@ -11595,36 +11673,73 @@ function loginWake() {
 
 // 用户登录
 function login() {
-    $('.refer').on('click', function () {
-        var uname = $('.phone-number').val();
-        var psd = $('.pass-word').val();
-        if ($('.refer').hasClass('refer-on')) {
-            $.ajax({
-                type: 'POST',
-                cache: 'false',
-                url: 'http://pandatest.dfth.com/api/v1/admin/login',
-                data: { 'username': uname, 'password': psd, 'grant_type': 'password', 'client_id': '1', 'client_secret': 'EjKXjo27hXenF8a2MgqHvpYv7IhtJ678GfOgnHc5' },
-                dataType: 'json',
-                success: function success(msg) {
-                    console.log(msg);
-                    if (msg.code == 0) {
-                        var ckey = msg.token_type + ' ' + msg.access_token;
-                        console.log(ckey);
-                        sessionStorage.setItem('ckey', ckey);
-                        window.location.href = 'index.html';
-                    } else {
-                        $('.pass-word').parent('.infor-item').addClass('infor-wrong');
-                        $('.pass-word').parent('.infor-item').find('.hint').text(msg.message);
-                    }
-                },
-                error: function error(msg) {
-                    console.log(msg);
+    if ($('.login').get(0)) {
+
+        $('.refer').on('click', function () {
+
+            if ($('.refer').hasClass('refer-on')) {
+                var uname = $('.phone-number').val();
+                var psd = $('.pass-word').val();
+                var curl = window.location.href;
+                if (curl.indexOf("?") > 0) {
+                    var keyGroup = curl.split('?');
+                    var keyid1 = keyGroup[1];
+                    var keyid2 = keyid1.split('=');
+                    var keyid3 = keyid2[1];
+                    console.log(keyid3);
+                } else {
+                    var keyid3 = '';
                 }
-            });
+                $.ajax({
+                    type: 'POST',
+                    cache: 'false',
+                    url: 'http://pandatest.dfth.com/api/v1/admin/login',
+                    data: { 'username': uname, 'password': psd, 'grant_type': 'password', 'client_id': '1', 'client_secret': 'EjKXjo27hXenF8a2MgqHvpYv7IhtJ678GfOgnHc5', 'openid': keyid3 },
+                    dataType: 'json',
+                    success: function success(msg) {
+                        if (msg.code == 0) {
+                            console.log(msg);
+                            var job = msg.jobCode.code;
+                            console.log(job);
+
+                            var ckey = msg.token_type + ' ' + msg.access_token;
+                            sessionStorage.setItem('ckey', ckey);
+                            console.log(job.indexOf('teachq'));
+                            if (job.indexOf('teach') != -1) {
+                                window.location.href = 'index.html';
+                            } else {
+                                window.location.href = 'tips.html?key=noteach';
+                            }
+                        } else {
+                            $('.pass-word').parent('.infor-item').addClass('infor-wrong');
+                            $('.pass-word').parent('.infor-item').find('.hint').text(msg.message);
+                        }
+                    },
+                    error: function error(msg) {
+                        console.log(msg);
+                    }
+                });
+            } else {
+                return false;
+            }
+        });
+    }
+}
+
+// 登录判断
+function loginTeach() {
+    if ($('.user-tips').get(0)) {
+        var curl = window.location.href;
+        var keyGroup = curl.split('?');
+        var keyid1 = keyGroup[1];
+        var keyid2 = keyid1.split('=');
+        var keyid3 = keyid2[1];
+        if (keyid3 == 'noteach') {
+            $('.user-tips').find('.p1').addClass('hide');
         } else {
-            return false;
+            $('.user-tips').find('.p2').addClass('hide');
         }
-    });
+    }
 }
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 

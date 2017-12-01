@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "59a42a11ca8f1ec1aacf"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ba5148acbf8305bfe9da"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11078,6 +11078,8 @@ function weekChoose() {
 
 // 课程类型判断
 function lessonType() {
+    $('.cricle').addClass('hide');
+    $('.notice-icon').addClass('hide');
     $('.class-list').each(function (a, b) {
         var ctype = $(b).find('.ctype').text();
         var cstatus = $(b).find('.cstatus').text();
@@ -11281,9 +11283,8 @@ function personDetai() {
                     // window.location.href='sign.html?id='+sid+'&schooltime='+s1;
                     setTimeout(function () {
                         $('.alink').click();
-                        // document.getElementById("alink").click();
-                        // sessionStorage.removeItem('idGroup');
-                        // sessionStorage.removeItem('sGroup');
+                        sessionStorage.removeItem('idGroup');
+                        sessionStorage.removeItem('sGroup');
                     }, 500);
                     $.ajax({
                         type: 'GET',
@@ -11538,7 +11539,6 @@ function personDetai() {
         var weekst2 = weekst1.replace(/\./g, '-');
         var weeken1 = $('.end').text();
         var weeken2 = weeken1.replace(/\./g, '-');
-        console.log(weekst2, weeken2);
         $.ajax({
             type: 'GET',
             cache: 'false',
@@ -11548,8 +11548,9 @@ function personDetai() {
             dataType: 'json',
             success: function success(msg) {
                 var lessonGroup = msg.data;
-                for (var key in lessonGroup) {
-                    for (var x in lessonGroup[key]) {
+
+                var _loop = function _loop(key) {
+                    var _loop2 = function _loop2(x) {
                         var ltime = lessonGroup[key][x].class_time;
                         var ltitle = lessonGroup[key][x].title;
                         var lnum = lessonGroup[key][x].studentCount;
@@ -11557,7 +11558,7 @@ function personDetai() {
                         var cstatus = lessonGroup[key][x].check_status;
                         var lteacher = lessonGroup[key][x].teacher.uname.substr(0, 1);
                         var lclass = lessonGroup[key][x].class_room.names.substr(0, 1);
-                        var _did = lessonGroup[key][x].id;
+                        var did = lessonGroup[key][x].id;
                         var st = lessonGroup[key][x].schooltime;
                         // keyGroup.push(key);
                         // idGroup2.push(did);
@@ -11565,34 +11566,53 @@ function personDetai() {
                         // let idNum = sessionStorage.setItem('idGroup2',idGroup2);
                         // let sNum = sessionStorage.setItem('sGroup2',sGroup2);
                         // let keyNum = sessionStorage.setItem('keyGroup',keyGroup);
-                        $('.item').eq(key - 1).find('.class-con').append('\n                            <li class="class-list">\n                                <a class="block alink clearfix">\n                                    <div class="class-detail fl">\n                                        <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                        <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i><em class="num">(<em class="snum">' + lnum + '</em></>\u4EBA)</em></p>\n                                    </div>\n                                    <div class="class-status fr tc">\n                                        <div class="signed">\n                                            <img class="vm signed-pic" src="images/signed.png" alt="">\n                                            <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                        </div>\n                                        <div class="sign-no">\n                                            <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                            <p class="p4">\u672A\u7B7E\u5230</p>\n                                        </div>\n                                        <p class="signing">\u7ACB\u5373\u7B7E\u5230</p>\n                                    </div>\n                                </a>    \n                                <i class="hide ctype">' + ctype + '</i>\n                                <i class="hide cstatus">' + cstatus + '</i>\n                                <i class="hide did">' + _did + '</i>\n                                <i class="hide st">' + st + '</i>\n                            </li>\n                        ');
+                        $('.class-con').html('');
+                        setTimeout(function () {
+                            $('.item').eq(key - 1).find('.class-con').append('\n                                <li class="class-list">\n                                    <a class="block alink clearfix">\n                                        <div class="class-detail fl">\n                                            <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                            <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i><em class="num">(<em class="snum">' + lnum + '</em></>\u4EBA)</em></p>\n                                        </div>\n                                        <div class="class-status fr tc">\n                                            <div class="signed">\n                                                <img class="vm signed-pic" src="images/signed.png" alt="">\n                                                <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                            </div>\n                                            <div class="sign-no">\n                                                <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                                <p class="p4">\u672A\u7B7E\u5230</p>\n                                            </div>\n                                            <p class="signing">\u7ACB\u5373\u7B7E\u5230</p>\n                                        </div>\n                                    </a>    \n                                    <i class="hide ctype">' + ctype + '</i>\n                                    <i class="hide cstatus">' + cstatus + '</i>\n                                    <i class="hide did">' + did + '</i>\n                                    <i class="hide st">' + st + '</i>\n                                </li>\n                            ');
+                            lessonType();
+                        }, 1);
+                    };
+
+                    for (var x in lessonGroup[key]) {
+                        _loop2(x);
                     }
+                };
+
+                for (var key in lessonGroup) {
+                    _loop(key);
                 }
 
-                lessonType();
-                $('.class-list').on('click', function () {
-                    var sList = $(this);
-                    var didText = sList.find('.did').text();
-                    var stText = sList.find('.st').text();
-                    var oindex = $(this).parents('.item').index();
-                    console.log(didText, stText);
-                    var s1 = stText.replace(' ', '=');
-                    window.location.href = 'sign.html?id=' + didText + '&schooltime=' + s1;
-                    $.ajax({
-                        type: 'GET',
-                        cache: 'false',
-                        url: 'http://pandatest.dfth.com/api/v1/teacher/checkWork',
-                        headers: { 'Authorization': cdata },
-                        data: { 'id': didText, 'schooltime': stText },
-                        dataType: 'json',
-                        success: function success(msg) {
-                            console.log(msg);
-                        },
-                        error: function error(msg) {
-                            console.log(msg);
-                        }
+                setTimeout(function () {
+                    $('.class-list').on('click', function () {
+                        console.log(569);
+                        var sList = $(this);
+                        var didText = sList.find('.did').text();
+                        var stText = sList.find('.st').text();
+                        var oindex = $(this).parents('.item').index();
+                        console.log(didText, stText);
+                        var s1 = stText.replace(' ', '=');
+                        var link = 'sign.html?id=' + didText + '&schooltime=' + s1;
+                        // window.location.href='sign.html?id='+didText+'&schooltime='+s1;
+                        $('.alink').attr('href', link);
+                        setTimeout(function () {
+                            $('.alink').click();
+                        }, 500);
+                        $.ajax({
+                            type: 'GET',
+                            cache: 'false',
+                            url: 'http://pandatest.dfth.com/api/v1/teacher/checkWork',
+                            headers: { 'Authorization': cdata },
+                            data: { 'id': didText, 'schooltime': stText },
+                            dataType: 'json',
+                            success: function success(msg) {
+                                console.log(msg);
+                            },
+                            error: function error(msg) {
+                                console.log(msg);
+                            }
+                        });
                     });
-                });
+                }, 2);
             },
             error: function error(msg) {
                 console.log('信息获取出错');

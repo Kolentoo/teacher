@@ -41,7 +41,7 @@ display: inline-block;position: relative;top: -0.2rem;}
 .class-tips {background: #333;margin-top:1rem;background: #fff;transition:all ease 2s;
 border:0.1rem solid #e6e6e6;}
 .c-signing .class-status {display: block;}
-.c-signing .class-status .signing {font-size: 2.8rem;color:#1fb5ad;line-height: 15rem;color:#1fb5ad;}
+.c-signing .class-status .signing {font-size: 2.8rem;color:#1fb5ad;line-height: 12rem;color:#1fb5ad;}
 .c-signing .sign-no {display: none;}
 .c-signing .signed {display: none;}
 .c-signing .signing {display: block;}
@@ -167,7 +167,8 @@ border-radius:0.5rem;text-align: center;}
 .week-box .hd-list .choose-icon {width: 2.2rem;position: absolute;bottom: 0;left: 50%;margin-left: -1.1rem;opacity: 0;}
 .week-box .on .choose-icon {opacity: 1;}
 .week-box .class-tips {border: none;}
-.week-box .class-tips .class-list {border-top: 0.1rem solid #e6e6e6;border-bottom: none;margin-top: -0.9rem;}
+.week-box .class-tips .class-op {transition:all ease 0.2s;opacity: 0;}
+.week-box .class-tips .class-list {border-top: 0.1rem solid #e6e6e6;border-bottom: none;margin-top: -0.9rem;opacity: 1;}
 .week-box .class-tips .class-list:nth-child(1) {border-top: none;}
 .week-box .class-tips .tips-txt {padding:5rem 0;color:#999;font-size: 2.8rem;}
 .tips-body,.tipsHtml{background: #fff;}

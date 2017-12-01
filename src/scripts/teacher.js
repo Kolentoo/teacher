@@ -6,6 +6,7 @@ $(function () {
     personDetai();
     loginWake();
     login();
+    loginTeach();
     setTimeout(function() {
         $('body').show();
     }, 100);
@@ -56,10 +57,13 @@ function weekChoose(){
 
 // 课程类型判断
 function lessonType(){
+    $('.cricle').addClass('hide');
+    $('.notice-icon').addClass('hide');
     $('.class-list').each((a,b)=>{
         let ctype = $(b).find('.ctype').text();
         let cstatus = $(b).find('.cstatus').text();
-        console.log(cstatus)
+        let num = $(b).find('.snum');
+        let numText = num.text();
         if (ctype ==0) {
             $(b).find('.ctext').text('');
             $(b).find('.ctext').removeClass('s1 s2 s3 s4 s5');
@@ -85,6 +89,10 @@ function lessonType(){
             $(b).find('.ctext').addClass('s5');
         }
 
+        if(numText==0){
+            $(b).addClass('hidden');
+        }
+
         if(cstatus=='yes'){
             $(b).removeClass('c-signing c-signoff').addClass('c-signed');
         }else if(cstatus=='no'){
@@ -92,9 +100,7 @@ function lessonType(){
             if($('.week-box').get(0)){
                 let oindex = $(b).parents('.item').index();
                 let oc = $('.week-box').find('.hd-list').eq(oindex).find('.cricle');
-                // if(!oc.hasClass('checked')){
-                    oc.removeClass('hide');
-                // }
+                oc.removeClass('hide');
             }
         }else if(cstatus=='overdue'){
             $(b).removeClass('c-signed c-signing').addClass('c-signoff');
@@ -105,10 +111,8 @@ function lessonType(){
                 let oindex = $(b).parents('.item').index();
                 let oc = $('.week-box').find('.hd-list').eq(oindex).find('.cricle');
                 let on = $('.week-box').find('.hd-list').eq(oindex).find('.notice-icon');
-                // if(!on.hasClass('checked')){
-                    oc.addClass('hide');
-                    on.removeClass('hide');
-                // }
+                oc.addClass('hide');
+                on.removeClass('hide');
             }
         }else {
             $(b).removeClass('c-signed c-signing c-signoff');
@@ -116,7 +120,7 @@ function lessonType(){
     });
 
     $(".ct").each((a,b)=>{
-        if ($(b).find('.class-list').length>0) {
+        if ($(b).find('.hidden').length!=$(b).find('.class-list').length) {
             $(b).find('.tips-txt').remove();
         }else{
             if ($(b).find('.tips-txt').length>0) {
@@ -136,8 +140,6 @@ function personDetai(){
     let sGroup = [];
     if($('.user-index').get(0)){
         let cdata = sessionStorage.getItem('ckey');
-        console.log(cdata);
-        let tid = [];
         $.ajax({
             type:'GET',
             cache:'false',
@@ -145,22 +147,22 @@ function personDetai(){
             headers:{'Authorization':cdata},
             dataType:'json',
             success:function(msg){
-                // console.log(msg)
                 $('.student-head').children('img').attr('src',msg.data.avatar);
                 $('.student-txt').find('.s1').text(msg.data.uname);
                 $('.student-txt').find('.s2').text(msg.data.school_name);
                 $('.student-txt').find('.txt2').find('i').text(msg.data.job.full_name);
-                tid.push(msg.data.aid);
+                let tid = sessionStorage.setItem('tid',msg.data.aid);
             },
             error:function(msg){
                 console.log('信息获取出错');
             }    
         });
 
-        
+        let tidNum = sessionStorage.getItem('tid');
         let nowdays = new Date();
         let year = nowdays.getFullYear();
-        let month = nowdays.getMonth();
+        let month = nowdays.getMonth()+1; 
+        console.log(year,month)
         if(month==0){
             month=12;
             year=year-1;
@@ -177,7 +179,7 @@ function personDetai(){
             cache:'false',
             url:'http://pandatest.dfth.com/api/v1/reportForms/teachFormsPic',
             headers:{'Authorization':cdata},
-            data:{'teach_uid':tid[0],'start_date':firstDay,'end_date':lastDay},
+            data:{'teach_uid':tidNum,'start_date':firstDay,'end_date':lastDay},
             dataType:'json',
             success:function(msg){
                 // console.log(msg.data)
@@ -213,14 +215,15 @@ function personDetai(){
             cache:'false',
             url:'http://pandatest.dfth.com/api/v1/teacher/syllabus',
             headers:{'Authorization':cdata},
-            data:{'teach_uid':tid[0],'start_date':today,'end_date':today},
+            data:{'teach_uid':tidNum,'start_date':today,'end_date':today},
             dataType:'json',
             success:function(msg){
-                console.log(msg.data);
+                // console.log(msg.data);
                 let classCon = msg.data;
                 for (let key in classCon) { 
                     let ctime = classCon[key].class_time;
                     let ctitle = classCon[key].course.title;
+                    let pnum = classCon[key].studentCount;
                     let cname = classCon[key].teacher.uname;
                     let cfirst = cname.substr(0, 1);
                     let cclass = classCon[key].class_room.names.substr(0, 1);
@@ -230,19 +233,24 @@ function personDetai(){
                     let st = classCon[key].schooltime; 
                     idGroup.push(did);
                     sGroup.push(st);
+                    let idNum = sessionStorage.setItem('idGroup',idGroup);
+                    let sNum = sessionStorage.setItem('sGroup',sGroup);
+                    
                     $('.class-con').append(
-                        `<li class="class-list clearfix">
-                            <div class="class-detail fl">
-                                <p class="p1"><em>${ctime}</em><i>${ctitle}</i><span class="ctext"></span></p>
-                                <p class="p2"><em>${cfirst}老师</em><i>教室${cclass}</i></p>
-                            </div>
-                            <div class="class-status fr tc">
-                                <div class="signed">
-                                    <img class="vm signed-pic" src="images/signed.png" alt="">
-                                    <p class="p3">已签到</p>
+                        `<li class="class-list">
+                            <a class="block alink clearfix" id="alink">
+                                <div class="class-detail fl">
+                                    <p class="p1"><em>${ctime}</em><i>${ctitle}</i><span class="ctext"></span></p>
+                                    <p class="p2"><em>${cfirst}老师</em><i>教室${cclass}</i><em class="num">(<em class="snum">${pnum}</em>人)</em></p>
                                 </div>
-                                <a class="signing">立即签到</a>
-                            </div>
+                                <div class="class-status fr tc">
+                                    <div class="signed">
+                                        <img class="vm signed-pic" src="images/signed.png" alt="">
+                                        <p class="p3">已签到</p>
+                                    </div>
+                                    <p class="signing">立即签到</p>
+                                </div>
+                            </a>
                             <i class="hide ctype">${ctype}</i>
                             <i class="hide cstatus">${cstatus}</i>
                         </li>`
@@ -252,17 +260,33 @@ function personDetai(){
                 lessonType();
 
                 setTimeout(function() {
-                    if($('.class-list').length==0){
+                    if($('.class-list').length<=$('.hidden').length){
                         $('.class-con').addClass('hide');
                         $('.class-result').removeClass('hide');
-                    }                
+                    }
                 }, 1);
 
-                $('.signing').on('click',function(){
-                    let sList = $(this).parents('.class-list');
+
+                $('.class-list').on('click',function(){
+                    let sList = $(this);
                     let sindex = sList.index();
-                    let sid = idGroup[sindex];
-                    let sschoole = sGroup[sindex];
+                    let idResult = sessionStorage.getItem('idGroup');
+                    let sResult = sessionStorage.getItem('sGroup');
+                    console.log(idResult,sResult);
+                    let ir = idResult.split(',');
+                    let sr = sResult.split(',');
+                    let sid = ir[sindex];
+                    let sschoole = sr[sindex];
+                    let s1 = sschoole.replace(' ','=');
+                    let alink = sList.find('.alink');
+                    let link = 'sign.html?id='+sid+'&schooltime='+s1;
+                    $('.alink').attr('href',link);
+                    // window.location.href='sign.html?id='+sid+'&schooltime='+s1;
+                    setTimeout(function() {
+                        $('.alink').click();
+                        sessionStorage.removeItem('idGroup');
+                        sessionStorage.removeItem('sGroup');
+                    }, 500);
                     $.ajax({    
                         type:'GET',
                         cache:'false',
@@ -271,11 +295,10 @@ function personDetai(){
                         data:{'id':sid,'schooltime':sschoole},
                         dataType:'json',
                         success:function(msg){
-                            console.log(msg);
-                            window.location.href='sign.html?id%'+sid+'&schooltime%'+sschoole;
+                            // console.log(msg);
                         },
                         error:function(msg){
-                            console.log('信息获取出错');
+                            // console.log(msg);
                         }    
                     });
                 });
@@ -289,12 +312,16 @@ function personDetai(){
     let cdata = sessionStorage.getItem('ckey');
     if($('.user-sign').get(0)){
         let durl = window.location.href;
-        let dobj = durl.split('%');
-        let dgroup = dobj[1];
-        let dgroup1 = dgroup.split('&');
+        let dobj = durl.split('=');
+        console.log(dobj)
+        let dj1 = dobj[1];
+        let dj2 = dobj[2];
+        let dj3 = dj1.split('&');
+        let dj5 = dobj[2]+' '+dobj[3];
+        console.log(dj3[0],dj5);
 
-        let did = dgroup1[0];
-        let dtime = dobj[2];
+        let did = dj3[0];
+        let dtime = dj5;
         $.ajax({    
             type:'GET',
             cache:'false',
@@ -304,12 +331,12 @@ function personDetai(){
             dataType:'json',
             success:function(msg){
                 console.log(msg.data);
-                let sGroup = msg.data.students;
+                let ssGroup = msg.data.students;
                 let signStatus = msg.data.check_status;
-                for(let key in sGroup){
-                    let cname = sGroup[key].child_name;
-                    let cnum = sGroup[key].course_curr_num;
-                    let ctype = sGroup[key].checkin_types_name;
+                for(let key in ssGroup){
+                    let cname = ssGroup[key].child_name;
+                    let cnum = ssGroup[key].course_curr_num;
+                    let ctype = ssGroup[key].checkin_types_name;
                     $('.sign-group').append(`
                         <li class="sign-list clearfix ">
                             <p class="p2 fl">${cname}</p>
@@ -334,11 +361,14 @@ function personDetai(){
                         status.removeClass('attend absent attend');
                     }
                     if($(b).children('.p3').text()=='已出勤'||$(b).children('.p3').text()=='出勤'){
-                        attend.push(1)
+                        attend.push(1);
+                        let attendNum = sessionStorage.setItem('attend',attend);
                     }else if($(b).children('.p3').text()=='已请假'){
                         leave.push(2);
+                        let leaveNum = sessionStorage.setItem('leave',leave);
                     }else if($(b).children('.p3').text()=='旷课'){
                         absent.push(3);
+                        let absentNum = sessionStorage.setItem('absent',absent);
                     }
                 });
                 let attendLength = attend.length;
@@ -374,34 +404,42 @@ function personDetai(){
                     $('.sign-early').removeClass('hide');
                 }
 
+                if($('.sign-list').length==0){
+                    $('.sign-btn').addClass('hide');
+                    $('.no-person').removeClass('hide');
+                }
+
                 // 考勤操作
                 $('.sign-list').children('.p3').on('click',function(){
-                    let o = $(this);
-                    let oindex = o.parent('.sign-list').index();
-                    if(o.text()=='出勤'){
-                        sGroup[oindex].checkin_types_name='旷课';
-                        sGroup[oindex].checkin_types=3;
-                        o.text('旷课');
-                        o.addClass('absent');
-                    }else if(o.text()=='旷课'){
-                        sGroup[oindex].checkin_types_name='出勤';
-                        sGroup[oindex].checkin_types=1;
-                        o.text('出勤');
-                        o.removeClass('absent');
+                    if($('.sign-ok').hasClass('hide')){
+                        let o = $(this);
+                        let oindex = o.parent('.sign-list').index();
+                        if(o.text()=='出勤'){
+                            ssGroup[oindex].checkin_types_name='旷课';
+                            ssGroup[oindex].checkin_types=3;
+                            o.text('旷课');
+                            o.addClass('absent');
+                        }else if(o.text()=='旷课'){
+                            ssGroup[oindex].checkin_types_name='出勤';
+                            ssGroup[oindex].checkin_types=1;
+                            o.text('出勤');
+                            o.removeClass('absent');
+                        }
                     }
                 });
 
                 // 确认签到
                 $('.sign-btn').on('click',()=>{
+                    let jsonGroup = JSON.stringify(ssGroup);
+                    console.log(jsonGroup)
                     $.ajax({
-                        type:'GET',
+                        type:'POST',
                         cache:'false',
-                        url:'http://pandatest.dfth.com/api/v1/teacher/checkWork',
+                        url:'http://pandatest.dfth.com/api/v1/teacher/checkWorkPost',
                         headers:{'Authorization':cdata},
-                        data:{'id':did,'schooltime':dtime,'students':sGroup},
+                        data:{'class_id':did,'schooltime':dtime,'students':jsonGroup},
                         dataType:'json',
                         success:function(msg){
-                            console.log(sGroup);
                             $('.sign-ok').removeClass('hide');
                             $('.sign-btn').addClass('hide');
                             $('.sign-list').each((a,b)=>{
@@ -409,6 +447,41 @@ function personDetai(){
                                     $(b).children('.p3').addClass('attend');
                                 }
                             });
+                            let attend=[];
+                            let leave=[];
+                            let absent=[];
+                            $('.sign-list').each((a,b)=>{
+                                let status = $(b).find('.p3');
+                                if(status.text()==='已请假'){
+                                    status.removeClass('attend absent').addClass('leave');
+                                }else if(status.text()==='旷课'){
+                                    status.removeClass('attend leave').addClass('absent');
+                                }else if(status.text()==='已出勤'){
+                                    status.removeClass('attend absent').addClass('attend');
+                                }else{
+                                    status.removeClass('attend absent attend');
+                                }
+                                if($(b).children('.p3').text()=='已出勤'||$(b).children('.p3').text()=='出勤'){
+                                    attend.push(1);
+                                    let attendNum = sessionStorage.setItem('attend',attend);
+                                }else if($(b).children('.p3').text()=='已请假'){
+                                    leave.push(2);
+                                    let leaveNum = sessionStorage.setItem('leave',leave);
+                                }else if($(b).children('.p3').text()=='旷课'){
+                                    absent.push(3);
+                                    let absentNum = sessionStorage.setItem('absent',absent);
+                                }
+                            });
+                            let attendLength = attend.length;
+                            let leaveLength = leave.length;
+                            let absentLength = absent.length;
+                            $('.common-msg').removeClass('msg-off').addClass('msg-on');
+                            setTimeout(function() {
+                                $('.common-msg').removeClass('msg-on').addClass('msg-off');
+                                $('.attend-list').children('i').text(attendLength);
+                                $('.leave-list').children('i').text(leaveLength);
+                                $('.absent-list').children('i').text(absentLength);
+                            }, 3000);
                         },
                         error:function(msg){
                             console.log('信息获取出错');
@@ -475,7 +548,6 @@ function personDetai(){
         let weekst2 = weekst1.replace(/\./g,'-');
         let weeken1 = $('.end').text();
         let weeken2 = weeken1.replace(/\./g,'-');
-        console.log(weekst2,weeken2);
         $.ajax({
             type:'GET',
             cache:'false',
@@ -484,65 +556,89 @@ function personDetai(){
             data:{'start_date':weekst2,'end_date':weeken2},
             dataType:'json',
             success:function(msg){
-                console.log(msg.data);
                 let lessonGroup = msg.data;
                 for(let key in lessonGroup){
                     for(let x in lessonGroup[key]){
                         let ltime = lessonGroup[key][x].class_time;
                         let ltitle = lessonGroup[key][x].title;
+                        let lnum = lessonGroup[key][x].studentCount;
                         let ctype = lessonGroup[key][x].type;
                         let cstatus = lessonGroup[key][x].check_status;
                         let lteacher = lessonGroup[key][x].teacher.uname.substr(0, 1);
                         let lclass = lessonGroup[key][x].class_room.names.substr(0, 1);
-                        $('.item').eq(key-1).find('.class-con').append(`
-                            <li class="class-list clearfix">
-                                <div class="class-detail fl">
-                                    <p class="p1"><em>${ltime}</em><i>${ltitle}</i><span class="ctext"></span></p></p>
-                                    <p class="p2"><em>${lteacher}老师</em><i>教室${lclass}</i></p>
-                                </div>
-                                <div class="class-status fr tc">
-                                    <div class="signed">
-                                        <img class="vm signed-pic" src="images/signed.png" alt="">
-                                        <p class="p3">已签到</p>
-                                    </div>
-                                    <div class="sign-no">
-                                        <img class="vm signed-pic" src="images/sign-no.png" alt="">
-                                        <p class="p4">未签到</p>
-                                    </div>
-                                    <a class="signing">立即签到</a>
-                                </div>
-                                <i class="hide ctype">${ctype}</i>
-                                <i class="hide cstatus">${cstatus}</i>
-                            </li>
-                        `);
+                        let did = lessonGroup[key][x].id;
+                        let st = lessonGroup[key][x].schooltime; 
+                        // keyGroup.push(key);
+                        // idGroup2.push(did);
+                        // sGroup2.push(st);
+                        // let idNum = sessionStorage.setItem('idGroup2',idGroup2);
+                        // let sNum = sessionStorage.setItem('sGroup2',sGroup2);
+                        // let keyNum = sessionStorage.setItem('keyGroup',keyGroup);
+                        $('.class-con').html('');
+                        setTimeout(function() {
+                            $('.item').eq(key-1).find('.class-con').append(`
+                                <li class="class-list">
+                                    <a class="block alink clearfix">
+                                        <div class="class-detail fl">
+                                            <p class="p1"><em>${ltime}</em><i>${ltitle}</i><span class="ctext"></span></p></p>
+                                            <p class="p2"><em>${lteacher}老师</em><i>教室${lclass}</i><em class="num">(<em class="snum">${lnum}</em></>人)</em></p>
+                                        </div>
+                                        <div class="class-status fr tc">
+                                            <div class="signed">
+                                                <img class="vm signed-pic" src="images/signed.png" alt="">
+                                                <p class="p3">已签到</p>
+                                            </div>
+                                            <div class="sign-no">
+                                                <img class="vm signed-pic" src="images/sign-no.png" alt="">
+                                                <p class="p4">未签到</p>
+                                            </div>
+                                            <p class="signing">立即签到</p>
+                                        </div>
+                                    </a>    
+                                    <i class="hide ctype">${ctype}</i>
+                                    <i class="hide cstatus">${cstatus}</i>
+                                    <i class="hide did">${did}</i>
+                                    <i class="hide st">${st}</i>
+                                </li>
+                            `);
+                            lessonType();
+                        }, 1);
                     }
 
                 }
 
-                lessonType();
-
-                $('.signing').on('click',function(){
-                    let sList = $(this).parents('.class-list');
-                    let sindex = sList.index();
-                    let sid = idGroup[sindex];
-                    let sschoole = sGroup[sindex];
+                
+                setTimeout(function() {
+                                    $('.class-list').on('click',function(){
+                    console.log(569)
+                    let sList = $(this);
+                    let didText = sList.find('.did').text();
+                    let stText = sList.find('.st').text();
                     let oindex = $(this).parents('.item').index();
+                    console.log(didText,stText);
+                    let s1 = stText.replace(' ','=');
+                    let link = 'sign.html?id='+didText+'&schooltime='+s1;
+                    // window.location.href='sign.html?id='+didText+'&schooltime='+s1;
+                    $('.alink').attr('href',link);
+                    setTimeout(function() {
+                        $('.alink').click();
+                    }, 500);
                     $.ajax({    
                         type:'GET',
                         cache:'false',
                         url:'http://pandatest.dfth.com/api/v1/teacher/checkWork',
                         headers:{'Authorization':cdata},
-                        data:{'id':sid,'schooltime':sschoole},
+                        data:{'id':didText,'schooltime':stText},
                         dataType:'json',
                         success:function(msg){
                             console.log(msg);
-                            window.location.href='sign.html?id%'+sid+'&schooltime%'+sschoole;
                         },
                         error:function(msg){
-                            console.log('信息获取出错');
+                            console.log(msg);
                         }    
                     });
                 });
+                }, 2);
 
             },
             error:function(msg){
@@ -625,37 +721,80 @@ function loginWake(){
 
 // 用户登录
 function login(){
-    $('.refer').on('click',()=>{
-        let uname = $('.phone-number').val();
-        let psd = $('.pass-word').val();
-        if($('.refer').hasClass('refer-on')){
-            $.ajax({
-                type:'POST',
-                cache:'false',
-                url:'http://pandatest.dfth.com/api/v1/admin/login',
-                data:{'username':uname,'password':psd,'grant_type':'password','client_id':'1','client_secret':'EjKXjo27hXenF8a2MgqHvpYv7IhtJ678GfOgnHc5'},
-                dataType:'json',
-                success:function(msg){
-                    console.log(msg)
-                    if(msg.code==0){
-                        let ckey = msg.token_type+' '+msg.access_token;
-                        console.log(ckey)
-                        sessionStorage.setItem('ckey', ckey);
-                        window.location.href='index.html';
-                    }else{
-                        $('.pass-word').parent('.infor-item').addClass('infor-wrong');
-                        $('.pass-word').parent('.infor-item').find('.hint').text(msg.message);
-                    }
-                },
-                error:function(msg){
-                    console.log(msg);
-                }    
-            });
-        }else{
-            return false;
-        }
-    });
+    if($('.login').get(0)){
+
+
+
+        $('.refer').on('click',()=>{
+
+            if($('.refer').hasClass('refer-on')){
+                var uname = $('.phone-number').val();
+                var psd = $('.pass-word').val();
+                var curl = window.location.href;
+                if(curl.indexOf("?")>0){
+                    var keyGroup = curl.split('?');
+                    var keyid1 = keyGroup[1];
+                    var keyid2 = keyid1.split('=');
+                    var keyid3 = keyid2[1];
+                    console.log(keyid3);
+                }else{
+                    var keyid3 = '';
+                }
+                $.ajax({
+                    type:'POST',
+                    cache:'false',
+                    url:'http://pandatest.dfth.com/api/v1/admin/login',
+                    data:{'username':uname,'password':psd,'grant_type':'password','client_id':'1','client_secret':'EjKXjo27hXenF8a2MgqHvpYv7IhtJ678GfOgnHc5','openid':keyid3},
+                    dataType:'json',
+                    success:function(msg){
+                        if(msg.code==0){
+                        console.log(msg)
+                        let job = msg.jobCode.code;
+                        console.log(job)
+                        
+                            let ckey = msg.token_type+' '+msg.access_token;
+                            sessionStorage.setItem('ckey', ckey);
+                            console.log(job.indexOf('teachq'));
+                            if(job.indexOf('teach')!=-1){
+                                window.location.href='index.html';
+                            }else{
+                                window.location.href='tips.html?key=noteach';
+                            }
+                        }else{
+                            $('.pass-word').parent('.infor-item').addClass('infor-wrong');
+                            $('.pass-word').parent('.infor-item').find('.hint').text(msg.message);
+                        }
+                    },
+                    error:function(msg){
+                        console.log(msg);
+                    }    
+                });
+            }else{
+                return false;
+            }
+        });
+    }
+
+    
 } 
+
+
+// 登录判断
+function loginTeach(){
+    if($('.user-tips').get(0)){
+        let curl = window.location.href;
+        let keyGroup = curl.split('?');
+        let keyid1 = keyGroup[1];
+        let keyid2 = keyid1.split('=');
+        let keyid3 = keyid2[1];
+        if(keyid3=='noteach'){
+            $('.user-tips').find('.p1').addClass('hide');
+        }else{
+            $('.user-tips').find('.p2').addClass('hide');
+        }
+    }
+}
+
 
 
 

@@ -162,8 +162,8 @@ border-radius:0.5rem;text-align: center;}
 .week-box .hd {box-shadow:0 0.2rem 0.4rem rgba(0,0,0,0.16);-moz-box-shadow:0 0.2rem 0.4rem rgba(0,0,0,0.16);
 -webkit-box-shadow:0 0.2rem 0.4rem rgba(0,0,0,0.16);}
 .week-box .hd-list {font-size: 3.2rem;color:#333;width: 14.28%;text-align: center;height: 8rem;line-height: 8rem;position: relative;}
-.week-box .hd-list .cricle {width: 1.6rem;height: 1.6rem;border-radius:50%;background: #1fb5ad;position: absolute;right: 4rem;top: 1.6rem;z-index:10;}
-.week-box .hd-list .notice-icon {width: 2.4rem;position: absolute;top: 1.3rem;right: 3.5rem;z-index:20;}
+.week-box .hd-list .cricle {width: 1.6rem;height: 1.6rem;border-radius:50%;background: #1fb5ad;position: absolute;right: 3rem;top: 1.6rem;z-index:10;}
+.week-box .hd-list .notice-icon {width: 2.4rem;position: absolute;top: 1.3rem;right: 2rem;z-index:20;}
 .week-box .hd-list .choose-icon {width: 2.2rem;position: absolute;bottom: 0;left: 50%;margin-left: -1.1rem;opacity: 0;}
 .week-box .on .choose-icon {opacity: 1;}
 .week-box .class-tips {border: none;}

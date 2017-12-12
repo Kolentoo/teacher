@@ -414,17 +414,31 @@ function personDetai(){
                     if($('.sign-ok').hasClass('hide')){
                         let o = $(this);
                         let oindex = o.parent('.sign-list').index();
-                        if(o.text()=='出勤'){
-                            ssGroup[oindex].checkin_types_name='旷课';
-                            ssGroup[oindex].checkin_types=3;
-                            o.text('旷课');
-                            o.addClass('absent');
+                        if(o.text()=='调课'){
+                            ssGroup[oindex].checkin_types_name='出勤';
+                            ssGroup[oindex].checkin_types=1;
+                            o.text('出勤');
+                            o.removeClass('absent');
+                            o.addClass('tk');
+                        }else if(o.text()=='出勤'){ 
+                            if(o.hasClass('tk')){
+                                ssGroup[oindex].checkin_types_name='调课';
+                                ssGroup[oindex].checkin_types=5;
+                                o.text('调课');
+                                o.removeClass('absent');
+                            }else{
+                                ssGroup[oindex].checkin_types_name='旷课';
+                                ssGroup[oindex].checkin_types=3;
+                                o.text('旷课');
+                                o.addClass('absent');
+                            }
                         }else if(o.text()=='旷课'){
                             ssGroup[oindex].checkin_types_name='出勤';
                             ssGroup[oindex].checkin_types=1;
                             o.text('出勤');
                             o.removeClass('absent');
                         }
+
                     }
                 });
 
@@ -609,8 +623,7 @@ function personDetai(){
 
                 
                 setTimeout(function() {
-                                    $('.class-list').on('click',function(){
-                    console.log(569)
+                $('.class-list').on('click',function(){
                     let sList = $(this);
                     let didText = sList.find('.did').text();
                     let stText = sList.find('.st').text();

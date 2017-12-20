@@ -736,8 +736,6 @@ function loginWake(){
 function login(){
     if($('.login').get(0)){
 
-
-
         $('.refer').on('click',()=>{
 
             if($('.refer').hasClass('refer-on')){
@@ -767,6 +765,7 @@ function login(){
                         
                             let ckey = msg.token_type+' '+msg.access_token;
                             sessionStorage.setItem('ckey', ckey);
+                            console.log(ckey);
                             console.log(job.indexOf('teachq'));
                             if(job.indexOf('teach')!=-1){
                                 window.location.href='index.html';
@@ -786,6 +785,23 @@ function login(){
                 return false;
             }
         });
+
+        let curl = window.location.href;
+        console.log(curl);
+        if(curl.indexOf('tk=')>0){
+            $('.loading').removeClass('hide');
+            let tkGroup = curl.split('tk=');
+            let tk = tkGroup[1];
+            let ckeyNew = 'Bearer'+' '+tk;
+            sessionStorage.setItem('ckey', ckeyNew);
+            console.log('ok');
+            window.location.href='index.html';
+        }
+        if(curl.indexOf('keyid=')>0){
+            $('.loading').addClass('hide');
+        }
+
+
     }
 
     

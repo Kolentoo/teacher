@@ -199,6 +199,7 @@ margin-top: 6rem;border:none;}
 .login .infor-wrong input{border-color:#ed3939;}
 .login .hint {color:#ed3939;font-size: 2rem;opacity:0;}
 .login .infor-wrong .hint {opacity: 1;}
+.loading {width: 18rem;height: 18rem;position: fixed;left: 50%;top: 50%;margin:-9rem 0 0 -9rem;}
 
 
 

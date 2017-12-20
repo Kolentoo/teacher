@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "51b0bec8b92f9f82b608"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2d8da75ee9c4bd79059d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11736,6 +11736,7 @@ function login() {
 
                             var ckey = msg.token_type + ' ' + msg.access_token;
                             sessionStorage.setItem('ckey', ckey);
+                            console.log(ckey);
                             console.log(job.indexOf('teachq'));
                             if (job.indexOf('teach') != -1) {
                                 window.location.href = 'index.html';
@@ -11755,6 +11756,21 @@ function login() {
                 return false;
             }
         });
+
+        var curl = window.location.href;
+        console.log(curl);
+        if (curl.indexOf('tk=') > 0) {
+            $('.loading').removeClass('hide');
+            var tkGroup = curl.split('tk=');
+            var tk = tkGroup[1];
+            var ckeyNew = 'Bearer' + ' ' + tk;
+            sessionStorage.setItem('ckey', ckeyNew);
+            console.log('ok');
+            window.location.href = 'index.html';
+        }
+        if (curl.indexOf('keyid=') > 0) {
+            $('.loading').addClass('hide');
+        }
     }
 }
 

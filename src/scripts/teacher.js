@@ -1,5 +1,6 @@
 $(function () {
 
+    
     _IsIOS();
     commonTab();
     weekChoose();
@@ -13,7 +14,7 @@ $(function () {
     
 });
 
-
+var panda = 'http://pandatest.dfth.com';
 // 设备判断
 function _IsIOS() {
     let ua = navigator.userAgent.toLowerCase();
@@ -143,7 +144,7 @@ function personDetai(){
         $.ajax({
             type:'GET',
             cache:'false',
-            url:'http://pandatest.dfth.com/api/v1/userinfo/user',
+            url:panda+'/api/v1/userinfo/user',
             headers:{'Authorization':cdata},
             dataType:'json',
             success:function(msg){
@@ -177,7 +178,7 @@ function personDetai(){
         $.ajax({
             type:'GET',
             cache:'false',
-            url:'http://pandatest.dfth.com/api/v1/reportForms/teachFormsPic',
+            url:panda+'/api/v1/reportForms/teachFormsPic',
             headers:{'Authorization':cdata},
             data:{'teach_uid':tidNum,'start_date':firstDay,'end_date':lastDay},
             dataType:'json',
@@ -213,7 +214,7 @@ function personDetai(){
         $.ajax({
             type:'GET',
             cache:'false',
-            url:'http://pandatest.dfth.com/api/v1/teacher/syllabus',
+            url:panda+'/api/v1/teacher/syllabus',
             headers:{'Authorization':cdata},
             data:{'teach_uid':tidNum,'start_date':today,'end_date':today},
             dataType:'json',
@@ -290,7 +291,7 @@ function personDetai(){
                     $.ajax({    
                         type:'GET',
                         cache:'false',
-                        url:'http://pandatest.dfth.com/api/v1/teacher/checkWork',
+                        url:panda+'/api/v1/teacher/checkWork',
                         headers:{'Authorization':cdata},
                         data:{'id':sid,'schooltime':sschoole},
                         dataType:'json',
@@ -325,7 +326,7 @@ function personDetai(){
         $.ajax({    
             type:'GET',
             cache:'false',
-            url:'http://pandatest.dfth.com/api/v1/teacher/checkWork',
+            url:panda+'/api/v1/teacher/checkWork',
             headers:{'Authorization':cdata},
             data:{'id':did,'schooltime':dtime},
             dataType:'json',
@@ -449,7 +450,7 @@ function personDetai(){
                     $.ajax({
                         type:'POST',
                         cache:'false',
-                        url:'http://pandatest.dfth.com/api/v1/teacher/checkWorkPost',
+                        url:panda+'/api/v1/teacher/checkWorkPost',
                         headers:{'Authorization':cdata},
                         data:{'class_id':did,'schooltime':dtime,'students':jsonGroup},
                         dataType:'json',
@@ -565,7 +566,7 @@ function personDetai(){
         $.ajax({
             type:'GET',
             cache:'false',
-            url:'http://pandatest.dfth.com/api/v1/teacher/syllabus',
+            url:panda+'/api/v1/teacher/syllabus',
             headers:{'Authorization':cdata},
             data:{'start_date':weekst2,'end_date':weeken2},
             dataType:'json',
@@ -639,7 +640,7 @@ function personDetai(){
                     $.ajax({    
                         type:'GET',
                         cache:'false',
-                        url:'http://pandatest.dfth.com/api/v1/teacher/checkWork',
+                        url:panda+'/api/v1/teacher/checkWork',
                         headers:{'Authorization':cdata},
                         data:{'id':didText,'schooltime':stText},
                         dataType:'json',
@@ -754,7 +755,7 @@ function login(){
                 $.ajax({
                     type:'POST',
                     cache:'false',
-                    url:'http://pandatest.dfth.com/api/v1/admin/login',
+                    url:panda+'/api/v1/admin/login',
                     data:{'username':uname,'password':psd,'grant_type':'password','client_id':'1','client_secret':'EjKXjo27hXenF8a2MgqHvpYv7IhtJ678GfOgnHc5','openid':keyid3},
                     dataType:'json',
                     success:function(msg){
@@ -806,7 +807,6 @@ function login(){
 
     
 } 
-
 
 // 登录判断
 function loginTeach(){

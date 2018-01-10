@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "fdec3702b3388022a315"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "315c65f8f0ab584c6a74"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11035,7 +11035,7 @@ $(function () {
     }, 100);
 });
 
-var panda = 'http://pandatest.dfth.com';
+var panda = 'http://panda.dfth.com';
 // 设备判断
 function _IsIOS() {
     var ua = navigator.userAgent.toLowerCase();

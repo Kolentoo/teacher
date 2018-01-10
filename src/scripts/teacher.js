@@ -14,7 +14,7 @@ $(function () {
     
 });
 
-var panda = 'http://pandatest.dfth.com';
+var panda = 'http://panda.dfth.com';
 // 设备判断
 function _IsIOS() {
     let ua = navigator.userAgent.toLowerCase();

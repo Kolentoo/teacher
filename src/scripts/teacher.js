@@ -15,6 +15,7 @@ $(function () {
 });
 
 var panda = 'http://panda.dfth.com';
+// var panda = 'http://pandatest.dfth.com';
 // 设备判断
 function _IsIOS() {
     let ua = navigator.userAgent.toLowerCase();
@@ -158,12 +159,10 @@ function personDetai(){
                 console.log('信息获取出错');
             }    
         });
-
         let tidNum = sessionStorage.getItem('tid');
         let nowdays = new Date();
         let year = nowdays.getFullYear();
         let month = nowdays.getMonth()+1; 
-        console.log(year,month)
         if(month==0){
             month=12;
             year=year-1;
@@ -178,29 +177,30 @@ function personDetai(){
         $.ajax({
             type:'GET',
             cache:'false',
-            url:panda+'/api/v1/reportForms/teachFormsPic',
+            url:panda+'/api/v1/teacher/forms',
             headers:{'Authorization':cdata},
-            data:{'teach_uid':tidNum,'start_date':firstDay,'end_date':lastDay},
+            // data:{'teach_uid':tidNum,'start_date':firstDay,'end_date':lastDay},
+            data:{'aid':tidNum,'client':'m'},
             dataType:'json',
             success:function(msg){
-                // console.log(msg.data)
-                let sum1=0;
-                for(let i=0;i<msg.data.chuqi.length;i++){
-                    sum1+=parseInt(msg.data.chuqi[i]);
-                }
+                console.log(msg.data);
+                // let sum1=0;
+                // for(let i=0;i<msg.data.chuqi.length;i++){
+                //     sum1+=parseInt(msg.data.chuqi[i]);
+                // }
 
-                let sum2=0;
-                for(let i=0;i<msg.data.aingjia.length;i++){
-                    sum2+=parseInt(msg.data.aingjia[i]);
-                }
+                // let sum2=0;
+                // for(let i=0;i<msg.data.aingjia.length;i++){
+                //     sum2+=parseInt(msg.data.aingjia[i]);
+                // }
 
-                let sum3=0;
-                for(let i=0;i<msg.data.kuangke.length;i++){
-                    sum3+=parseInt(msg.data.kuangke[i]);
-                }
-                $('.total-list').eq(0).children('.p1').text(sum1);
-                $('.total-list').eq(1).children('.p1').text(sum2);
-                $('.total-list').eq(2).children('.p1').text(sum3);
+                // let sum3=0;
+                // for(let i=0;i<msg.data.kuangke.length;i++){
+                //     sum3+=parseInt(msg.data.kuangke[i]);
+                // }
+                $('.total-list').eq(0).children('.p1').text(msg.data.cq);
+                $('.total-list').eq(1).children('.p1').text(msg.data.qj);
+                $('.total-list').eq(2).children('.p1').text(msg.data.kc);
             },
             error:function(msg){
                 console.log('信息获取出错');
@@ -314,12 +314,10 @@ function personDetai(){
     if($('.user-sign').get(0)){
         let durl = window.location.href;
         let dobj = durl.split('=');
-        console.log(dobj)
         let dj1 = dobj[1];
         let dj2 = dobj[2];
         let dj3 = dj1.split('&');
         let dj5 = dobj[2]+' '+dobj[3];
-        console.log(dj3[0],dj5);
 
         let did = dj3[0];
         let dtime = dj5;
@@ -748,7 +746,6 @@ function login(){
                     var keyid1 = keyGroup[1];
                     var keyid2 = keyid1.split('=');
                     var keyid3 = keyid2[1];
-                    console.log(keyid3);
                 }else{
                     var keyid3 = '';
                 }

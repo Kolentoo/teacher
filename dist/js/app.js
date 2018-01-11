@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "315c65f8f0ab584c6a74"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3a0c0762297892ef81db"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11036,6 +11036,7 @@ $(function () {
 });
 
 var panda = 'http://panda.dfth.com';
+// var panda = 'http://pandatest.dfth.com';
 // 设备判断
 function _IsIOS() {
     var ua = navigator.userAgent.toLowerCase();
@@ -11176,12 +11177,10 @@ function personDetai() {
                 console.log('信息获取出错');
             }
         });
-
         var tidNum = sessionStorage.getItem('tid');
         var nowdays = new Date();
         var year = nowdays.getFullYear();
         var month = nowdays.getMonth() + 1;
-        console.log(year, month);
         if (month == 0) {
             month = 12;
             year = year - 1;
@@ -11196,29 +11195,30 @@ function personDetai() {
         $.ajax({
             type: 'GET',
             cache: 'false',
-            url: panda + '/api/v1/reportForms/teachFormsPic',
+            url: panda + '/api/v1/teacher/forms',
             headers: { 'Authorization': _cdata },
-            data: { 'teach_uid': tidNum, 'start_date': firstDay, 'end_date': lastDay },
+            // data:{'teach_uid':tidNum,'start_date':firstDay,'end_date':lastDay},
+            data: { 'aid': tidNum, 'client': 'm' },
             dataType: 'json',
             success: function success(msg) {
-                // console.log(msg.data)
-                var sum1 = 0;
-                for (var i = 0; i < msg.data.chuqi.length; i++) {
-                    sum1 += parseInt(msg.data.chuqi[i]);
-                }
+                console.log(msg.data);
+                // let sum1=0;
+                // for(let i=0;i<msg.data.chuqi.length;i++){
+                //     sum1+=parseInt(msg.data.chuqi[i]);
+                // }
 
-                var sum2 = 0;
-                for (var _i = 0; _i < msg.data.aingjia.length; _i++) {
-                    sum2 += parseInt(msg.data.aingjia[_i]);
-                }
+                // let sum2=0;
+                // for(let i=0;i<msg.data.aingjia.length;i++){
+                //     sum2+=parseInt(msg.data.aingjia[i]);
+                // }
 
-                var sum3 = 0;
-                for (var _i2 = 0; _i2 < msg.data.kuangke.length; _i2++) {
-                    sum3 += parseInt(msg.data.kuangke[_i2]);
-                }
-                $('.total-list').eq(0).children('.p1').text(sum1);
-                $('.total-list').eq(1).children('.p1').text(sum2);
-                $('.total-list').eq(2).children('.p1').text(sum3);
+                // let sum3=0;
+                // for(let i=0;i<msg.data.kuangke.length;i++){
+                //     sum3+=parseInt(msg.data.kuangke[i]);
+                // }
+                $('.total-list').eq(0).children('.p1').text(msg.data.cq);
+                $('.total-list').eq(1).children('.p1').text(msg.data.qj);
+                $('.total-list').eq(2).children('.p1').text(msg.data.kc);
             },
             error: function error(msg) {
                 console.log('信息获取出错');
@@ -11313,12 +11313,10 @@ function personDetai() {
     if ($('.user-sign').get(0)) {
         var durl = window.location.href;
         var dobj = durl.split('=');
-        console.log(dobj);
         var dj1 = dobj[1];
         var dj2 = dobj[2];
         var dj3 = dj1.split('&');
         var dj5 = dobj[2] + ' ' + dobj[3];
-        console.log(dj3[0], dj5);
 
         var did = dj3[0];
         var dtime = dj5;
@@ -11719,7 +11717,6 @@ function login() {
                     var keyid1 = keyGroup[1];
                     var keyid2 = keyid1.split('=');
                     var keyid3 = keyid2[1];
-                    console.log(keyid3);
                 } else {
                     var keyid3 = '';
                 }

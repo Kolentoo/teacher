@@ -15,8 +15,8 @@ $(function () {
     
 });
 
-var panda = 'http://panda.dfth.com';
-// var panda = 'http://pandatest.dfth.com';
+// var panda = 'http://panda.dfth.com';
+var panda = 'http://pandatest.dfth.com';
 // 设备判断
 function _IsIOS() {
     let ua = navigator.userAgent.toLowerCase();
@@ -103,7 +103,11 @@ function lessonType(){
             if($('.week-box').get(0)){
                 let oindex = $(b).parents('.item').index();
                 let oc = $('.week-box').find('.hd-list').eq(oindex).find('.cricle');
-                oc.removeClass('hide');
+                if($(b).hasClass('has-lesson')){
+                    oc.removeClass('hide');
+                }else{
+                    oc.addClass('hide');
+                }
             }
         }else if(cstatus=='overdue'){
             $(b).removeClass('c-signed c-signing').addClass('c-signoff');
@@ -220,7 +224,7 @@ function personDetai(){
             data:{'teach_uid':tidNum,'start_date':today,'end_date':today},
             dataType:'json',
             success:function(msg){
-                // console.log(msg.data);
+
                 let classCon = msg.data;
                 for (let key in classCon) { 
                     let ctime = classCon[key].class_time;
@@ -260,6 +264,9 @@ function personDetai(){
                 }
 
                 lessonType();
+                var nd = new Date();
+                // var nd = 
+                console.log(nd);
 
                 setTimeout(function() {
                     if($('.class-list').length<=$('.hidden').length){
@@ -582,6 +589,7 @@ function personDetai(){
                         let lclass = lessonGroup[key][x].class_room.names.substr(0, 1);
                         let did = lessonGroup[key][x].id;
                         let st = lessonGroup[key][x].schooltime; 
+                        let dtime = st.substr(0,10);
                         // keyGroup.push(key);
                         // idGroup2.push(did);
                         // sGroup2.push(st);
@@ -613,6 +621,7 @@ function personDetai(){
                                     <i class="hide cstatus">${cstatus}</i>
                                     <i class="hide did">${did}</i>
                                     <i class="hide st">${st}</i>
+                                    <i class="hide dtime">${dtime}</i>
                                 </li>
                             `);
                             lessonType();
@@ -621,38 +630,57 @@ function personDetai(){
 
                 }
 
+                var nd = new Date();
                 
+                var nowt = Date.parse(nd)/1000;
                 setTimeout(function() {
-                $('.class-list').on('click',function(){
-                    let sList = $(this);
-                    let didText = sList.find('.did').text();
-                    let stText = sList.find('.st').text();
-                    let oindex = $(this).parents('.item').index();
-                    console.log(didText,stText);
-                    let s1 = stText.replace(' ','=');
-                    let link = 'sign.html?id='+didText+'&schooltime='+s1;
-                    // window.location.href='sign.html?id='+didText+'&schooltime='+s1;
-                    $('.alink').attr('href',link);
-                    setTimeout(function() {
-                        $('.alink').click();
-                    }, 500);
-                    $.ajax({    
-                        type:'GET',
-                        cache:'false',
-                        url:panda+'/api/v1/teacher/checkWork',
-                        headers:{'Authorization':cdata},
-                        data:{'id':didText,'schooltime':stText},
-                        dataType:'json',
-                        success:function(msg){
-                            console.log(msg);
-                        },
-                        error:function(msg){
-                            console.log(msg);
-                        }    
+                    $('.class-list').each(function(a,b){
+                        var dt = $(b).find('.st').text();
+                        var timeLine = Date.parse(new Date(dt))/1000;
+                        if(timeLine>nowt){
+                            $(b).addClass('no-lesson').removeClass('has-lesson');
+                        }else{
+                            $(b).removeClass('no-lesson').addClass('has-lesson');
+                        }
                     });
-                });
                 }, 2);
 
+                
+                setTimeout(function() {
+                    $('.class-list').on('click',function(){
+                        let sList = $(this);
+                        let didText = sList.find('.did').text();
+                        let stText = sList.find('.st').text();
+                        let oindex = $(this).parents('.item').index();
+                        console.log(didText,stText);
+                        let s1 = stText.replace(' ','=');
+                        let link = 'sign.html?id='+didText+'&schooltime='+s1;
+                        // window.location.href='sign.html?id='+didText+'&schooltime='+s1;
+                        $('.alink').attr('href',link);
+                        setTimeout(function() {
+                            $('.alink').click();
+                        }, 500);
+                        $.ajax({    
+                            type:'GET',
+                            cache:'false',
+                            url:panda+'/api/v1/teacher/checkWork',
+                            headers:{'Authorization':cdata},
+                            data:{'id':didText,'schooltime':stText},
+                            dataType:'json',
+                            success:function(msg){
+                                console.log(msg);
+                            },
+                            error:function(msg){
+                                console.log(msg);
+                            }    
+                        });
+                    });
+                }, 2);
+
+                setTimeout(function() {
+                    lessonType();
+                }, 2);
+                
             },
             error:function(msg){
                 console.log('信息获取出错');

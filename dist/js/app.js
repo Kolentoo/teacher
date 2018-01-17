@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3a0c0762297892ef81db"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "f71dccf76bce2d4fc4fb"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11035,8 +11035,8 @@ $(function () {
     }, 100);
 });
 
-var panda = 'http://panda.dfth.com';
-// var panda = 'http://pandatest.dfth.com';
+// var panda = 'http://panda.dfth.com';
+var panda = 'http://pandatest.dfth.com';
 // 设备判断
 function _IsIOS() {
     var ua = navigator.userAgent.toLowerCase();
@@ -11123,7 +11123,11 @@ function lessonType() {
             if ($('.week-box').get(0)) {
                 var oindex = $(b).parents('.item').index();
                 var oc = $('.week-box').find('.hd-list').eq(oindex).find('.cricle');
-                oc.removeClass('hide');
+                if ($(b).hasClass('has-lesson')) {
+                    oc.removeClass('hide');
+                } else {
+                    oc.addClass('hide');
+                }
             }
         } else if (cstatus == 'overdue') {
             $(b).removeClass('c-signed c-signing').addClass('c-signoff');
@@ -11237,7 +11241,7 @@ function personDetai() {
             data: { 'teach_uid': tidNum, 'start_date': today, 'end_date': today },
             dataType: 'json',
             success: function success(msg) {
-                // console.log(msg.data);
+
                 var classCon = msg.data;
                 for (var key in classCon) {
                     var ctime = classCon[key].class_time;
@@ -11259,6 +11263,9 @@ function personDetai() {
                 }
 
                 lessonType();
+                var nd = new Date();
+                // var nd = 
+                console.log(nd);
 
                 setTimeout(function () {
                     if ($('.class-list').length <= $('.hidden').length) {
@@ -11572,6 +11579,7 @@ function personDetai() {
                         var lclass = lessonGroup[key][x].class_room.names.substr(0, 1);
                         var did = lessonGroup[key][x].id;
                         var st = lessonGroup[key][x].schooltime;
+                        var dtime = st.substr(0, 10);
                         // keyGroup.push(key);
                         // idGroup2.push(did);
                         // sGroup2.push(st);
@@ -11580,7 +11588,7 @@ function personDetai() {
                         // let keyNum = sessionStorage.setItem('keyGroup',keyGroup);
                         $('.class-con').html('');
                         setTimeout(function () {
-                            $('.item').eq(key - 1).find('.class-con').append('\n                                <li class="class-list">\n                                    <a class="block alink clearfix">\n                                        <div class="class-detail fl">\n                                            <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                            <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i><em class="num">(<em class="snum">' + lnum + '</em></>\u4EBA)</em></p>\n                                        </div>\n                                        <div class="class-status fr tc">\n                                            <div class="signed">\n                                                <img class="vm signed-pic" src="images/signed.png" alt="">\n                                                <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                            </div>\n                                            <div class="sign-no">\n                                                <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                                <p class="p4">\u672A\u7B7E\u5230</p>\n                                            </div>\n                                            <p class="signing">\u7ACB\u5373\u7B7E\u5230</p>\n                                        </div>\n                                    </a>    \n                                    <i class="hide ctype">' + ctype + '</i>\n                                    <i class="hide cstatus">' + cstatus + '</i>\n                                    <i class="hide did">' + did + '</i>\n                                    <i class="hide st">' + st + '</i>\n                                </li>\n                            ');
+                            $('.item').eq(key - 1).find('.class-con').append('\n                                <li class="class-list">\n                                    <a class="block alink clearfix">\n                                        <div class="class-detail fl">\n                                            <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                            <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i><em class="num">(<em class="snum">' + lnum + '</em></>\u4EBA)</em></p>\n                                        </div>\n                                        <div class="class-status fr tc">\n                                            <div class="signed">\n                                                <img class="vm signed-pic" src="images/signed.png" alt="">\n                                                <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                            </div>\n                                            <div class="sign-no">\n                                                <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                                <p class="p4">\u672A\u7B7E\u5230</p>\n                                            </div>\n                                            <p class="signing">\u7ACB\u5373\u7B7E\u5230</p>\n                                        </div>\n                                    </a>    \n                                    <i class="hide ctype">' + ctype + '</i>\n                                    <i class="hide cstatus">' + cstatus + '</i>\n                                    <i class="hide did">' + did + '</i>\n                                    <i class="hide st">' + st + '</i>\n                                    <i class="hide dtime">' + dtime + '</i>\n                                </li>\n                            ');
                             lessonType();
                         }, 1);
                     };
@@ -11593,6 +11601,21 @@ function personDetai() {
                 for (var key in lessonGroup) {
                     _loop(key);
                 }
+
+                var nd = new Date();
+
+                var nowt = Date.parse(nd) / 1000;
+                setTimeout(function () {
+                    $('.class-list').each(function (a, b) {
+                        var dt = $(b).find('.st').text();
+                        var timeLine = Date.parse(new Date(dt)) / 1000;
+                        if (timeLine > nowt) {
+                            $(b).addClass('no-lesson').removeClass('has-lesson');
+                        } else {
+                            $(b).removeClass('no-lesson').addClass('has-lesson');
+                        }
+                    });
+                }, 2);
 
                 setTimeout(function () {
                     $('.class-list').on('click', function () {
@@ -11623,6 +11646,10 @@ function personDetai() {
                             }
                         });
                     });
+                }, 2);
+
+                setTimeout(function () {
+                    lessonType();
                 }, 2);
             },
             error: function error(msg) {

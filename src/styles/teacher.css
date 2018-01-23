@@ -1,6 +1,6 @@
 /* 公用css */
-html, body{ width: 100%; overflow-x: hidden;}
-body{display: none;}
+/*html, body{ width: 100%; overflow-x: hidden;}*/
+/*body{display: none;}*/
 .pf {font-family: PingFangTC-Light, sans-serif;}
 .sy {font-family: 'Source Han Sans CN';}
 input {-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;}
@@ -64,6 +64,7 @@ border:0.1rem solid #e6e6e6;}
 .c-signoff .class-detail .p2 {color:#ccc;}
 .c-signoff .class-detail span{display: none;}
 .c-signoff .class-detail span{display: inline-block;}
+.no-lesson .signing {display: none;}
 
 
 /* 全局头部 */

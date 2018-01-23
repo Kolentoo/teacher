@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "f71dccf76bce2d4fc4fb"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "3f151f5264cb8e06557e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11030,13 +11030,15 @@ $(function () {
     loginWake();
     login();
     loginTeach();
-    setTimeout(function () {
-        $('body').show();
-    }, 100);
+    // setTimeout(function() {
+    //     $('body').show();
+    // }, 100);
+
 });
 
 // var panda = 'http://panda.dfth.com';
-var panda = 'http://pandatest.dfth.com';
+var panda = 'http://pstest.dfth.com';
+// var panda = '';
 // 设备判断
 function _IsIOS() {
     var ua = navigator.userAgent.toLowerCase();
@@ -11112,9 +11114,9 @@ function lessonType() {
             $(b).find('.ctext').addClass('s5');
         }
 
-        if (numText == 0) {
-            $(b).addClass('hidden');
-        }
+        // if(numText==0){
+        //     $(b).addClass('hidden');
+        // }
 
         if (cstatus == 'yes') {
             $(b).removeClass('c-signing c-signoff').addClass('c-signed');
@@ -11171,143 +11173,144 @@ function personDetai() {
             headers: { 'Authorization': _cdata },
             dataType: 'json',
             success: function success(msg) {
+                console.log(msg);
                 $('.student-head').children('img').attr('src', msg.data.avatar);
                 $('.student-txt').find('.s1').text(msg.data.uname);
                 $('.student-txt').find('.s2').text(msg.data.school_name);
-                $('.student-txt').find('.txt2').find('i').text(msg.data.job.full_name);
+                $('.student-txt').find('.txt2').find('i').text(msg.data.department);
                 var tid = sessionStorage.setItem('tid', msg.data.aid);
-            },
-            error: function error(msg) {
-                console.log('信息获取出错');
-            }
-        });
-        var tidNum = sessionStorage.getItem('tid');
-        var nowdays = new Date();
-        var year = nowdays.getFullYear();
-        var month = nowdays.getMonth() + 1;
-        if (month == 0) {
-            month = 12;
-            year = year - 1;
-        }
-        if (month < 10) {
-            month = "0" + month;
-        }
-        var firstDay = year + "-" + month + "-" + "01"; //上个月的第一天
-        var myDate = new Date(year, month, 0);
-        var lastDay = year + "-" + month + "-" + myDate.getDate(); //上个月的最后一天
-
-        $.ajax({
-            type: 'GET',
-            cache: 'false',
-            url: panda + '/api/v1/teacher/forms',
-            headers: { 'Authorization': _cdata },
-            // data:{'teach_uid':tidNum,'start_date':firstDay,'end_date':lastDay},
-            data: { 'aid': tidNum, 'client': 'm' },
-            dataType: 'json',
-            success: function success(msg) {
-                console.log(msg.data);
-                // let sum1=0;
-                // for(let i=0;i<msg.data.chuqi.length;i++){
-                //     sum1+=parseInt(msg.data.chuqi[i]);
-                // }
-
-                // let sum2=0;
-                // for(let i=0;i<msg.data.aingjia.length;i++){
-                //     sum2+=parseInt(msg.data.aingjia[i]);
-                // }
-
-                // let sum3=0;
-                // for(let i=0;i<msg.data.kuangke.length;i++){
-                //     sum3+=parseInt(msg.data.kuangke[i]);
-                // }
-                $('.total-list').eq(0).children('.p1').text(msg.data.cq);
-                $('.total-list').eq(1).children('.p1').text(msg.data.qj);
-                $('.total-list').eq(2).children('.p1').text(msg.data.kc);
-            },
-            error: function error(msg) {
-                console.log('信息获取出错');
-            }
-        });
-
-        var mydate = new Date();
-        var today = "" + mydate.getFullYear() + "/";
-        today += mydate.getMonth() + 1 + "/";
-        today += mydate.getDate();
-        $.ajax({
-            type: 'GET',
-            cache: 'false',
-            url: panda + '/api/v1/teacher/syllabus',
-            headers: { 'Authorization': _cdata },
-            data: { 'teach_uid': tidNum, 'start_date': today, 'end_date': today },
-            dataType: 'json',
-            success: function success(msg) {
-
-                var classCon = msg.data;
-                for (var key in classCon) {
-                    var ctime = classCon[key].class_time;
-                    var ctitle = classCon[key].course.title;
-                    var pnum = classCon[key].studentCount;
-                    var cname = classCon[key].teacher.uname;
-                    var cfirst = cname.substr(0, 1);
-                    var cclass = classCon[key].class_room.names.substr(0, 1);
-                    var ctype = classCon[key].type;
-                    var cstatus = classCon[key].check_status;
-                    var did = classCon[key].id;
-                    var st = classCon[key].schooltime;
-                    idGroup.push(did);
-                    sGroup.push(st);
-                    var idNum = sessionStorage.setItem('idGroup', idGroup);
-                    var sNum = sessionStorage.setItem('sGroup', sGroup);
-
-                    $('.class-con').append('<li class="class-list">\n                            <a class="block alink clearfix" id="alink">\n                                <div class="class-detail fl">\n                                    <p class="p1"><em>' + ctime + '</em><i>' + ctitle + '</i><span class="ctext"></span></p>\n                                    <p class="p2"><em>' + cfirst + '\u8001\u5E08</em><i>\u6559\u5BA4' + cclass + '</i><em class="num">(<em class="snum">' + pnum + '</em>\u4EBA)</em></p>\n                                </div>\n                                <div class="class-status fr tc">\n                                    <div class="signed">\n                                        <img class="vm signed-pic" src="images/signed.png" alt="">\n                                        <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                    </div>\n                                    <p class="signing">\u7ACB\u5373\u7B7E\u5230</p>\n                                </div>\n                            </a>\n                            <i class="hide ctype">' + ctype + '</i>\n                            <i class="hide cstatus">' + cstatus + '</i>\n                        </li>');
+                var tidNum = sessionStorage.getItem('tid');
+                var nowdays = new Date();
+                var year = nowdays.getFullYear();
+                var month = nowdays.getMonth() + 1;
+                if (month == 0) {
+                    month = 12;
+                    year = year - 1;
                 }
+                if (month < 10) {
+                    month = "0" + month;
+                }
+                var firstDay = year + "-" + month + "-" + "01"; //上个月的第一天
+                var myDate = new Date(year, month, 0);
+                var lastDay = year + "-" + month + "-" + myDate.getDate(); //上个月的最后一天
 
-                lessonType();
-                var nd = new Date();
-                // var nd = 
-                console.log(nd);
+                $.ajax({
+                    type: 'GET',
+                    cache: 'false',
+                    url: panda + '/api/v1/teacher/forms',
+                    headers: { 'Authorization': _cdata },
+                    // data:{'teach_uid':tidNum,'start_date':firstDay,'end_date':lastDay},
+                    data: { 'aid': tidNum, 'client': 'm' },
+                    dataType: 'json',
+                    success: function success(msg) {
+                        console.log(msg.data);
+                        // let sum1=0;
+                        // for(let i=0;i<msg.data.chuqi.length;i++){
+                        //     sum1+=parseInt(msg.data.chuqi[i]);
+                        // }
 
-                setTimeout(function () {
-                    if ($('.class-list').length <= $('.hidden').length) {
-                        $('.class-con').addClass('hide');
-                        $('.class-result').removeClass('hide');
+                        // let sum2=0;
+                        // for(let i=0;i<msg.data.aingjia.length;i++){
+                        //     sum2+=parseInt(msg.data.aingjia[i]);
+                        // }
+
+                        // let sum3=0;
+                        // for(let i=0;i<msg.data.kuangke.length;i++){
+                        //     sum3+=parseInt(msg.data.kuangke[i]);
+                        // }
+                        $('.total-list').eq(0).children('.p1').text(msg.data.cq);
+                        $('.total-list').eq(1).children('.p1').text(msg.data.qj);
+                        $('.total-list').eq(2).children('.p1').text(msg.data.kc);
+                    },
+                    error: function error(msg) {
+                        console.log('信息获取出错');
                     }
-                }, 1);
+                });
 
-                $('.class-list').on('click', function () {
-                    var sList = $(this);
-                    var sindex = sList.index();
-                    var idResult = sessionStorage.getItem('idGroup');
-                    var sResult = sessionStorage.getItem('sGroup');
-                    console.log(idResult, sResult);
-                    var ir = idResult.split(',');
-                    var sr = sResult.split(',');
-                    var sid = ir[sindex];
-                    var sschoole = sr[sindex];
-                    var s1 = sschoole.replace(' ', '=');
-                    var alink = sList.find('.alink');
-                    var link = 'sign.html?id=' + sid + '&schooltime=' + s1;
-                    $('.alink').attr('href', link);
-                    // window.location.href='sign.html?id='+sid+'&schooltime='+s1;
-                    setTimeout(function () {
-                        $('.alink').click();
-                        sessionStorage.removeItem('idGroup');
-                        sessionStorage.removeItem('sGroup');
-                    }, 500);
-                    $.ajax({
-                        type: 'GET',
-                        cache: 'false',
-                        url: panda + '/api/v1/teacher/checkWork',
-                        headers: { 'Authorization': _cdata },
-                        data: { 'id': sid, 'schooltime': sschoole },
-                        dataType: 'json',
-                        success: function success(msg) {
-                            // console.log(msg);
-                        },
-                        error: function error(msg) {
-                            // console.log(msg);
+                var mydate = new Date();
+                var today = "" + mydate.getFullYear() + "/";
+                today += mydate.getMonth() + 1 + "/";
+                today += mydate.getDate();
+                $.ajax({
+                    type: 'GET',
+                    cache: 'false',
+                    url: panda + '/api/v1/teacher/syllabus',
+                    headers: { 'Authorization': _cdata },
+                    data: { 'teach_uid': tidNum, 'start_date': today, 'end_date': today },
+                    dataType: 'json',
+                    success: function success(msg) {
+
+                        var classCon = msg.data;
+                        for (var key in classCon) {
+                            var ctime = classCon[key].class_time;
+                            var ctitle = classCon[key].course.title;
+                            var pnum = classCon[key].studentCount;
+                            var cname = classCon[key].teacher.uname;
+                            var cfirst = cname.substr(0, 1);
+                            var cclass = classCon[key].class_room.names.substr(0, 1);
+                            var ctype = classCon[key].type;
+                            var cstatus = classCon[key].check_status;
+                            var did = classCon[key].id;
+                            var st = classCon[key].schooltime;
+                            idGroup.push(did);
+                            sGroup.push(st);
+                            var idNum = sessionStorage.setItem('idGroup', idGroup);
+                            var sNum = sessionStorage.setItem('sGroup', sGroup);
+
+                            $('.class-con').append('<li class="class-list">\n                                    <a class="block alink clearfix" id="alink">\n                                        <div class="class-detail fl">\n                                            <p class="p1"><em>' + ctime + '</em><i>' + ctitle + '</i><span class="ctext"></span></p>\n                                            <p class="p2"><em>' + cfirst + '\u8001\u5E08</em><i>\u6559\u5BA4' + cclass + '</i><em class="num">(<em class="snum">' + pnum + '</em>\u4EBA)</em></p>\n                                        </div>\n                                        <div class="class-status fr tc">\n                                            <div class="signed">\n                                                <img class="vm signed-pic" src="images/signed.png" alt="">\n                                                <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                            </div>\n                                            <p class="signing">\u7ACB\u5373\u7B7E\u5230</p>\n                                        </div>\n                                    </a>\n                                    <i class="hide ctype">' + ctype + '</i>\n                                    <i class="hide cstatus">' + cstatus + '</i>\n                                </li>');
                         }
-                    });
+
+                        lessonType();
+                        var nd = new Date();
+                        // var nd = 
+                        console.log(nd);
+
+                        setTimeout(function () {
+                            if ($('.class-list').length <= $('.hidden').length) {
+                                $('.class-con').addClass('hide');
+                                $('.class-result').removeClass('hide');
+                            }
+                        }, 1);
+
+                        $('.class-list').on('click', function () {
+                            var sList = $(this);
+                            var sindex = sList.index();
+                            var idResult = sessionStorage.getItem('idGroup');
+                            var sResult = sessionStorage.getItem('sGroup');
+                            var ir = idResult.split(',');
+                            var sr = sResult.split(',');
+                            var sid = ir[sindex];
+                            var sschoole = sr[sindex];
+                            var s1 = sschoole.replace(' ', '-');
+                            var alink = sList.find('.alink');
+                            var link = 'sign.html?id=' + sid + '&schooltime=' + s1;
+
+                            $('.alink').attr('href', link);
+                            // window.location.href='sign.html?id='+sid+'&schooltime='+s1;
+                            setTimeout(function () {
+                                $('.alink').click();
+                                sessionStorage.removeItem('idGroup');
+                                sessionStorage.removeItem('sGroup');
+                            }, 500);
+                            $.ajax({
+                                type: 'GET',
+                                cache: 'false',
+                                url: panda + '/api/v1/teacher/checkWork',
+                                headers: { 'Authorization': _cdata },
+                                data: { 'id': sid, 'schooltime': sschoole },
+                                dataType: 'json',
+                                success: function success(msg) {
+                                    // console.log(msg);
+                                },
+                                error: function error(msg) {
+                                    // console.log(msg);
+                                }
+                            });
+                        });
+                    },
+                    error: function error(msg) {
+                        console.log('信息获取出错');
+                    }
                 });
             },
             error: function error(msg) {
@@ -11515,14 +11518,14 @@ function personDetai() {
     mondaySum(tmonday);
     function mondaySum(value) {
         var str1 = value.toLocaleDateString();
-        var str2 = str1.replace(/\//g, '.');
+        var str2 = str1.split('/').join('.');
         $('.start').text(str2);
     }
 
     sundaySum(tsunday);
     function sundaySum(value) {
         var str1 = value.toLocaleDateString();
-        var str2 = str1.replace(/\//g, '.');
+        var str2 = str1.split('/').join('.');
         $('.end').text(str2);
     }
 
@@ -11555,15 +11558,30 @@ function personDetai() {
 
     function timeOperation() {
         var weekst1 = $('.start').text();
-        var weekst2 = weekst1.replace(/\./g, '-');
+        var weekst3 = weekst1.split('.');
+        if (weekst3[1].length === 1) {
+            weekst3[1] = '0' + weekst3[1];
+        }
+        if (weekst3[2].length === 1) {
+            weekst3[2] = '0' + weekst3[2];
+        }
+        var weekst4 = weekst3.join('/');
+
         var weeken1 = $('.end').text();
-        var weeken2 = weeken1.replace(/\./g, '-');
+        var weeken3 = weeken1.split('.');
+        if (weeken3[1].length === 1) {
+            weeken3[1] = '0' + weeken3[1];
+        }
+        if (weeken3[2].length === 1) {
+            weeken3[2] = '0' + weeken3[2];
+        }
+        var weeken4 = weeken3.join('/');
         $.ajax({
             type: 'GET',
             cache: 'false',
             url: panda + '/api/v1/teacher/syllabus',
             headers: { 'Authorization': cdata },
-            data: { 'start_date': weekst2, 'end_date': weeken2 },
+            data: { 'start_date': weekst4, 'end_date': weeken4 },
             dataType: 'json',
             success: function success(msg) {
                 var lessonGroup = msg.data;
@@ -11579,18 +11597,14 @@ function personDetai() {
                         var lclass = lessonGroup[key][x].class_room.names.substr(0, 1);
                         var did = lessonGroup[key][x].id;
                         var st = lessonGroup[key][x].schooltime;
+                        var sGroup = st.split('-').join('/');
                         var dtime = st.substr(0, 10);
-                        // keyGroup.push(key);
-                        // idGroup2.push(did);
-                        // sGroup2.push(st);
-                        // let idNum = sessionStorage.setItem('idGroup2',idGroup2);
-                        // let sNum = sessionStorage.setItem('sGroup2',sGroup2);
-                        // let keyNum = sessionStorage.setItem('keyGroup',keyGroup);
+
                         $('.class-con').html('');
                         setTimeout(function () {
-                            $('.item').eq(key - 1).find('.class-con').append('\n                                <li class="class-list">\n                                    <a class="block alink clearfix">\n                                        <div class="class-detail fl">\n                                            <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                            <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i><em class="num">(<em class="snum">' + lnum + '</em></>\u4EBA)</em></p>\n                                        </div>\n                                        <div class="class-status fr tc">\n                                            <div class="signed">\n                                                <img class="vm signed-pic" src="images/signed.png" alt="">\n                                                <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                            </div>\n                                            <div class="sign-no">\n                                                <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                                <p class="p4">\u672A\u7B7E\u5230</p>\n                                            </div>\n                                            <p class="signing">\u7ACB\u5373\u7B7E\u5230</p>\n                                        </div>\n                                    </a>    \n                                    <i class="hide ctype">' + ctype + '</i>\n                                    <i class="hide cstatus">' + cstatus + '</i>\n                                    <i class="hide did">' + did + '</i>\n                                    <i class="hide st">' + st + '</i>\n                                    <i class="hide dtime">' + dtime + '</i>\n                                </li>\n                            ');
+                            $('.item').eq(key - 1).find('.class-con').append('\n                                <li class="class-list">\n                                    <a class="block alink clearfix">\n                                        <div class="class-detail fl">\n                                            <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                            <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i><em class="num">(<em class="snum">' + lnum + '</em></>\u4EBA)</em></p>\n                                        </div>\n                                        <div class="class-status fr tc">\n                                            <div class="signed">\n                                                <img class="vm signed-pic" src="images/signed.png" alt="">\n                                                <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                            </div>\n                                            <div class="sign-no">\n                                                <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                                <p class="p4">\u672A\u7B7E\u5230</p>\n                                            </div>\n                                            <p class="signing">\u7ACB\u5373\u7B7E\u5230</p>\n                                        </div>\n                                    </a>    \n                                    <i class="hide ctype">' + ctype + '</i>\n                                    <i class="hide cstatus">' + cstatus + '</i>\n                                    <i class="hide did">' + did + '</i>\n                                    <i class="hide st">' + sGroup + '</i>\n                                    <i class="hide dtime">' + dtime + '</i>\n                                </li>\n                            ');
                             lessonType();
-                        }, 1);
+                        }, 20);
                     };
 
                     for (var x in lessonGroup[key]) {
@@ -11604,12 +11618,11 @@ function personDetai() {
 
                 var nd = new Date();
 
-                var nowt = Date.parse(nd) / 1000;
                 setTimeout(function () {
                     $('.class-list').each(function (a, b) {
                         var dt = $(b).find('.st').text();
-                        var timeLine = Date.parse(new Date(dt)) / 1000;
-                        if (timeLine > nowt) {
+                        var timeLine = new Date(dt);
+                        if (timeLine > nd) {
                             $(b).addClass('no-lesson').removeClass('has-lesson');
                         } else {
                             $(b).removeClass('no-lesson').addClass('has-lesson');
@@ -11624,7 +11637,7 @@ function personDetai() {
                         var stText = sList.find('.st').text();
                         var oindex = $(this).parents('.item').index();
                         console.log(didText, stText);
-                        var s1 = stText.replace(' ', '=');
+                        var s1 = stText.replace(' ', '-');
                         var link = 'sign.html?id=' + didText + '&schooltime=' + s1;
                         // window.location.href='sign.html?id='+didText+'&schooltime='+s1;
                         $('.alink').attr('href', link);
@@ -11732,9 +11745,7 @@ function loginWake() {
 // 用户登录
 function login() {
     if ($('.login').get(0)) {
-
         $('.refer').on('click', function () {
-
             if ($('.refer').hasClass('refer-on')) {
                 var uname = $('.phone-number').val();
                 var psd = $('.pass-word').val();

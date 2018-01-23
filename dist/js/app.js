@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3f151f5264cb8e06557e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "a090e193b1bfe74b12e3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11037,8 +11037,8 @@ $(function () {
 });
 
 // var panda = 'http://panda.dfth.com';
-var panda = 'http://pstest.dfth.com';
-// var panda = '';
+// var panda = 'http://pstest.dfth.com';
+var panda = '';
 // 设备判断
 function _IsIOS() {
     var ua = navigator.userAgent.toLowerCase();
@@ -11097,11 +11097,11 @@ function lessonType() {
             $(b).find('.ctext').removeClass('s2 s3 s4 s5');
             $(b).find('.ctext').addClass('s1');
         } else if (ctype == 2) {
-            $(b).find('.ctext').text('被代');
+            $(b).find('.ctext').text('补课');
             $(b).find('.ctext').removeClass('s1 s3 s4 s5');
             $(b).find('.ctext').addClass('s2');
         } else if (ctype == 3) {
-            $(b).find('.ctext').text('补课');
+            $(b).find('.ctext').text('被代');
             $(b).find('.ctext').removeClass('s1 s2 s4 s5');
             $(b).find('.ctext').addClass('s3');
         } else if (ctype == 4) {

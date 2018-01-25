@@ -282,7 +282,7 @@ function personDetai(){
                             let sr = sResult.split(',');
                             let sid = ir[sindex];
                             let sschoole = sr[sindex];
-                            let s1 = sschoole.replace(' ','-');
+                            let s1 = sschoole.replace(' ','+');
                             let alink = sList.find('.alink');
                             let link = 'sign.html?id='+sid+'&schooltime='+s1;
                             
@@ -324,12 +324,13 @@ function personDetai(){
     if($('.user-sign').get(0)){
         let durl = window.location.href;
         let dobj = durl.split('=');
+        let dGroup = dobj[1].split('&');
         let dj1 = dobj[1];
         let dj2 = dobj[2];
-        let dj3 = dj1.split('&');
-        let dj5 = dobj[2]+' '+dobj[3];
+        let dj3 = dj2.split('+');
+        let dj5 = dj3[0]+' '+dj3[1];
 
-        let did = dj3[0];
+        let did = dGroup[0];
         let dtime = dj5;
         $.ajax({    
             type:'GET',
@@ -339,6 +340,7 @@ function personDetai(){
             data:{'id':did,'schooltime':dtime},
             dataType:'json',
             success:function(msg){
+                // console.log(dtime)
                 console.log(msg.data);
                 let ssGroup = msg.data.students;
                 let signStatus = msg.data.check_status;
@@ -638,7 +640,7 @@ function personDetai(){
                                 </li>
                             `);
                             lessonType();
-                        }, 20);
+                        }, 1);
                     }
 
                 }
@@ -664,14 +666,13 @@ function personDetai(){
                         let didText = sList.find('.did').text();
                         let stText = sList.find('.st').text();
                         let oindex = $(this).parents('.item').index();
-                        console.log(didText,stText);
-                        let s1 = stText.replace(' ','-');
+                        let s1 = stText.replace(' ','+');
                         let link = 'sign.html?id='+didText+'&schooltime='+s1;
                         // window.location.href='sign.html?id='+didText+'&schooltime='+s1;
                         $('.alink').attr('href',link);
-                        setTimeout(function() {
-                            $('.alink').click();
-                        }, 500);
+                        // setTimeout(function() {
+                        //     $('.alink').click();
+                        // }, 500);
                         $.ajax({    
                             type:'GET',
                             cache:'false',

@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "a090e193b1bfe74b12e3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "0a2d355936492ca62704"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11281,7 +11281,7 @@ function personDetai() {
                             var sr = sResult.split(',');
                             var sid = ir[sindex];
                             var sschoole = sr[sindex];
-                            var s1 = sschoole.replace(' ', '-');
+                            var s1 = sschoole.replace(' ', '+');
                             var alink = sList.find('.alink');
                             var link = 'sign.html?id=' + sid + '&schooltime=' + s1;
 
@@ -11323,12 +11323,13 @@ function personDetai() {
     if ($('.user-sign').get(0)) {
         var durl = window.location.href;
         var dobj = durl.split('=');
+        var dGroup = dobj[1].split('&');
         var dj1 = dobj[1];
         var dj2 = dobj[2];
-        var dj3 = dj1.split('&');
-        var dj5 = dobj[2] + ' ' + dobj[3];
+        var dj3 = dj2.split('+');
+        var dj5 = dj3[0] + ' ' + dj3[1];
 
-        var did = dj3[0];
+        var did = dGroup[0];
         var dtime = dj5;
         $.ajax({
             type: 'GET',
@@ -11338,6 +11339,7 @@ function personDetai() {
             data: { 'id': did, 'schooltime': dtime },
             dataType: 'json',
             success: function success(msg) {
+                // console.log(dtime)
                 console.log(msg.data);
                 var ssGroup = msg.data.students;
                 var signStatus = msg.data.check_status;
@@ -11604,7 +11606,7 @@ function personDetai() {
                         setTimeout(function () {
                             $('.item').eq(key - 1).find('.class-con').append('\n                                <li class="class-list">\n                                    <a class="block alink clearfix">\n                                        <div class="class-detail fl">\n                                            <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                            <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i><em class="num">(<em class="snum">' + lnum + '</em></>\u4EBA)</em></p>\n                                        </div>\n                                        <div class="class-status fr tc">\n                                            <div class="signed">\n                                                <img class="vm signed-pic" src="images/signed.png" alt="">\n                                                <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                            </div>\n                                            <div class="sign-no">\n                                                <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                                <p class="p4">\u672A\u7B7E\u5230</p>\n                                            </div>\n                                            <p class="signing">\u7ACB\u5373\u7B7E\u5230</p>\n                                        </div>\n                                    </a>    \n                                    <i class="hide ctype">' + ctype + '</i>\n                                    <i class="hide cstatus">' + cstatus + '</i>\n                                    <i class="hide did">' + did + '</i>\n                                    <i class="hide st">' + sGroup + '</i>\n                                    <i class="hide dtime">' + dtime + '</i>\n                                </li>\n                            ');
                             lessonType();
-                        }, 20);
+                        }, 1);
                     };
 
                     for (var x in lessonGroup[key]) {
@@ -11636,14 +11638,13 @@ function personDetai() {
                         var didText = sList.find('.did').text();
                         var stText = sList.find('.st').text();
                         var oindex = $(this).parents('.item').index();
-                        console.log(didText, stText);
-                        var s1 = stText.replace(' ', '-');
+                        var s1 = stText.replace(' ', '+');
                         var link = 'sign.html?id=' + didText + '&schooltime=' + s1;
                         // window.location.href='sign.html?id='+didText+'&schooltime='+s1;
                         $('.alink').attr('href', link);
-                        setTimeout(function () {
-                            $('.alink').click();
-                        }, 500);
+                        // setTimeout(function() {
+                        //     $('.alink').click();
+                        // }, 500);
                         $.ajax({
                             type: 'GET',
                             cache: 'false',

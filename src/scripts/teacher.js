@@ -8,15 +8,12 @@ $(function () {
     loginWake();
     login();
     loginTeach();
-    // setTimeout(function() {
-    //     $('body').show();
-    // }, 100);
     
     
 });
 
 // var panda = 'http://panda.dfth.com';
-// var panda = 'http://pstest.dfth.com';
+// var panda = 'http://pandatest.dfth.com';
 var panda = '';
 // 设备判断
 function _IsIOS() {
@@ -69,28 +66,49 @@ function lessonType(){
         let num = $(b).find('.snum');
         let numText = num.text();
         if (ctype ==0) {
-            $(b).find('.ctext').text('');
+            if($(b).find('.ctext').text()==="超时"){
+
+            }else{
+                $(b).find('.ctext').text('');
+            } 
             $(b).find('.ctext').removeClass('s1 s2 s3 s4 s5');
         }else if (ctype ==1) {
-            $(b).find('.ctext').text('代');
+            if($(b).find('.ctext').text()==="超时"){
+
+            }else{
+                $(b).find('.ctext').text('代');
+            } 
             $(b).find('.ctext').removeClass('s2 s3 s4 s5');
             $(b).find('.ctext').addClass('s1');
         }else if (ctype ==2) {
-            $(b).find('.ctext').text('补课');
+            if($(b).find('.ctext').text()==="超时"){
+
+            }else{
+                $(b).find('.ctext').text('补课');
+            } 
             $(b).find('.ctext').removeClass('s1 s3 s4 s5');
             $(b).find('.ctext').addClass('s2');
         }else if (ctype ==3) {
-            $(b).find('.ctext').text('被代');
+            if($(b).find('.ctext').text()==="超时"){
+
+            }else{
+                $(b).find('.ctext').text('被代');
+            } 
             $(b).find('.ctext').removeClass('s1 s2 s4 s5');
             $(b).find('.ctext').addClass('s3');
         }else if (ctype ==4) {
-            $(b).find('.ctext').text('代课审核');
+            if($(b).find('.ctext').text()==="超时"){
+
+            }else{
+                $(b).find('.ctext').text('代课审核');
+            } 
             $(b).find('.ctext').removeClass('s1 s2 s3 s5');
             $(b).find('.ctext').addClass('s4');
         }else if (ctype ==5) {
-            $(b).find('.ctext').text('停课');
-            $(b).find('.ctext').removeClass('s1 s2 s3 s4');
-            $(b).find('.ctext').addClass('s5');
+            // $(b).find('.ctext').text('停课');
+            // $(b).find('.ctext').removeClass('s1 s2 s3 s4');
+            // $(b).find('.ctext').addClass('s5');
+            $(b).addClass('c-signstop').removeClass('c-signoff c-signed c-signing');
         }
 
         // if(numText==0){
@@ -98,9 +116,9 @@ function lessonType(){
         // }
 
         if(cstatus=='yes'){
-            $(b).removeClass('c-signing c-signoff').addClass('c-signed');
+            $(b).removeClass('c-signing c-signoff c-signstop').addClass('c-signed');
         }else if(cstatus=='no'){
-            $(b).removeClass('c-signed c-signoff').addClass('c-signing');
+            $(b).removeClass('c-signed c-signoff c-signstop').addClass('c-signing');
             if($('.week-box').get(0)){
                 let oindex = $(b).parents('.item').index();
                 let oc = $('.week-box').find('.hd-list').eq(oindex).find('.cricle');
@@ -111,7 +129,7 @@ function lessonType(){
                 }
             }
         }else if(cstatus=='overdue'){
-            $(b).removeClass('c-signed c-signing').addClass('c-signoff');
+            $(b).removeClass('c-signed c-signing c-signstop').addClass('c-signoff');
             $(b).find('.ctext').text('超时');
             $(b).find('.ctext').removeClass('s1 s2 s3 s5');
             $(b).find('.ctext').addClass('s4');
@@ -282,7 +300,7 @@ function personDetai(){
                             let sr = sResult.split(',');
                             let sid = ir[sindex];
                             let sschoole = sr[sindex];
-                            let s1 = sschoole.replace(' ','+');
+                            let s1 = sschoole.replace(' ','x');
                             let alink = sList.find('.alink');
                             let link = 'sign.html?id='+sid+'&schooltime='+s1;
                             
@@ -327,7 +345,7 @@ function personDetai(){
         let dGroup = dobj[1].split('&');
         let dj1 = dobj[1];
         let dj2 = dobj[2];
-        let dj3 = dj2.split('+');
+        let dj3 = dj2.split('x');
         let dj5 = dj3[0]+' '+dj3[1];
 
         let did = dGroup[0];
@@ -340,21 +358,42 @@ function personDetai(){
             data:{'id':did,'schooltime':dtime},
             dataType:'json',
             success:function(msg){
-                // console.log(dtime)
-                console.log(msg.data);
                 let ssGroup = msg.data.students;
                 let signStatus = msg.data.check_status;
                 for(let key in ssGroup){
                     let cname = ssGroup[key].child_name;
                     let cnum = ssGroup[key].course_curr_num;
                     let ctype = ssGroup[key].checkin_types_name;
+                    let chours = ssGroup[key].class_hour;
+                    let hnum = ssGroup[key].course_curr_num;
                     $('.sign-group').append(`
                         <li class="sign-list clearfix ">
                             <p class="p2 fl">${cname}</p>
+                            <div class="p2 fl hour-num">
+                                <select name="hours" class="hours tc">
+                                </select>
+                                <i class="arrow block"></i>
+                            </div>
                             <p class="p2 fl">${cnum}</p>
                             <p class="p2 fl p3">${ctype}</p>
                         </li>
                     `);
+                    if(hnum<=12){
+                        for(let i = 0;i<hnum;i++){
+                            let em = i+1;
+                            $('.hours').eq(key).append(
+                                `<option value="${em}">${em}</option>`
+                            );
+                        }
+                    }else{
+                        for(let i = 0;i<12;i++){
+                            let em = i+1;
+                            $('.hours').eq(key).append(
+                                `<option value="${em}">${em}</option>`
+                            );
+                        }
+                    }
+
                 }
 
                 let attend=[];
@@ -398,60 +437,76 @@ function personDetai(){
                     $('.sign-ok').addClass('hide');
                     $('.sign-late').removeClass('hide');
                     $('.sign-early').addClass('hide');
+                    $('.user-sign').removeClass('user-hours');
                 }else if(signStatus==='yes'){
                     $('.sign-btn').addClass('hide');
                     $('.sign-ok').removeClass('hide');
                     $('.sign-late').addClass('hide');
                     $('.sign-early').addClass('hide');
+                    $('.user-sign').addClass('user-ok');
                 }else if(signStatus==='no'){
                     $('.sign-btn').removeClass('hide');
                     $('.sign-ok').addClass('hide');
                     $('.sign-late').addClass('hide');
                     $('.sign-early').addClass('hide');
+                    // 考勤操作
+                    $('.sign-list').children('.p3').on('click',function(){
+                        if($('.sign-ok').hasClass('hide')){
+                            let o = $(this);
+                            let oindex = o.parent('.sign-list').index();
+                            let hours = o.parent('.sign-list').find('.hours');
+                            let snum = o.parent('.sign-list').find('.hour-num');
+                            if(o.text()=='调课'){
+                                ssGroup[oindex].checkin_types_name='出勤';
+                                ssGroup[oindex].checkin_types=1;
+                                o.text('出勤');
+                                o.removeClass('absent');
+                                o.addClass('tk');
+                                snum.removeClass('hours-off');
+                                hours.find('option').eq(0).removeAttr('selected','selected');
+                                hours.removeAttr('disabled','disabled');
+                            }else if(o.text()=='出勤'){ 
+                                if(o.hasClass('tk')){
+                                    ssGroup[oindex].checkin_types_name='调课';
+                                    ssGroup[oindex].checkin_types=5;
+                                    snum.addClass('hours-off');
+                                    hours.find('option').eq(0).attr('selected','selected');
+                                    hours.attr('disabled','disabled');
+                                    o.text('调课');
+                                }else{
+                                    ssGroup[oindex].checkin_types_name='旷课';
+                                    ssGroup[oindex].checkin_types=3;
+                                    o.text('旷课');
+                                    o.addClass('absent');
+                                    snum.addClass('hours-off');
+                                    hours.find('option').eq(0).attr('selected','selected');
+                                    hours.attr('disabled','disabled');
+                                    o.removeClass('absent');
+                                }
+                            }else if(o.text()=='旷课'){
+                                ssGroup[oindex].checkin_types_name='出勤';
+                                ssGroup[oindex].checkin_types=1;
+                                o.text('出勤');
+                                o.removeClass('absent');
+                                snum.removeClass('hours-off');
+                                hours.find('option').eq(0).removeAttr('selected','selected');
+                                hours.removeAttr('disabled','disabled');
+                            }
+
+                        }
+                    });
                 }else{
                     $('.sign-btn').addClass('hide');
                     $('.sign-ok').addClass('hide');
                     $('.sign-late').addClass('hide');
                     $('.sign-early').removeClass('hide');
+                    $('.user-sign').addClass('user-ok');
                 }
 
                 if($('.sign-list').length==0){
                     $('.sign-btn').addClass('hide');
                     $('.no-person').removeClass('hide');
                 }
-
-                // 考勤操作
-                $('.sign-list').children('.p3').on('click',function(){
-                    if($('.sign-ok').hasClass('hide')){
-                        let o = $(this);
-                        let oindex = o.parent('.sign-list').index();
-                        if(o.text()=='调课'){
-                            ssGroup[oindex].checkin_types_name='出勤';
-                            ssGroup[oindex].checkin_types=1;
-                            o.text('出勤');
-                            o.removeClass('absent');
-                            o.addClass('tk');
-                        }else if(o.text()=='出勤'){ 
-                            if(o.hasClass('tk')){
-                                ssGroup[oindex].checkin_types_name='调课';
-                                ssGroup[oindex].checkin_types=5;
-                                o.text('调课');
-                                o.removeClass('absent');
-                            }else{
-                                ssGroup[oindex].checkin_types_name='旷课';
-                                ssGroup[oindex].checkin_types=3;
-                                o.text('旷课');
-                                o.addClass('absent');
-                            }
-                        }else if(o.text()=='旷课'){
-                            ssGroup[oindex].checkin_types_name='出勤';
-                            ssGroup[oindex].checkin_types=1;
-                            o.text('出勤');
-                            o.removeClass('absent');
-                        }
-
-                    }
-                });
 
                 // 确认签到
                 $('.sign-btn').on('click',()=>{
@@ -588,6 +643,8 @@ function personDetai(){
             weeken3[2]='0'+weeken3[2];
         }
         let weeken4 =weeken3.join('/');
+        
+        // alert(weekst4)
         $.ajax({
             type:'GET',
             cache:'false',
@@ -596,6 +653,7 @@ function personDetai(){
             data:{'start_date':weekst4,'end_date':weeken4},
             dataType:'json',
             success:function(msg){
+                // alert(weeken4)
                 let lessonGroup = msg.data;
                 for(let key in lessonGroup){
                     for(let x in lessonGroup[key]){
@@ -628,6 +686,10 @@ function personDetai(){
                                             <div class="sign-no">
                                                 <img class="vm signed-pic" src="images/sign-no.png" alt="">
                                                 <p class="p4">未签到</p>
+                                            </div>
+                                            <div class="sign-stop">
+                                                <img class="vm signed-pic" src="images/stop.png" alt="">
+                                                <p class="p4">停课</p>
                                             </div>
                                             <p class="signing">立即签到</p>
                                         </div>
@@ -666,7 +728,7 @@ function personDetai(){
                         let didText = sList.find('.did').text();
                         let stText = sList.find('.st').text();
                         let oindex = $(this).parents('.item').index();
-                        let s1 = stText.replace(' ','+');
+                        let s1 = stText.replace(' ','x');
                         let link = 'sign.html?id='+didText+'&schooltime='+s1;
                         // window.location.href='sign.html?id='+didText+'&schooltime='+s1;
                         $('.alink').attr('href',link);
@@ -800,7 +862,6 @@ function login(){
                         console.log(msg)
                         let job = msg.jobCode.code;
                         console.log(job)
-                        
                             let ckey = msg.token_type+' '+msg.access_token;
                             sessionStorage.setItem('ckey', ckey);
                             console.log(ckey);
@@ -816,7 +877,7 @@ function login(){
                         }
                     },
                     error:function(msg){
-                        console.log(msg);
+                        console.log('fail');
                     }    
                 });
             }else{

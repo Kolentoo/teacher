@@ -42,6 +42,7 @@ display: inline-block;position: relative;top: -0.2rem;}
 border:0.1rem solid #e6e6e6;}
 .c-signing .class-status {display: block;}
 .c-signing .class-status .signing {font-size: 2.8rem;color:#1fb5ad;line-height: 12rem;color:#1fb5ad;}
+.c-signing .sign-stop {display: none;}
 .c-signing .sign-no {display: none;}
 .c-signing .signed {display: none;}
 .c-signing .signing {display: block;}
@@ -50,6 +51,7 @@ border:0.1rem solid #e6e6e6;}
 
 .c-signed .class-status {display: block;}
 .c-signed .class-detail {color:#ccc;}
+.c-signed .sign-stop {display: none;}
 .c-signed .signed {display: block;}
 .c-signed .signing {display: none;}
 .c-signed .sign-no {display: none;}
@@ -58,13 +60,21 @@ border:0.1rem solid #e6e6e6;}
 
 .c-signoff .class-status {display: block;}
 .c-signoff .class-detail {color:#ccc;}
-.c-signoff .signed {display: block;}
+.c-signoff .sign-stop {display: none;}
+.c-signoff .sign-no {display: block;}
 .c-signoff .signing {display: none;}
 .c-signoff .signed {display: none;}
 .c-signoff .class-detail .p2 {color:#ccc;}
 .c-signoff .class-detail span{display: none;}
 .c-signoff .class-detail span{display: inline-block;}
 .no-lesson .signing {display: none;}
+
+.c-signstop .class-status {display: block;}
+.c-signstop .sign-stop {display: block;}
+.c-signstop .sign-stop .p4 {color:#ffd429;}
+.c-signstop .sign-no {display: none;}
+.c-signstop .signing {display: none;}
+.c-signstop .signed {display: none;}
 
 
 /* 全局头部 */
@@ -134,9 +144,22 @@ padding:0 0.9rem;position: absolute;left: 50%;top: 50%;margin:-5rem 0 0 1rem;}
 
 /* 老师课程签到页 */
 .sign-body,.signHtml {background: #fff;padding-bottom: 5rem;}
-.user-sign .sign-title {margin-top: 5rem;}
+.user-sign .sign-title {line-height: 7rem;background: rgb(245,245,245);}
 .user-sign .sign-title p{width: 33.33%;text-align: center;font-size: 3.4rem;color:#333;font-family:SimHei;}
+.user-sign .hour-num {display: none;}
+.user-hours .hour-num {display: block;}
+.user-hours .sign-title p{width: 24.8%;}
+
 .user-sign .sign-group p{width: 33.33%;text-align: center;font-size: 3.2rem;color:#666;}
+.user-hours .sign-group .p2 {width: 24.8%;text-align: center;font-size: 3.2rem;color:#666;position: relative;}
+.user-hours .sign-group .hours {text-align: center;font-size: 3.2rem;color:#666;width: 40%;margin:0 auto;background: none;
+ -webkit-appearance:none;}
+.user-hours .sign-group .arrow {content:'';width: 0;height: 0;border-left: 0.5rem solid transparent;border-right: 0.5rem solid transparent;
+    border-top: 1rem solid #333;color:#333;position: absolute;top: 2rem;left: 50%;margin-left: 2rem;}
+.user-hours .hours-off .hours {border:none;}
+.user-hours .hours-off .arrow {border:none;}
+.user-ok .sign-group .hours {border:none;}
+.user-ok .sign-group .arrow {border:none;}
 .user-sign .sign-group .sign-list {margin-top: 6.5rem;}
 .user-sign .sign-group .sign-list .attend {color:#1fb5ad;}
 .user-sign .sign-group .sign-list .leave {color:#e8bd38;}

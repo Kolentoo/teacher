@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "0a2d355936492ca62704"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "88f41ba8b64addb2b01e"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11030,14 +11030,10 @@ $(function () {
     loginWake();
     login();
     loginTeach();
-    // setTimeout(function() {
-    //     $('body').show();
-    // }, 100);
-
 });
 
 // var panda = 'http://panda.dfth.com';
-// var panda = 'http://pstest.dfth.com';
+// var panda = 'http://pandatest.dfth.com';
 var panda = '';
 // 设备判断
 function _IsIOS() {
@@ -11090,28 +11086,39 @@ function lessonType() {
         var num = $(b).find('.snum');
         var numText = num.text();
         if (ctype == 0) {
-            $(b).find('.ctext').text('');
+            if ($(b).find('.ctext').text() === "超时") {} else {
+                $(b).find('.ctext').text('');
+            }
             $(b).find('.ctext').removeClass('s1 s2 s3 s4 s5');
         } else if (ctype == 1) {
-            $(b).find('.ctext').text('代');
+            if ($(b).find('.ctext').text() === "超时") {} else {
+                $(b).find('.ctext').text('代');
+            }
             $(b).find('.ctext').removeClass('s2 s3 s4 s5');
             $(b).find('.ctext').addClass('s1');
         } else if (ctype == 2) {
-            $(b).find('.ctext').text('补课');
+            if ($(b).find('.ctext').text() === "超时") {} else {
+                $(b).find('.ctext').text('补课');
+            }
             $(b).find('.ctext').removeClass('s1 s3 s4 s5');
             $(b).find('.ctext').addClass('s2');
         } else if (ctype == 3) {
-            $(b).find('.ctext').text('被代');
+            if ($(b).find('.ctext').text() === "超时") {} else {
+                $(b).find('.ctext').text('被代');
+            }
             $(b).find('.ctext').removeClass('s1 s2 s4 s5');
             $(b).find('.ctext').addClass('s3');
         } else if (ctype == 4) {
-            $(b).find('.ctext').text('代课审核');
+            if ($(b).find('.ctext').text() === "超时") {} else {
+                $(b).find('.ctext').text('代课审核');
+            }
             $(b).find('.ctext').removeClass('s1 s2 s3 s5');
             $(b).find('.ctext').addClass('s4');
         } else if (ctype == 5) {
-            $(b).find('.ctext').text('停课');
-            $(b).find('.ctext').removeClass('s1 s2 s3 s4');
-            $(b).find('.ctext').addClass('s5');
+            // $(b).find('.ctext').text('停课');
+            // $(b).find('.ctext').removeClass('s1 s2 s3 s4');
+            // $(b).find('.ctext').addClass('s5');
+            $(b).addClass('c-signstop').removeClass('c-signoff c-signed c-signing');
         }
 
         // if(numText==0){
@@ -11119,9 +11126,9 @@ function lessonType() {
         // }
 
         if (cstatus == 'yes') {
-            $(b).removeClass('c-signing c-signoff').addClass('c-signed');
+            $(b).removeClass('c-signing c-signoff c-signstop').addClass('c-signed');
         } else if (cstatus == 'no') {
-            $(b).removeClass('c-signed c-signoff').addClass('c-signing');
+            $(b).removeClass('c-signed c-signoff c-signstop').addClass('c-signing');
             if ($('.week-box').get(0)) {
                 var oindex = $(b).parents('.item').index();
                 var oc = $('.week-box').find('.hd-list').eq(oindex).find('.cricle');
@@ -11132,7 +11139,7 @@ function lessonType() {
                 }
             }
         } else if (cstatus == 'overdue') {
-            $(b).removeClass('c-signed c-signing').addClass('c-signoff');
+            $(b).removeClass('c-signed c-signing c-signstop').addClass('c-signoff');
             $(b).find('.ctext').text('超时');
             $(b).find('.ctext').removeClass('s1 s2 s3 s5');
             $(b).find('.ctext').addClass('s4');
@@ -11281,7 +11288,7 @@ function personDetai() {
                             var sr = sResult.split(',');
                             var sid = ir[sindex];
                             var sschoole = sr[sindex];
-                            var s1 = sschoole.replace(' ', '+');
+                            var s1 = sschoole.replace(' ', 'x');
                             var alink = sList.find('.alink');
                             var link = 'sign.html?id=' + sid + '&schooltime=' + s1;
 
@@ -11326,7 +11333,7 @@ function personDetai() {
         var dGroup = dobj[1].split('&');
         var dj1 = dobj[1];
         var dj2 = dobj[2];
-        var dj3 = dj2.split('+');
+        var dj3 = dj2.split('x');
         var dj5 = dj3[0] + ' ' + dj3[1];
 
         var did = dGroup[0];
@@ -11339,15 +11346,26 @@ function personDetai() {
             data: { 'id': did, 'schooltime': dtime },
             dataType: 'json',
             success: function success(msg) {
-                // console.log(dtime)
-                console.log(msg.data);
                 var ssGroup = msg.data.students;
                 var signStatus = msg.data.check_status;
                 for (var key in ssGroup) {
                     var cname = ssGroup[key].child_name;
                     var cnum = ssGroup[key].course_curr_num;
                     var ctype = ssGroup[key].checkin_types_name;
-                    $('.sign-group').append('\n                        <li class="sign-list clearfix ">\n                            <p class="p2 fl">' + cname + '</p>\n                            <p class="p2 fl">' + cnum + '</p>\n                            <p class="p2 fl p3">' + ctype + '</p>\n                        </li>\n                    ');
+                    var chours = ssGroup[key].class_hour;
+                    var hnum = ssGroup[key].course_curr_num;
+                    $('.sign-group').append('\n                        <li class="sign-list clearfix ">\n                            <p class="p2 fl">' + cname + '</p>\n                            <div class="p2 fl hour-num">\n                                <select name="hours" class="hours tc">\n                                </select>\n                                <i class="arrow block"></i>\n                            </div>\n                            <p class="p2 fl">' + cnum + '</p>\n                            <p class="p2 fl p3">' + ctype + '</p>\n                        </li>\n                    ');
+                    if (hnum <= 12) {
+                        for (var i = 0; i < hnum; i++) {
+                            var em = i + 1;
+                            $('.hours').eq(key).append('<option value="' + em + '">' + em + '</option>');
+                        }
+                    } else {
+                        for (var _i = 0; _i < 12; _i++) {
+                            var _em = _i + 1;
+                            $('.hours').eq(key).append('<option value="' + _em + '">' + _em + '</option>');
+                        }
+                    }
                 }
 
                 var attend = [];
@@ -11391,59 +11409,75 @@ function personDetai() {
                     $('.sign-ok').addClass('hide');
                     $('.sign-late').removeClass('hide');
                     $('.sign-early').addClass('hide');
+                    $('.user-sign').removeClass('user-hours');
                 } else if (signStatus === 'yes') {
                     $('.sign-btn').addClass('hide');
                     $('.sign-ok').removeClass('hide');
                     $('.sign-late').addClass('hide');
                     $('.sign-early').addClass('hide');
+                    $('.user-sign').addClass('user-ok');
                 } else if (signStatus === 'no') {
                     $('.sign-btn').removeClass('hide');
                     $('.sign-ok').addClass('hide');
                     $('.sign-late').addClass('hide');
                     $('.sign-early').addClass('hide');
+                    // 考勤操作
+                    $('.sign-list').children('.p3').on('click', function () {
+                        if ($('.sign-ok').hasClass('hide')) {
+                            var o = $(this);
+                            var oindex = o.parent('.sign-list').index();
+                            var hours = o.parent('.sign-list').find('.hours');
+                            var snum = o.parent('.sign-list').find('.hour-num');
+                            if (o.text() == '调课') {
+                                ssGroup[oindex].checkin_types_name = '出勤';
+                                ssGroup[oindex].checkin_types = 1;
+                                o.text('出勤');
+                                o.removeClass('absent');
+                                o.addClass('tk');
+                                snum.removeClass('hours-off');
+                                hours.find('option').eq(0).removeAttr('selected', 'selected');
+                                hours.removeAttr('disabled', 'disabled');
+                            } else if (o.text() == '出勤') {
+                                if (o.hasClass('tk')) {
+                                    ssGroup[oindex].checkin_types_name = '调课';
+                                    ssGroup[oindex].checkin_types = 5;
+                                    snum.addClass('hours-off');
+                                    hours.find('option').eq(0).attr('selected', 'selected');
+                                    hours.attr('disabled', 'disabled');
+                                    o.text('调课');
+                                } else {
+                                    ssGroup[oindex].checkin_types_name = '旷课';
+                                    ssGroup[oindex].checkin_types = 3;
+                                    o.text('旷课');
+                                    o.addClass('absent');
+                                    snum.addClass('hours-off');
+                                    hours.find('option').eq(0).attr('selected', 'selected');
+                                    hours.attr('disabled', 'disabled');
+                                    o.removeClass('absent');
+                                }
+                            } else if (o.text() == '旷课') {
+                                ssGroup[oindex].checkin_types_name = '出勤';
+                                ssGroup[oindex].checkin_types = 1;
+                                o.text('出勤');
+                                o.removeClass('absent');
+                                snum.removeClass('hours-off');
+                                hours.find('option').eq(0).removeAttr('selected', 'selected');
+                                hours.removeAttr('disabled', 'disabled');
+                            }
+                        }
+                    });
                 } else {
                     $('.sign-btn').addClass('hide');
                     $('.sign-ok').addClass('hide');
                     $('.sign-late').addClass('hide');
                     $('.sign-early').removeClass('hide');
+                    $('.user-sign').addClass('user-ok');
                 }
 
                 if ($('.sign-list').length == 0) {
                     $('.sign-btn').addClass('hide');
                     $('.no-person').removeClass('hide');
                 }
-
-                // 考勤操作
-                $('.sign-list').children('.p3').on('click', function () {
-                    if ($('.sign-ok').hasClass('hide')) {
-                        var o = $(this);
-                        var oindex = o.parent('.sign-list').index();
-                        if (o.text() == '调课') {
-                            ssGroup[oindex].checkin_types_name = '出勤';
-                            ssGroup[oindex].checkin_types = 1;
-                            o.text('出勤');
-                            o.removeClass('absent');
-                            o.addClass('tk');
-                        } else if (o.text() == '出勤') {
-                            if (o.hasClass('tk')) {
-                                ssGroup[oindex].checkin_types_name = '调课';
-                                ssGroup[oindex].checkin_types = 5;
-                                o.text('调课');
-                                o.removeClass('absent');
-                            } else {
-                                ssGroup[oindex].checkin_types_name = '旷课';
-                                ssGroup[oindex].checkin_types = 3;
-                                o.text('旷课');
-                                o.addClass('absent');
-                            }
-                        } else if (o.text() == '旷课') {
-                            ssGroup[oindex].checkin_types_name = '出勤';
-                            ssGroup[oindex].checkin_types = 1;
-                            o.text('出勤');
-                            o.removeClass('absent');
-                        }
-                    }
-                });
 
                 // 确认签到
                 $('.sign-btn').on('click', function () {
@@ -11578,6 +11612,8 @@ function personDetai() {
             weeken3[2] = '0' + weeken3[2];
         }
         var weeken4 = weeken3.join('/');
+
+        // alert(weekst4)
         $.ajax({
             type: 'GET',
             cache: 'false',
@@ -11586,6 +11622,7 @@ function personDetai() {
             data: { 'start_date': weekst4, 'end_date': weeken4 },
             dataType: 'json',
             success: function success(msg) {
+                // alert(weeken4)
                 var lessonGroup = msg.data;
 
                 var _loop = function _loop(key) {
@@ -11604,7 +11641,7 @@ function personDetai() {
 
                         $('.class-con').html('');
                         setTimeout(function () {
-                            $('.item').eq(key - 1).find('.class-con').append('\n                                <li class="class-list">\n                                    <a class="block alink clearfix">\n                                        <div class="class-detail fl">\n                                            <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                            <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i><em class="num">(<em class="snum">' + lnum + '</em></>\u4EBA)</em></p>\n                                        </div>\n                                        <div class="class-status fr tc">\n                                            <div class="signed">\n                                                <img class="vm signed-pic" src="images/signed.png" alt="">\n                                                <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                            </div>\n                                            <div class="sign-no">\n                                                <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                                <p class="p4">\u672A\u7B7E\u5230</p>\n                                            </div>\n                                            <p class="signing">\u7ACB\u5373\u7B7E\u5230</p>\n                                        </div>\n                                    </a>    \n                                    <i class="hide ctype">' + ctype + '</i>\n                                    <i class="hide cstatus">' + cstatus + '</i>\n                                    <i class="hide did">' + did + '</i>\n                                    <i class="hide st">' + sGroup + '</i>\n                                    <i class="hide dtime">' + dtime + '</i>\n                                </li>\n                            ');
+                            $('.item').eq(key - 1).find('.class-con').append('\n                                <li class="class-list">\n                                    <a class="block alink clearfix">\n                                        <div class="class-detail fl">\n                                            <p class="p1"><em>' + ltime + '</em><i>' + ltitle + '</i><span class="ctext"></span></p></p>\n                                            <p class="p2"><em>' + lteacher + '\u8001\u5E08</em><i>\u6559\u5BA4' + lclass + '</i><em class="num">(<em class="snum">' + lnum + '</em></>\u4EBA)</em></p>\n                                        </div>\n                                        <div class="class-status fr tc">\n                                            <div class="signed">\n                                                <img class="vm signed-pic" src="images/signed.png" alt="">\n                                                <p class="p3">\u5DF2\u7B7E\u5230</p>\n                                            </div>\n                                            <div class="sign-no">\n                                                <img class="vm signed-pic" src="images/sign-no.png" alt="">\n                                                <p class="p4">\u672A\u7B7E\u5230</p>\n                                            </div>\n                                            <div class="sign-stop">\n                                                <img class="vm signed-pic" src="images/stop.png" alt="">\n                                                <p class="p4">\u505C\u8BFE</p>\n                                            </div>\n                                            <p class="signing">\u7ACB\u5373\u7B7E\u5230</p>\n                                        </div>\n                                    </a>    \n                                    <i class="hide ctype">' + ctype + '</i>\n                                    <i class="hide cstatus">' + cstatus + '</i>\n                                    <i class="hide did">' + did + '</i>\n                                    <i class="hide st">' + sGroup + '</i>\n                                    <i class="hide dtime">' + dtime + '</i>\n                                </li>\n                            ');
                             lessonType();
                         }, 1);
                     };
@@ -11638,7 +11675,7 @@ function personDetai() {
                         var didText = sList.find('.did').text();
                         var stText = sList.find('.st').text();
                         var oindex = $(this).parents('.item').index();
-                        var s1 = stText.replace(' ', '+');
+                        var s1 = stText.replace(' ', 'x');
                         var link = 'sign.html?id=' + didText + '&schooltime=' + s1;
                         // window.location.href='sign.html?id='+didText+'&schooltime='+s1;
                         $('.alink').attr('href', link);
@@ -11770,7 +11807,6 @@ function login() {
                             console.log(msg);
                             var job = msg.jobCode.code;
                             console.log(job);
-
                             var ckey = msg.token_type + ' ' + msg.access_token;
                             sessionStorage.setItem('ckey', ckey);
                             console.log(ckey);
@@ -11786,7 +11822,7 @@ function login() {
                         }
                     },
                     error: function error(msg) {
-                        console.log(msg);
+                        console.log('fail');
                     }
                 });
             } else {

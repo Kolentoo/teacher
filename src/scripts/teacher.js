@@ -14,6 +14,7 @@ $(function () {
 
 // var panda = 'http://panda.dfth.com';
 // var panda = 'http://pandatest.dfth.com';
+// var panda = 'http://pstest.dfth.com';
 var panda = '';
 // 设备判断
 function _IsIOS() {
@@ -40,8 +41,8 @@ function commonTab(){
         item1.removeClass('hide');
         let oc = o.find('.cricle');
         let on = o.find('.notice-icon');
-        oc.addClass('hide checked');
-        on.addClass('hide checked');
+        // oc.addClass('hide checked');
+        // on.addClass('hide checked');
     });
 }
 
@@ -373,8 +374,9 @@ function personDetai(){
                                 <select name="hours" class="hours tc">
                                 </select>
                                 <i class="arrow block"></i>
+                                <p class="hourNum hide">${chours}</p>
                             </div>
-                            <p class="p2 fl">${cnum}</p>
+                            <p class="p2 fl current">${cnum}</p>
                             <p class="p2 fl p3">${ctype}</p>
                         </li>
                     `);
@@ -431,6 +433,11 @@ function personDetai(){
                     $('.absent-list').children('i').text(absentLength);
                 }
 
+                $('.sign-list').each(function(a,b){
+                    let text = $(b).find('.hourNum').text();
+                    let selectVal = $(b).find('select option:selected').text(text);
+                });
+
                 // 判断老师是否签到
                 if(signStatus==='overdue'){
                     $('.sign-btn').addClass('hide');
@@ -438,12 +445,14 @@ function personDetai(){
                     $('.sign-late').removeClass('hide');
                     $('.sign-early').addClass('hide');
                     $('.user-sign').removeClass('user-hours');
+                    $('.hours').attr('disabled','disabled');
                 }else if(signStatus==='yes'){
                     $('.sign-btn').addClass('hide');
                     $('.sign-ok').removeClass('hide');
                     $('.sign-late').addClass('hide');
                     $('.sign-early').addClass('hide');
                     $('.user-sign').addClass('user-ok');
+                    $('.hours').attr('disabled','disabled');
                 }else if(signStatus==='no'){
                     $('.sign-btn').removeClass('hide');
                     $('.sign-ok').addClass('hide');
@@ -481,7 +490,7 @@ function personDetai(){
                                     snum.addClass('hours-off');
                                     hours.find('option').eq(0).attr('selected','selected');
                                     hours.attr('disabled','disabled');
-                                    o.removeClass('absent');
+                                    o.addClass('absent');
                                 }
                             }else if(o.text()=='旷课'){
                                 ssGroup[oindex].checkin_types_name='出勤';
@@ -489,7 +498,7 @@ function personDetai(){
                                 o.text('出勤');
                                 o.removeClass('absent');
                                 snum.removeClass('hours-off');
-                                hours.find('option').eq(0).removeAttr('selected','selected');
+                                hours.find('option').eq(0).attr('selected','selected');
                                 hours.removeAttr('disabled','disabled');
                             }
 
@@ -501,6 +510,8 @@ function personDetai(){
                     $('.sign-late').addClass('hide');
                     $('.sign-early').removeClass('hide');
                     $('.user-sign').addClass('user-ok');
+                    $('.hours').attr('disabled','disabled');
+                    $('.user-sign').removeClass('user-hours');
                 }
 
                 if($('.sign-list').length==0){
@@ -510,8 +521,21 @@ function personDetai(){
 
                 // 确认签到
                 $('.sign-btn').on('click',()=>{
-                    let jsonGroup = JSON.stringify(ssGroup);
-                    console.log(jsonGroup)
+                    
+                    var hourGroup = [];
+                    $('.sign-list').each(function(a,b){
+                        let hval = $(b).find('select option:selected').val();
+                        hourGroup.push(hval);
+                        let cnum1 = $(b).find('.current').text();
+                        let cnum2 = parseInt(cnum1);
+                        $(b).find('.current').text(cnum2-hval);
+                    });
+                    for(let key in ssGroup){
+                        ssGroup[key].class_hour=hourGroup[key];
+                        ssGroup[key].course_curr_num=ssGroup[key].course_curr_num-hourGroup[key]; 
+                    }
+                    var jsonGroup = JSON.stringify(ssGroup);
+                    // console.log(jsonGroup)
                     $.ajax({
                         type:'POST',
                         cache:'false',
@@ -520,6 +544,8 @@ function personDetai(){
                         data:{'class_id':did,'schooltime':dtime,'students':jsonGroup},
                         dataType:'json',
                         success:function(msg){
+                            $('.hours').attr('disabled','disabled');
+                            $('.user-sign').addClass('user-ok');
                             $('.sign-ok').removeClass('hide');
                             $('.sign-btn').addClass('hide');
                             $('.sign-list').each((a,b)=>{
@@ -844,40 +870,42 @@ function login(){
                 var psd = $('.pass-word').val();
                 var curl = window.location.href;
                 if(curl.indexOf("?")>0){
-                    var keyGroup = curl.split('?');
-                    var keyid1 = keyGroup[1];
-                    var keyid2 = keyid1.split('=');
-                    var keyid3 = keyid2[1];
+                    // var keyGroup = curl.split('?');
+                    // var keyid1 = keyGroup[1];
+                    // var keyid2 = keyid1.split('=');
+                    // var keyid3 = keyid2[1];
+                    // // alert(keyGroup[1])
                 }else{
                     var keyid3 = '';
                 }
+                console.log(keyid3)
                 $.ajax({
                     type:'POST',
                     cache:'false',
                     url:panda+'/api/v1/admin/login',
-                    data:{'username':uname,'password':psd,'grant_type':'password','client_id':'1','client_secret':'EjKXjo27hXenF8a2MgqHvpYv7IhtJ678GfOgnHc5','openid':keyid3},
+                    // data:{'username':uname,'password':psd,'grant_type':'password','client_id':'1','client_secret':'EjKXjo27hXenF8a2MgqHvpYv7IhtJ678GfOgnHc5','openid':keyid3},
+                    data:{'username':uname,'password':psd,'grant_type':'password','client_id':'1','client_secret':'EjKXjo27hXenF8a2MgqHvpYv7IhtJ678GfOgnHc5'},
                     dataType:'json',
                     success:function(msg){
                         if(msg.code==0){
-                        console.log(msg)
                         let job = msg.jobCode.code;
-                        console.log(job)
                             let ckey = msg.token_type+' '+msg.access_token;
                             sessionStorage.setItem('ckey', ckey);
-                            console.log(ckey);
-                            console.log(job.indexOf('teachq'));
+                            // console.log(ckey);
+                            // console.log(job.indexOf('teachq'));
                             if(job.indexOf('teach')!=-1){
                                 window.location.href='index.html';
                             }else{
                                 window.location.href='tips.html?key=noteach';
                             }
+                            // alert('ok')
                         }else{
                             $('.pass-word').parent('.infor-item').addClass('infor-wrong');
                             $('.pass-word').parent('.infor-item').find('.hint').text(msg.message);
                         }
                     },
                     error:function(msg){
-                        console.log('fail');
+                        // alert(msg);
                     }    
                 });
             }else{

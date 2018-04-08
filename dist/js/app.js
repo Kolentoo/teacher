@@ -61,7 +61,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "88f41ba8b64addb2b01e"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "72775060251593600051"; // eslint-disable-line no-unused-vars
 /******/ 	var hotRequestTimeout = 10000;
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
@@ -11034,6 +11034,7 @@ $(function () {
 
 // var panda = 'http://panda.dfth.com';
 // var panda = 'http://pandatest.dfth.com';
+// var panda = 'http://pstest.dfth.com';
 var panda = '';
 // 设备判断
 function _IsIOS() {
@@ -11060,8 +11061,8 @@ function commonTab() {
         item1.removeClass('hide');
         var oc = o.find('.cricle');
         var on = o.find('.notice-icon');
-        oc.addClass('hide checked');
-        on.addClass('hide checked');
+        // oc.addClass('hide checked');
+        // on.addClass('hide checked');
     });
 }
 
@@ -11354,7 +11355,7 @@ function personDetai() {
                     var ctype = ssGroup[key].checkin_types_name;
                     var chours = ssGroup[key].class_hour;
                     var hnum = ssGroup[key].course_curr_num;
-                    $('.sign-group').append('\n                        <li class="sign-list clearfix ">\n                            <p class="p2 fl">' + cname + '</p>\n                            <div class="p2 fl hour-num">\n                                <select name="hours" class="hours tc">\n                                </select>\n                                <i class="arrow block"></i>\n                            </div>\n                            <p class="p2 fl">' + cnum + '</p>\n                            <p class="p2 fl p3">' + ctype + '</p>\n                        </li>\n                    ');
+                    $('.sign-group').append('\n                        <li class="sign-list clearfix ">\n                            <p class="p2 fl">' + cname + '</p>\n                            <div class="p2 fl hour-num">\n                                <select name="hours" class="hours tc">\n                                </select>\n                                <i class="arrow block"></i>\n                                <p class="hourNum hide">' + chours + '</p>\n                            </div>\n                            <p class="p2 fl current">' + cnum + '</p>\n                            <p class="p2 fl p3">' + ctype + '</p>\n                        </li>\n                    ');
                     if (hnum <= 12) {
                         for (var i = 0; i < hnum; i++) {
                             var em = i + 1;
@@ -11403,6 +11404,11 @@ function personDetai() {
                     $('.absent-list').children('i').text(absentLength);
                 }
 
+                $('.sign-list').each(function (a, b) {
+                    var text = $(b).find('.hourNum').text();
+                    var selectVal = $(b).find('select option:selected').text(text);
+                });
+
                 // 判断老师是否签到
                 if (signStatus === 'overdue') {
                     $('.sign-btn').addClass('hide');
@@ -11410,12 +11416,14 @@ function personDetai() {
                     $('.sign-late').removeClass('hide');
                     $('.sign-early').addClass('hide');
                     $('.user-sign').removeClass('user-hours');
+                    $('.hours').attr('disabled', 'disabled');
                 } else if (signStatus === 'yes') {
                     $('.sign-btn').addClass('hide');
                     $('.sign-ok').removeClass('hide');
                     $('.sign-late').addClass('hide');
                     $('.sign-early').addClass('hide');
                     $('.user-sign').addClass('user-ok');
+                    $('.hours').attr('disabled', 'disabled');
                 } else if (signStatus === 'no') {
                     $('.sign-btn').removeClass('hide');
                     $('.sign-ok').addClass('hide');
@@ -11453,7 +11461,7 @@ function personDetai() {
                                     snum.addClass('hours-off');
                                     hours.find('option').eq(0).attr('selected', 'selected');
                                     hours.attr('disabled', 'disabled');
-                                    o.removeClass('absent');
+                                    o.addClass('absent');
                                 }
                             } else if (o.text() == '旷课') {
                                 ssGroup[oindex].checkin_types_name = '出勤';
@@ -11461,7 +11469,7 @@ function personDetai() {
                                 o.text('出勤');
                                 o.removeClass('absent');
                                 snum.removeClass('hours-off');
-                                hours.find('option').eq(0).removeAttr('selected', 'selected');
+                                hours.find('option').eq(0).attr('selected', 'selected');
                                 hours.removeAttr('disabled', 'disabled');
                             }
                         }
@@ -11472,6 +11480,8 @@ function personDetai() {
                     $('.sign-late').addClass('hide');
                     $('.sign-early').removeClass('hide');
                     $('.user-sign').addClass('user-ok');
+                    $('.hours').attr('disabled', 'disabled');
+                    $('.user-sign').removeClass('user-hours');
                 }
 
                 if ($('.sign-list').length == 0) {
@@ -11481,8 +11491,21 @@ function personDetai() {
 
                 // 确认签到
                 $('.sign-btn').on('click', function () {
+
+                    var hourGroup = [];
+                    $('.sign-list').each(function (a, b) {
+                        var hval = $(b).find('select option:selected').val();
+                        hourGroup.push(hval);
+                        var cnum1 = $(b).find('.current').text();
+                        var cnum2 = parseInt(cnum1);
+                        $(b).find('.current').text(cnum2 - hval);
+                    });
+                    for (var _key in ssGroup) {
+                        ssGroup[_key].class_hour = hourGroup[_key];
+                        ssGroup[_key].course_curr_num = ssGroup[_key].course_curr_num - hourGroup[_key];
+                    }
                     var jsonGroup = JSON.stringify(ssGroup);
-                    console.log(jsonGroup);
+                    // console.log(jsonGroup)
                     $.ajax({
                         type: 'POST',
                         cache: 'false',
@@ -11491,6 +11514,8 @@ function personDetai() {
                         data: { 'class_id': did, 'schooltime': dtime, 'students': jsonGroup },
                         dataType: 'json',
                         success: function success(msg) {
+                            $('.hours').attr('disabled', 'disabled');
+                            $('.user-sign').addClass('user-ok');
                             $('.sign-ok').removeClass('hide');
                             $('.sign-btn').addClass('hide');
                             $('.sign-list').each(function (a, b) {
@@ -11789,40 +11814,42 @@ function login() {
                 var psd = $('.pass-word').val();
                 var curl = window.location.href;
                 if (curl.indexOf("?") > 0) {
-                    var keyGroup = curl.split('?');
-                    var keyid1 = keyGroup[1];
-                    var keyid2 = keyid1.split('=');
-                    var keyid3 = keyid2[1];
+                    // var keyGroup = curl.split('?');
+                    // var keyid1 = keyGroup[1];
+                    // var keyid2 = keyid1.split('=');
+                    // var keyid3 = keyid2[1];
+                    // // alert(keyGroup[1])
                 } else {
                     var keyid3 = '';
                 }
+                console.log(keyid3);
                 $.ajax({
                     type: 'POST',
                     cache: 'false',
                     url: panda + '/api/v1/admin/login',
-                    data: { 'username': uname, 'password': psd, 'grant_type': 'password', 'client_id': '1', 'client_secret': 'EjKXjo27hXenF8a2MgqHvpYv7IhtJ678GfOgnHc5', 'openid': keyid3 },
+                    // data:{'username':uname,'password':psd,'grant_type':'password','client_id':'1','client_secret':'EjKXjo27hXenF8a2MgqHvpYv7IhtJ678GfOgnHc5','openid':keyid3},
+                    data: { 'username': uname, 'password': psd, 'grant_type': 'password', 'client_id': '1', 'client_secret': 'EjKXjo27hXenF8a2MgqHvpYv7IhtJ678GfOgnHc5' },
                     dataType: 'json',
                     success: function success(msg) {
                         if (msg.code == 0) {
-                            console.log(msg);
                             var job = msg.jobCode.code;
-                            console.log(job);
                             var ckey = msg.token_type + ' ' + msg.access_token;
                             sessionStorage.setItem('ckey', ckey);
-                            console.log(ckey);
-                            console.log(job.indexOf('teachq'));
+                            // console.log(ckey);
+                            // console.log(job.indexOf('teachq'));
                             if (job.indexOf('teach') != -1) {
                                 window.location.href = 'index.html';
                             } else {
                                 window.location.href = 'tips.html?key=noteach';
                             }
+                            // alert('ok')
                         } else {
                             $('.pass-word').parent('.infor-item').addClass('infor-wrong');
                             $('.pass-word').parent('.infor-item').find('.hint').text(msg.message);
                         }
                     },
                     error: function error(msg) {
-                        console.log('fail');
+                        // alert(msg);
                     }
                 });
             } else {
